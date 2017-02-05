@@ -19,6 +19,7 @@ $api->version('v1', function($api)
     $api->group(['namespace'=>'App\Http\Controllers'], function($api)
     {
         $api->post('/auth/register', 'Auth\AuthController@register');
+        $api->post('/auth/login', 'Auth\AuthController@login');
         $api->get('/auth/activate', 'Auth\AuthController@activate');
     });
 });
