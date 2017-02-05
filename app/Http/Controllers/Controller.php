@@ -2,30 +2,40 @@
 
 namespace App\Http\Controllers;
 
-use Route;
-use Illuminate\Http\Request;
+use App\Transformers\PaginatorTransformer;
+use Dingo\Api\Routing\Helpers;
+use Illuminate\Contracts\Pagination\Paginator;
 use Illuminate\Foundation\Bus\DispatchesJobs;
-use Illuminate\Validation\ValidationException;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use stdClass;
 
 class Controller extends BaseController
 {
-    use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
+    use AuthorizesRequests, DispatchesJobs, ValidatesRequests, Helpers;
 
-    /*fixes unwanted redirects when validation fails*/
-    public function validate(Request $request, array $rules, array $messages = [], array $customAttributes = [])
+    protected function responseTransformed($entity, $transformer, array $meta = null)
     {
-        $validator = $this->getValidationFactory()->make($request->all(), $rules, $messages, $customAttributes);
-
-        if ($validator->fails()) {
-            if (Route::current()->getPrefix() === 'api') {
-                $message = $validator->errors()->first();
-                throw new ValidationException($message);
-            } else {
-                throw new ValidationException($this);
+        $transformed = $entity;
+        if(strcasecmp(get_parent_class($transformer), 'App\Utils\Transformer\MainTransformer') == 0){
+            if(strcasecmp(get_parent_class($entity), "Illuminate\Pagination\AbstractPaginator") == 0 || $entity instanceof Paginator){
+                $paginatorTransformer = new PaginatorTransformer();
+                $meta = array_merge(is_null($meta)?[]:$meta, $paginatorTransformer->transform($entity));
+                $entity = $entity->items();
+                $transformed = $transformer->transformCollection($entity);
+            }else{
+                $transformed = $transformer->transform($entity);
             }
         }
+        if(is_null($meta)){
+            $meta = new stdClass();
+        }
+        $response = [
+            'meta' => $meta,
+            'data' => $transformed
+        ];
+
+        return $this->response->array($response);
     }
 }

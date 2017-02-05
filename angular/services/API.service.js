@@ -4,7 +4,7 @@ export class APIService {
 		//content negotiation
 		let headers = {
 			'Content-Type': 'application/json',
-			'Accept': 'application/x.laravel.v1+json'
+			'Accept': 'application/json'
 		};
 
 		return Restangular.withConfig(function(RestangularConfigurer) {
@@ -18,7 +18,10 @@ export class APIService {
 						}
 					}
                     if (response.status === 500) {
-                      return ToastService.error(response.statusText)
+                      return ToastService.error(response.responseText)
+                    }
+                    if (response.status === 400) {
+                        return ToastService.error(response.data.message)
                     }
 				})
 				.addFullRequestInterceptor(function(element, operation, what, url, headers) {

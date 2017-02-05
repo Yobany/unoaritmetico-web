@@ -51,6 +51,14 @@ export function RoutesConfig($stateProvider, $urlRouterProvider) {
                 }
             }
         })
+        .state('app.activate', {
+            url: '/auth/activate?token',
+            views: {
+                'main@': {
+                    templateUrl: getView('activate-account')
+                }
+            }
+        })
         .state('app.forgot_password', {
             url: '/forgot-password',
             views: {
