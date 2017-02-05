@@ -2,14 +2,24 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Http\Requests\ActivateAccountRequest;
+use App\Http\Requests\RegisterUserRequest;
+use App\Repositories\UserRepository;
+use App\Transformers\UserTransformer;
 use Auth;
 use JWTAuth;
-use App\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
 class AuthController extends Controller
 {
+    private $userRepository;
+
+    public function __construct(UserRepository $userRepository)
+    {
+        $this->userRepository = $userRepository;
+    }
+
     public function login(Request $request)
     {
         $this->validate($request, [
@@ -33,22 +43,16 @@ class AuthController extends Controller
         return response()->success(compact('user', 'token'));
     }
 
-    public function register(Request $request)
+    public function register(RegisterUserRequest $request)
     {
-        $this->validate($request, [
-            'name'       => 'required|min:3',
-            'email'      => 'required|email|unique:users',
-            'password'   => 'required|min:8',
-        ]);
+        $this->userRepository->registerAccount($request->only(['first_name', 'last_name', 'email', 'password']));
+        return $this->response->noContent();
+    }
 
-        $user = new User;
-        $user->name = trim($request->name);
-        $user->email = trim(strtolower($request->email));
-        $user->password = bcrypt($request->password);
-        $user->save();
-
-        $token = JWTAuth::fromUser($user);
-
-        return response()->success(compact('user', 'token'));
+    public function activate(ActivateAccountRequest $request)
+    {
+        $user = $this->userRepository->findBy('activation_token', $request->input('token'));
+        $this->userRepository->activateAccount($request->input('token'));
+        return $this->responseTransformed($user, new UserTransformer());
     }
 }

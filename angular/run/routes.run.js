@@ -1,4 +1,4 @@
-export function RoutesRun($state, $transitions, $auth) {
+export function RoutesRun($state, $transitions) {
     'ngInject';
 
     let requiresAuthCriteria = {

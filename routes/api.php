@@ -13,15 +13,12 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::post('auth/login', 'Auth\AuthController@login');
-Route::post('auth/register', 'Auth\AuthController@register');
-
-Route::post('auth/password/email', 'Auth\PasswordResetController@sendResetLinkEmail');
-Route::get('auth/password/verify', 'Auth\PasswordResetController@verify');
-Route::post('auth/password/reset', 'Auth\PasswordResetController@reset');
-
-
-//protected API routes with JWT (must be logged in)
-Route::get('/user', function (Request $request) {
-    return $request->user();
-})->middleware('auth:api');
+$api = app('Dingo\Api\Routing\Router');
+$api->version('v1', function($api)
+{
+    $api->group(['namespace'=>'App\Http\Controllers'], function($api)
+    {
+        $api->post('/auth/register', 'Auth\AuthController@register');
+        $api->get('/auth/activate', 'Auth\AuthController@activate');
+    });
+});

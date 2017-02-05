@@ -5,6 +5,7 @@ import {ResetPasswordComponent} from './app/components/reset-password/reset-pass
 import {ForgotPasswordComponent} from './app/components/forgot-password/forgot-password.component';
 import {LoginFormComponent} from './app/components/login-form/login-form.component';
 import {RegisterFormComponent} from './app/components/register-form/register-form.component';
+import {ActivateAccountComponent} from './app/components/activate-account/activate-account.component';
 
 angular.module('app.components')
 	.component('appHeader', AppHeaderComponent)
@@ -13,5 +14,6 @@ angular.module('app.components')
 	.component('resetPassword', ResetPasswordComponent)
 	.component('forgotPassword', ForgotPasswordComponent)
 	.component('loginForm', LoginFormComponent)
-	.component('registerForm', RegisterFormComponent);
+	.component('registerForm', RegisterFormComponent)
+    .component('activateAccount', ActivateAccountComponent);
 
