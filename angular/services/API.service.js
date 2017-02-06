@@ -1,7 +1,6 @@
 export class APIService {
-	constructor(Restangular, ToastService, $window) {
+	constructor(Restangular, ToastService, $window, $state) {
 		'ngInject';
-		//content negotiation
 		let headers = {
 			'Content-Type': 'application/json',
 			'Accept': 'application/json'
@@ -12,7 +11,10 @@ export class APIService {
 				.setBaseUrl('/api/')
 				.setDefaultHeaders(headers)
 				.setErrorInterceptor(function(response) {
-					if (response.status === 422 || response.status === 401) {
+                    if(response.status === 401){
+                        $state.go('app.landing');
+                    }
+				    if (response.status === 422) {
 						for (let error in response.data.errors) {
 							return ToastService.error(response.data.errors[error][0]);
 						}
@@ -24,6 +26,16 @@ export class APIService {
                         return ToastService.error(response.data.message)
                     }
 				})
+                .addResponseInterceptor(function(data, operation, what, url, response, deferred) {
+                    let extractedData;
+                    if(typeof data.meta != 'undefined' && typeof data.data != 'undefined'){
+                        extractedData = data.data;
+                        extractedData.meta = data.meta;
+                    }else{
+                        extractedData = data;
+                    }
+                    return extractedData;
+                })
 				.addFullRequestInterceptor(function(element, operation, what, url, headers) {
 					let token = $window.localStorage.satellizer_token;
 					if (token) {

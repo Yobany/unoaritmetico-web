@@ -6,6 +6,7 @@
                 <div layout="row" layout-align="center stretch">
                     <a hide-xs ng-if="!vm.isAuthenticated" class="DemoHeader-link md-subhead" ui-sref="app.login">Iniciar sesión</a>
                     <a hide-xs ng-if="!vm.isAuthenticated" class="DemoHeader-link md-subhead" ui-sref="app.register">Registrarme</a>
+                    <a hide-xs ng-if="vm.isAuthenticated" class="DemoHeader-link md-subhead" ui-sref="app.groups">Mis grupos</a>
                     <a hide-xs ng-if="vm.isAuthenticated" class="DemoHeader-link md-subhead" href ng-click="vm.logout()">Cerrar sesión</a>
                 </div>
             </div>

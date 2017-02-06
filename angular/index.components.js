@@ -1,3 +1,4 @@
+import {GroupListComponent} from './app/components/group-list/group-list.component';
 import {AppHeaderComponent} from './app/components/app-header/app-header.component';
 import {AppRootComponent} from './app/components/app-root/app-root.component';
 import {AppShellComponent} from './app/components/app-shell/app-shell.component';
@@ -8,6 +9,7 @@ import {RegisterFormComponent} from './app/components/register-form/register-for
 import {ActivateAccountComponent} from './app/components/activate-account/activate-account.component';
 
 angular.module('app.components')
+	.component('groupList', GroupListComponent)
 	.component('appHeader', AppHeaderComponent)
 	.component('appRoot', AppRootComponent)
 	.component('appShell', AppShellComponent)

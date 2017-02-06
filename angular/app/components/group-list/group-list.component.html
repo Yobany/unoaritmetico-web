@@ -1,0 +1,35 @@
+<div class="table-responsive">
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th><span>C&oacute;digo</span></th>
+            <th><span>Nombre</span></th>
+            <th><span>Alumnos</span></th>
+            <th class="text-right"><span>Acciones</span></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="group in vm.groups track by group.id">
+            <td>{{group.id}}</td>
+            <td>{{group.name}}</td>
+            <td>{{group.students.length}}</td>
+            <td class="text-right">
+                <div class="btn-group flex-btn-group-container">
+                    <button type="submit"  data-toggle="tooltip" data-placement="top" title="Ver/Editar"
+                            ui-sref="app.landing"
+                            class="btn btn-info btn-sm">
+                        <span class="glyphicon glyphicon-edit"></span>
+                        <span class="hidden-xs hidden-sm"></span>
+                    </button>
+                    <button type="submit" data-toggle="tooltip" data-placement="top" title="Eliminar"
+                            ui-sref="app.landing"
+                            class="btn btn-primary btn-sm">
+                        <span class="glyphicon glyphicon-trash"></span>
+                        <span class="hidden-xs hidden-sm"></span>
+                    </button>
+                </div>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>

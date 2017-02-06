@@ -25,8 +25,8 @@ class AuthController extends Controller
     public function login(LoginRequest $request)
     {
         $token = $this->issueJWT($request->only(['email','password']));
-        //$user = $this->userRepository->findBy('email', $request->input('email'));
-        return $this->responseTransformed(['token' => $token]);
+        $user = $this->userRepository->findBy('email', $request->input('email'));
+        return $this->responseTransformed($user, new UserTransformer(), ['token' => $token]);
     }
 
     public function register(RegisterUserRequest $request)
