@@ -1,44 +1,54 @@
 class LoginFormController {
-	constructor($auth, ToastService) {
-		'ngInject';
+    constructor($auth, ToastService, $state) {
+        'ngInject';
 
-		this.$auth = $auth;
-		this.ToastService = ToastService;
-	}
+        this.$auth = $auth;
+        this.ToastService = ToastService;
+        this.$state = $state;
+    }
 
     $onInit(){
         this.email = '';
         this.password = '';
+        this.isLoginIn = false;
+        if(this.$auth.isAuthenticated()){
+            this.$state.go('app.landing');
+        }
     }
 
-	login() {
-		let user = {
-			email: this.email,
-			password: this.password
-		};
+    login() {
+        let user = {
+            email: this.email,
+            password: this.password
+        };
 
-		this.$auth.login(user)
-			.then((response) => {
-				this.$auth.setToken(response.data);
+        this.isLoginIn = true;
 
-				this.ToastService.show('Logged in successfully.');
-			})
-			.catch(this.failedLogin.bind(this));
-	}
+        this.$auth.login(user)
+            .then(()=> {
+                this.isLoginIn = false;
+                this.$state.go('app.landing', {}, {reload:true});
+            })
+            .catch(this.failedLogin.bind(this));
+    }
 
-	failedLogin(response) {
-		if (response.status === 422) {
-			for (let error in response.data.errors) {
-				return this.ToastService.error(response.data.errors[error][0]);
-			}
-		}
-		this.ToastService.error(response.statusText);
-	}
+    failedLogin(response) {
+        this.isLoginIn = false;
+        if (response.status === 422) {
+            for (let error in response.data.errors) {
+                return this.ToastService.error(response.data.errors[error][0]);
+            }
+        }
+        if(response.status === 401){
+            return this.ToastService.error(response.data.message);
+        }
+        this.ToastService.error(response.statusText);
+    }
 }
 
 export const LoginFormComponent = {
-	templateUrl: './views/app/components/login-form/login-form.component.html',
-	controller: LoginFormController,
-	controllerAs: 'vm',
-	bindings: {}
-}
+    templateUrl: './views/app/components/login-form/login-form.component.html',
+    controller: LoginFormController,
+    controllerAs: 'vm',
+    bindings: {}
+};

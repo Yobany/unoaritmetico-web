@@ -15,7 +15,7 @@ class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests, Helpers;
 
-    protected function responseTransformed($entity, $transformer, array $meta = null)
+    protected function responseTransformed($entity, $transformer = null, array $meta = null)
     {
         $transformed = $entity;
         if(strcasecmp(get_parent_class($transformer), 'App\Utils\Transformer\MainTransformer') == 0){
