@@ -14,6 +14,9 @@ class RegisterFormController {
         this.password = '';
         this.password_confirmation = '';
         this.isRegistering = false;
+        if(this.$auth.isAuthenticated()){
+            this.$state.go('app.landing');
+        }
     }
 
 	register() {

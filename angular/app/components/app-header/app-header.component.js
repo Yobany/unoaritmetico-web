@@ -1,14 +1,18 @@
 class AppHeaderController{
-    constructor($sce){
+    constructor($sce, $auth, $state){
         'ngInject';
 
         this.$sce = $sce;
+        this.$auth = $auth;
+        this.$state = $state;
     }
 
     $onInit(){
-        //defer iframe loading
-        let url = 'https://ghbtns.com/github-btn.html?user=jadjoubran&repo=laravel5-angular-material-starter&type=star&count=true&size=large';
-        this.githubWidget = this.$sce.trustAsResourceUrl(url);
+        this.isAuthenticated = this.$auth.isAuthenticated();
+        this.logout = () => {
+            this.$auth.logout();
+            this.$state.go('app.landing', {}, {reload:true});
+        };
     }
 }
 
@@ -17,4 +21,4 @@ export const AppHeaderComponent = {
     controller: AppHeaderController,
     controllerAs: 'vm',
     bindings: {}
-}
+};
