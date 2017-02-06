@@ -1,14 +1,14 @@
 <md-content class="Page-container">
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-xs-4 no-padding-left">
-                <button class="btn btn-primary" ui-sref="app.landing" >
-                    <span class="glyphicon glyphicon-plus"></span>
-                    <span>Agregar</span>
-                </button>
-            </div>
+    <md-toolbar>
+        <div class="md-toolbar-tools">
+            <h1 class="center" layout="center">
+                <span flex></span>
+                <span>Grupos</span>
+                <span flex></span>
+            </h1>
         </div>
+    </md-toolbar>
+    <div flex="80" flex-offset="10">
+        <group-list></group-list>
     </div>
-    <br>
-    <group-list></group-list>
 </md-content>

@@ -1,35 +1,23 @@
-<div class="table-responsive">
-    <table class="table table-striped">
-        <thead>
-        <tr>
-            <th><span>C&oacute;digo</span></th>
-            <th><span>Nombre</span></th>
-            <th><span>Alumnos</span></th>
-            <th class="text-right"><span>Acciones</span></th>
-        </tr>
+<md-button ng-click="vm.createGroup(group)" class="md-raised md-primary">Agregar</md-button>
+<md-table-container>
+    <table md-table>
+        <thead md-head md-order="myOrder">
+        <th md-column md-numeric>C&oacute;digo</th>
+        <th md-column md-numeric>Nombre</th>
+        <th md-column md-numeric>Estudiantes</th>
+        <th md-column>Acciones</th>
         </thead>
-        <tbody>
-        <tr ng-repeat="group in vm.groups track by group.id">
-            <td>{{group.id}}</td>
-            <td>{{group.name}}</td>
-            <td>{{group.students.length}}</td>
-            <td class="text-right">
-                <div class="btn-group flex-btn-group-container">
-                    <button type="submit"  data-toggle="tooltip" data-placement="top" title="Ver/Editar"
-                            ui-sref="app.landing"
-                            class="btn btn-info btn-sm">
-                        <span class="glyphicon glyphicon-edit"></span>
-                        <span class="hidden-xs hidden-sm"></span>
-                    </button>
-                    <button type="submit" data-toggle="tooltip" data-placement="top" title="Eliminar"
-                            ui-sref="app.landing"
-                            class="btn btn-primary btn-sm">
-                        <span class="glyphicon glyphicon-trash"></span>
-                        <span class="hidden-xs hidden-sm"></span>
-                    </button>
-                </div>
+        <tbody md-body>
+        <!-- we can let ng-repeat sort the columns for us -->
+        <tr ng-repeat="group in vm.groups">
+            <td md-cell>{{group.id}}</td>
+            <td md-cell>{{group.name}}</td>
+            <td md-cell>{{group.students.length}}</td>
+            <td md-cell>
+                <md-button class="md-icon-button md-primary"><i class="material-icons">mode_edit</i></md-button>
+                <md-button ng-click="vm.confirmDeletion(group)" class="md-icon-button md-primary"><i class="material-icons">delete</i></md-button>
             </td>
         </tr>
         </tbody>
     </table>
-</div>
+</md-table-container>

@@ -2,12 +2,12 @@
     <div layout="row">
         <div flex="90" flex-offset="5" class="DemoHeader-container">
             <div layout="row" layout-align="space-between">
-                <img src="img/icons/logo.svg" ui-sref="app.landing" class="DemoHeader-logo"/>
+                <img src="img/icons/logo-grey.svg" ui-sref="app.landing" class="DemoHeader-logo"/>
                 <div layout="row" layout-align="center stretch">
-                    <a hide-xs ng-if="!vm.isAuthenticated" class="DemoHeader-link md-subhead" ui-sref="app.login">Iniciar sesión</a>
-                    <a hide-xs ng-if="!vm.isAuthenticated" class="DemoHeader-link md-subhead" ui-sref="app.register">Registrarme</a>
-                    <a hide-xs ng-if="vm.isAuthenticated" class="DemoHeader-link md-subhead" ui-sref="app.groups">Mis grupos</a>
-                    <a hide-xs ng-if="vm.isAuthenticated" class="DemoHeader-link md-subhead" href ng-click="vm.logout()">Cerrar sesión</a>
+                    <a aria-label="iniciar sesion" hide-xs ng-if="!vm.isAuthenticated" class="DemoHeader-link md-subhead" ui-sref="app.login">Iniciar sesión</a>
+                    <a aria-label="registrarme" hide-xs ng-if="!vm.isAuthenticated" class="DemoHeader-link md-subhead" ui-sref="app.register">Registrarme</a>
+                    <a aria-label="mis grupos" hide-xs ng-if="vm.isAuthenticated" class="DemoHeader-link md-subhead" ui-sref="app.groups">Mis grupos</a>
+                    <a aria-label="cerrar sesion" hide-xs ng-if="vm.isAuthenticated" class="DemoHeader-link md-subhead" href ng-click="vm.logout()">Cerrar sesión</a>
                 </div>
             </div>
         </div>
