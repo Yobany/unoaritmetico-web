@@ -59,6 +59,24 @@ export function RoutesConfig($stateProvider, $urlRouterProvider) {
                 }
             }
         })
+        .state('app.groups', {
+            url: '/groups?page&per_page',
+            auth : true,
+            views: {
+                'main@': {
+                    templateUrl: getView('group-list')
+                }
+            }
+        })
+        .state('app.students', {
+            url: '/students?page&per_page',
+            auth : true,
+            views: {
+                'main@': {
+                    templateUrl: getView('student-list')
+                }
+            }
+        })
         .state('app.forgot_password', {
             url: '/forgot-password',
             views: {

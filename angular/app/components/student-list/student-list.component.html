@@ -1,0 +1,26 @@
+<md-button ng-click="vm.createGroup(student)" class="md-raised md-primary">Agregar</md-button>
+<md-table-container>
+    <table md-table>
+        <thead md-head md-order="myOrder">
+        <th md-column md-numeric>C&oacute;digo</th>
+        <th md-column>Nombre</th>
+        <th md-column md-numeric>Age</th>
+        <th md-column>Grupo</th>
+        <th md-column md-numeric>Partidas</th>
+        </thead>
+        <tbody md-body>
+        <!-- we can let ng-repeat sort the columns for us -->
+        <tr ng-repeat="student in vm.students">
+            <td md-cell>{{student.id}}</td>
+            <td md-cell>{{student.name}}</td>
+            <td md-cell>{{student.age}}</td>
+            <td md-cell>{{student.group.name}}</td>
+            <td md-cell>{{0}}</td>
+            <td md-cell>
+                <md-button class="md-icon-button md-primary"><i class="material-icons">mode_edit</i></md-button>
+                <md-button ng-click="vm.confirmDeletion(student)" class="md-icon-button md-primary"><i class="material-icons">delete</i></md-button>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</md-table-container>

@@ -10,6 +10,7 @@
 
     <link rel="manifest" href="manifest.json">
 
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <!--[if lte IE 10]>
     <script type="text/javascript">document.location.href = '/unsupported-browser'</script>
     <![endif]-->
@@ -34,6 +35,7 @@
     (function(){
         var link = document.createElement("link");
         link.href = "{!! elixir('css/final.css') !!}";
+        console.log(link.href);
         link.type = "text/css";
         link.rel = "stylesheet";
         document.body.appendChild(link);

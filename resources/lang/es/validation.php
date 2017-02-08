@@ -113,8 +113,10 @@ return [
 
     'attributes' => [
         'token' => 'activacion',
+        'name' => 'nombre',
         'password' => 'contraseña',
         'password_confirmation' => 'confirmación de contraseña',
+        'group_id' => 'grupo',
     ],
 
 ];
