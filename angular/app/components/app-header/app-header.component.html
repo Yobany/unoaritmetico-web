@@ -6,7 +6,8 @@
                 <div layout="row" layout-align="center stretch">
                     <a aria-label="iniciar sesion" hide-xs ng-if="!vm.isAuthenticated" class="DemoHeader-link md-subhead" ui-sref="app.login">Iniciar sesión</a>
                     <a aria-label="registrarme" hide-xs ng-if="!vm.isAuthenticated" class="DemoHeader-link md-subhead" ui-sref="app.register">Registrarme</a>
-                    <a aria-label="mis grupos" hide-xs ng-if="vm.isAuthenticated" class="DemoHeader-link md-subhead" ui-sref="app.groups">Mis grupos</a>
+                    <a aria-label="mis grupos" hide-xs ng-if="vm.isAuthenticated" class="DemoHeader-link md-subhead" ui-sref="app.groups">Grupos</a>
+                    <a aria-label="mis estudiantes" hide-xs ng-if="vm.isAuthenticated" class="DemoHeader-link md-subhead" ui-sref="app.students">Estudiantes</a>
                     <a aria-label="cerrar sesion" hide-xs ng-if="vm.isAuthenticated" class="DemoHeader-link md-subhead" href ng-click="vm.logout()">Cerrar sesión</a>
                 </div>
             </div>

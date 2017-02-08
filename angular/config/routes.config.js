@@ -68,6 +68,15 @@ export function RoutesConfig($stateProvider, $urlRouterProvider) {
                 }
             }
         })
+        .state('app.students', {
+            url: '/students?page&per_page',
+            auth : true,
+            views: {
+                'main@': {
+                    templateUrl: getView('student-list')
+                }
+            }
+        })
         .state('app.forgot_password', {
             url: '/forgot-password',
             views: {

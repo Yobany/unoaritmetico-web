@@ -35,6 +35,7 @@
     (function(){
         var link = document.createElement("link");
         link.href = "{!! elixir('css/final.css') !!}";
+        console.log(link.href);
         link.type = "text/css";
         link.rel = "stylesheet";
         document.body.appendChild(link);

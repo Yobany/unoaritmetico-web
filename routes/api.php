@@ -26,10 +26,20 @@ $api->version('v1', function($api)
         $api->group(['middleware' => 'auth:api'], function($api) {
             $api->post('/groups', 'GroupsController@store');
             $api->get('/groups', 'GroupsController@index');
-            $api->group(['middleware' => 'verify.group.ownership'], function ($api) {
+            $api->group(['middleware' => 'verify.group.ownership'], function($api)
+            {
                 $api->put('/groups/{groupId}', 'GroupsController@update');
                 $api->delete('/groups/{groupId}', 'GroupsController@destroy');
                 $api->get('/groups/{groupId}', 'GroupsController@show');
+            });
+
+            $api->post('/students', 'StudentsController@store');
+            $api->get('/students', 'StudentsController@index');
+            $api->group(['middleware' => 'verify.student.ownership'], function($api)
+            {
+                $api->put('/students/{studentId}', 'StudentsController@update');
+                $api->delete('/students/{studentId}', 'StudentsController@destroy');
+                $api->get('/students/{studentId}', 'StudentsController@show');
             });
         });
     });
