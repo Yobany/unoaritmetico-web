@@ -15,11 +15,10 @@ class GroupTransformer extends MainTransformer
 
     public function transform(Group $entity)
     {
-        //$studentsTransformer = new StudentTransformer();
         return [
             'id' => $entity->id,
             'name' => $entity->name,
-            'students' => []
+            'studentsNumber' => count($entity->students)
         ];
     }
 }

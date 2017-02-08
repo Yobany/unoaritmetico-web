@@ -15,11 +15,12 @@ class StudentTransformer extends MainTransformer
 {
     public function transform(Student $entity)
     {
+        $groupTransformer = new GroupTransformer();
         return [
             'id' => $entity->id,
             'name' => $entity->name,
             'age' => $entity->age,
-            'group_id' => $entity->group_id
+            'group' => $groupTransformer->transform($entity->group)
         ];
     }
 }

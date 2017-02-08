@@ -12,7 +12,7 @@
         <tr ng-repeat="group in vm.groups">
             <td md-cell>{{group.id}}</td>
             <td md-cell>{{group.name}}</td>
-            <td md-cell>{{group.students.length}}</td>
+            <td md-cell>{{group.studentsNumber}}</td>
             <td md-cell>
                 <md-button class="md-icon-button md-primary"><i class="material-icons">mode_edit</i></md-button>
                 <md-button ng-click="vm.confirmDeletion(group)" class="md-icon-button md-primary"><i class="material-icons">delete</i></md-button>

@@ -14,7 +14,6 @@ use App\Transformers\StudentTransformer;
 
 class StudentsController extends Controller
 {
-
     private $studentRepository;
     private $groupRepository;
 
@@ -26,20 +25,13 @@ class StudentsController extends Controller
 
     /**
      * @SWG\Get(
-     *     path="/groups/{groupId}/students",
+     *     path="/students",
      *     summary="Obtains all students",
      *     tags={"Students"},
      *     description="Obtains all students",
      *     operationId="getStudents",
      *     consumes={"application/json"},
      *     produces={"application/json"},
-     *     @SWG\Parameter(
-     *         name="groupId",
-     *         in="path",
-     *         description="Id of group to retrieve",
-     *         required=true,
-     *         type="integer"
-     *     ),
      *     @SWG\Parameter(
      *         name="page",
      *         in="query",
@@ -92,7 +84,7 @@ class StudentsController extends Controller
 
     /**
      * @SWG\Post(
-     *     path="/groups/{groupId}/students",
+     *     path="/students",
      *     summary="Create a student",
      *     tags={"Students"},
      *     description="Create a student",
@@ -105,13 +97,6 @@ class StudentsController extends Controller
      *         description="Student information",
      *         required=true,
      *         @SWG\Schema(ref="#/definitions/StoreStudentRequest")
-     *     ),
-     *     @SWG\Parameter(
-     *         name="groupId",
-     *         in="path",
-     *         description="Id of group",
-     *         required=true,
-     *         type="integer"
      *     ),
      *     @SWG\Response(
      *         response=200,
@@ -144,20 +129,13 @@ class StudentsController extends Controller
 
     /**
      * @SWG\Get(
-     *     path="/groups/{groupId}/students/{studentId}",
+     *     path="/students/{studentId}",
      *     summary="Display a single student",
      *     tags={"Students"},
      *     description="Display a single student",
      *     operationId="getGroups",
      *     consumes={"application/json"},
      *     produces={"application/json"},
-     *     @SWG\Parameter(
-     *         name="groupId",
-     *         in="path",
-     *         description="Id of group to retrieve",
-     *         required=true,
-     *         type="integer"
-     *     ),
      *     @SWG\Parameter(
      *         name="studentId",
      *         in="path",
@@ -192,7 +170,7 @@ class StudentsController extends Controller
      *     ),
      * )
      */
-    public function show($groupId, $studentId)
+    public function show($studentId)
     {
         return $this->responseTransformed($this->studentRepository->find($studentId), new StudentTransformer());
     }
@@ -200,7 +178,7 @@ class StudentsController extends Controller
 
     /**
      * @SWG\Put(
-     *     path="/groups/{groupId}/students/{studentId}",
+     *     path="/students/{studentId}",
      *     summary="Update a student",
      *     tags={"Students"},
      *     description="Update a student",
@@ -213,13 +191,6 @@ class StudentsController extends Controller
      *         description="Group to update",
      *         required=true,
      *         @SWG\Schema(ref="#/definitions/UpdateStudentRequest")
-     *     ),
-     *     @SWG\Parameter(
-     *         name="groupId",
-     *         in="path",
-     *         description="Id of student group",
-     *         required=true,
-     *         type="integer"
      *     ),
      *     @SWG\Parameter(
      *         name="studentId",
@@ -250,7 +221,7 @@ class StudentsController extends Controller
      *     ),
      * )
      */
-    public function update(UpdateStudentRequest $request, $groupId, $studentId)
+    public function update(UpdateStudentRequest $request, $studentId)
     {
         $student = $this->studentRepository->find($studentId);
         $student->fill($request->only(['name', 'age']));
@@ -260,20 +231,13 @@ class StudentsController extends Controller
 
     /**
      * @SWG\Delete(
-     *     path="/groups/{groupId}/students/{studentId}",
+     *     path="/students/{studentId}",
      *     summary="Delete a student",
      *     tags={"Students"},
      *     description="Delete a student",
      *     operationId="deleteStudent",
      *     consumes={"application/json"},
      *     produces={"application/json"},
-     *     @SWG\Parameter(
-     *         name="groupId",
-     *         in="path",
-     *         description="Id of student group",
-     *         required=true,
-     *         type="integer"
-     *     ),
      *     @SWG\Parameter(
      *         name="studentId",
      *         in="path",
@@ -302,7 +266,7 @@ class StudentsController extends Controller
      *     ),
      * )
      */
-    public function destroy($groupId, $studentId)
+    public function destroy($studentId)
     {
         $this->studentRepository->delete($studentId);
         return $this->response->noContent();

@@ -2,73 +2,110 @@
 
 namespace App\Http\Controllers\Auth;
 
-use Mail;
-use App\User;
-use App\PasswordReset;
-use Illuminate\Http\Request;
+use App\Http\Requests\RecoverPasswordRequest;
+use App\Http\Requests\ResetPasswordRequest;
 use App\Http\Controllers\Controller;
+use App\Repositories\UserRepository;
 
 class PasswordResetController extends Controller
 {
-    public function sendResetLinkEmail(Request $request)
+    private $userRepository;
+
+    public function __construct(UserRepository $userRepository)
     {
-        $this->validate($request, [
-            'email' => 'required|email|exists:users,email',
-        ]);
-
-        //invalidate old tokens
-        PasswordReset::whereEmail($request->email)->delete();
-
-        $email = $request->email;
-        $reset = PasswordReset::create([
-            'email' => $email,
-            'token' => str_random(10),
-        ]);
-
-        $token = $reset->token;
-
-        Mail::send('auth.reset_link', compact('email', 'token'), function ($mail) use ($email) {
-            $mail->to($email)
-            ->from('noreply@example.com')
-            ->subject('Password reset link');
-        });
-
-        return response()->success(true);
+        $this->userRepository = $userRepository;
     }
 
-    public function verify(Request $request)
+    /**
+     * @SWG\Post(
+     *     path="/auth/password/recover",
+     *     summary="Sends the recover password link",
+     *     tags={"Accounts"},
+     *     description="Sends the recover password link",
+     *     operationId="recoverAccount",
+     *     consumes={"application/json"},
+     *     produces={"application/json"},
+     *     @SWG\Parameter(
+     *         name="body",
+     *         in="body",
+     *         description="Account to register",
+     *         required=true,
+     *         @SWG\Schema(ref="#/definitions/RecoverPasswordRequest")
+     *     ),
+     *     @SWG\Response(
+     *         response=201,
+     *         description="Password recover link was sent"
+     *     ),
+     *     @SWG\Response(
+     *         response=405,
+     *         description="Invalid Method",
+     *          @SWG\Schema(ref="#/definitions/Error"),
+     *     ),
+     *     @SWG\Response(
+     *         response=422,
+     *         description="Invalid Fields",
+     *          @SWG\Schema(ref="#/definitions/Validation"),
+     *     ),
+     *     @SWG\Response(
+     *         response=500,
+     *         description="Internal Error",
+     *          @SWG\Schema(ref="#/definitions/Error"),
+     *     ),
+     * )
+     */
+    public function recover(RecoverPasswordRequest $request)
     {
-        $this->validate($request, [
-            'email' => 'required|email',
-            'token' => 'required',
-        ]);
-
-        $check = PasswordReset::whereEmail($request->email)
-        ->whereToken($request->token)
-        ->first();
-
-        if (! $check) {
-            return response()->error('Email does not exist', 422);
-        }
-
-        return response()->success(true);
+        $this->userRepository->sendResetPasswordLink($request->input('email'));
+        return $this->response->noContent();
     }
 
-    public function reset(Request $request)
+    /**
+     * @SWG\Post(
+     *     path="/auth/password/reset",
+     *     summary="Updates the user password",
+     *     tags={"Accounts"},
+     *     description="Updates the user password",
+     *     operationId="recoverAccount",
+     *     consumes={"application/json"},
+     *     produces={"application/json"},
+     *     @SWG\Parameter(
+     *         name="token",
+     *         in="query",
+     *         type="string",
+     *         description="Token given by the mail",
+     *         required=true
+     *     ),
+     *     @SWG\Parameter(
+     *         name="body",
+     *         in="body",
+     *         description="Account to register",
+     *         required=true,
+     *         @SWG\Schema(ref="#/definitions/ResetPasswordRequest")
+     *     ),
+     *     @SWG\Response(
+     *         response=201,
+     *         description="Password recover link was sent"
+     *     ),
+     *     @SWG\Response(
+     *         response=405,
+     *         description="Invalid Method",
+     *          @SWG\Schema(ref="#/definitions/Error"),
+     *     ),
+     *     @SWG\Response(
+     *         response=422,
+     *         description="Invalid Fields",
+     *          @SWG\Schema(ref="#/definitions/Validation"),
+     *     ),
+     *     @SWG\Response(
+     *         response=500,
+     *         description="Internal Error",
+     *          @SWG\Schema(ref="#/definitions/Error"),
+     *     ),
+     * )
+     */
+    public function reset(ResetPasswordRequest $request)
     {
-        $this->validate($request, [
-            'email'    => 'required|email',
-            'token'    => "required|exists:password_resets,token,email,{$request->email}",
-            'password' => 'required|min:8|confirmed',
-        ]);
-
-        $user = User::whereEmail($request->email)->firstOrFail();
-        $user->password = bcrypt($request->password);
-        $user->save();
-
-        //delete pending resets
-        PasswordReset::whereEmail($request->email)->delete();
-
-        return response()->success(true);
+        $this->userRepository->resetPassword($request->input('token'), $request->input('password'));
+        return $this->response->noContent();
     }
 }

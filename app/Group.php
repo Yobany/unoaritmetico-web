@@ -13,8 +13,8 @@ class Group extends Model
         return $this->belongsTo(User::class);
     }
 
-//    public function students()
-//    {
-//        return $this->hasMany(Student::class);
-//    }
+    public function students()
+    {
+        return $this->hasMany(Student::class);
+    }
 }
