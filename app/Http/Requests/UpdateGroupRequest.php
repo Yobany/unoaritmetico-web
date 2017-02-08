@@ -2,9 +2,7 @@
 
 namespace App\Http\Requests;
 
-use Illuminate\Foundation\Http\FormRequest;
-
-class UpdateGroupRequest extends ApiRequest
+class UpdateGroupRequest extends ApiSimpleRequest
 {
     /**
      * Get the validation rules that apply to the request.

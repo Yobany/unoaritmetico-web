@@ -29,8 +29,8 @@ class VerifyStudentOwnership
         if(is_null($student)){
             throw new NotFoundHttpException("Student not found");
         }
-        if($student->group_id != $request->route()->parameter('groupId')){
-            throw new UnauthorizedHttpException("Student not found for group", "Student not found for user");
+        if($student->group->user_id != $request->user()->id){
+            throw new NotFoundHttpException("Student not for user");
         }
         return $next($request);
     }

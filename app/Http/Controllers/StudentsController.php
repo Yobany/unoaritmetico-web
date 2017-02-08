@@ -73,9 +73,8 @@ class StudentsController extends Controller
      *     ),
      * )
      */
-    public function index(ConsultRequest $request, $groupId)
+    public function index(ConsultRequest $request)
     {
-        $this->studentRepository->pushCriteria(new FromGroup($groupId));
         $perPage = $request->has('per_page') ? $request->input('per_page') : 10;
         $students = $this->studentRepository->paginate($perPage);
         return $this->responseTransformed($students, new StudentTransformer());
@@ -120,10 +119,10 @@ class StudentsController extends Controller
      *     ),
      * )
      */
-    public function store(CreateStudentRequest $request, $groupId)
+    public function store(CreateStudentRequest $request)
     {
         $student = new Student($request->only(['name', 'age']));
-        $this->groupRepository->find($groupId)->students()->save($student);
+        $this->groupRepository->find($request->input('group_id'))->students()->save($student);
         return $this->responseTransformed($student, new StudentTransformer());
     }
 

@@ -2,9 +2,7 @@
 
 namespace App\Http\Requests;
 
-use Illuminate\Foundation\Http\FormRequest;
-
-class ResetPasswordRequest extends ApiRequest
+class ResetPasswordRequest extends ApiSimpleRequest
 {
 
     /**

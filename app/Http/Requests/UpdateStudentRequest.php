@@ -2,7 +2,7 @@
 
 namespace App\Http\Requests;
 
-class UpdateStudentRequest extends ApiRequest
+class UpdateStudentRequest extends ApiSimpleRequest
 {
 
     /**

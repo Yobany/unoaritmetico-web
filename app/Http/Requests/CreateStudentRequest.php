@@ -2,9 +2,7 @@
 
 namespace App\Http\Requests;
 
-use Illuminate\Foundation\Http\FormRequest;
-
-class CreateStudentRequest extends ApiRequest
+class CreateStudentRequest extends ApiSimpleRequest
 {
 
     /**
