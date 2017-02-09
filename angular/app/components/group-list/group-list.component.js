@@ -8,44 +8,44 @@ class GroupListController{
 
     $onInit(){
         this.groups = [];
-        this.API.all('groups').getList().then((results)=>{
-            this.groups = results;
-        });
+        this.fetchGroups();
     }
-
 
     confirmDeletion(group) {
         let confirm = this.$mdDialog.confirm()
-            .title('¿Deseas eliminar el grupo ' + group.name)
+            .title('¿Deseas eliminar el grupo "' + group.name + '"')
             .textContent('Todos los alumnos pertenecientes al grupo se eliminaran')
             .ariaLabel('Confirmar operación')
             .ok('SI')
             .cancel('NO');
 
-        let component = this;
+        this.$mdDialog.show(confirm).then(() => remove(group));
 
-        this.$mdDialog.show(confirm).then(function() {
-            group.remove().then(()=>{
-                component.$state.reload();
+        let component = this;
+        let remove = (group) => {
+            group.remove().then(() => {
+                component.fetchGroups();
             });
-        });
+        }
     }
 
-    createGroup(ev) {
-        let confirm = this.$mdDialog.prompt()
-            .title('Crear nuevo grupo')
-            .placeholder('Nombre')
-            .ariaLabel('nombre')
-            .targetEvent(ev)
-            .ok('Guardar')
-            .cancel('Cancelar');
+    create() {
+        this.$mdDialog.show({
+            template: '<md-dialog aria-label="grupos"><group-form></group-form></md-dialog>',
+            clickOutsideToClose:true
+        }).then( () => this.fetchGroups());
+    }
 
-        let component = this;
+    edit(group){
+        this.$mdDialog.show({
+            template: "<md-dialog aria-label='grupos'><group-form group='" + JSON.stringify(group) + "'></group-form></md-dialog>",
+            clickOutsideToClose:true
+        }).then(() => this.fetchGroups());
+    }
 
-        this.$mdDialog.show(confirm).then((result) => {
-            component.API.all('groups').post({name : result}).then(()=>{
-                component.$state.reload();
-            });
+    fetchGroups(){
+        this.API.all('groups').getList().then((results)=>{
+            this.groups = results;
         });
     }
 }
@@ -55,4 +55,4 @@ export const GroupListComponent = {
     controller: GroupListController,
     controllerAs: 'vm',
     bindings: {}
-}
+};
