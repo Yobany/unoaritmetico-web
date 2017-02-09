@@ -62,8 +62,11 @@ class AuthController extends Controller
      */
     public function login(LoginRequest $request)
     {
-        $token = $this->issueJWT($request->only(['email','password']));
         $user = $this->userRepository->findBy('email', $request->input('email'));
+        if($user->active != 1){
+            $this->response->errorUnauthorized("Tu cuenta no esta activada");
+        }
+        $token = $this->issueJWT($request->only(['email','password']));
         return $this->responseTransformed($user, new UserTransformer(), ['token' => $token]);
     }
 

@@ -78,7 +78,7 @@ export function RoutesConfig($stateProvider, $urlRouterProvider) {
             }
         })
         .state('app.forgot_password', {
-            url: '/forgot-password',
+            url: '/auth/recover',
             views: {
                 'main@': {
                     templateUrl: getView('forgot-password')
@@ -86,7 +86,7 @@ export function RoutesConfig($stateProvider, $urlRouterProvider) {
             }
         })
         .state('app.reset_password', {
-            url: '/reset-password/:email/:token',
+            url: '/auth/reset?token',
             views: {
                 'main@': {
                     templateUrl: getView('reset-password')

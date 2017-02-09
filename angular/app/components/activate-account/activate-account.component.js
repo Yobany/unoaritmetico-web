@@ -9,6 +9,7 @@ class ActivateAccountController {
     }
 
     $onInit(){
+        this.isValidToken = false;
         if(typeof this.$stateParams.token == 'undefined'){
             this.$state.go('app.landing');
         }else{

@@ -9,13 +9,16 @@ class ForgotPasswordController {
 
     $onInit(){
         this.email = '';
+        this.isSending = false;
     }
 
     submit() {
-        this.API.all('auth/password/email').post({
+        this.isSending = true;
+        this.API.all('auth/password/recover').post({
             email: this.email
         }).then(() => {
-            this.ToastService.show(`Please check your email for instructions on how to reset your password.`);
+            this.isSending = false;
+            this.ToastService.show(`Te hemos enviado un enlace para recuperar tu cuenta, revisa tu correo`);
             this.$state.go('app.landing');
         });
     }
