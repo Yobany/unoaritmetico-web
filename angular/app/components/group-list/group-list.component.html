@@ -1,4 +1,4 @@
-<md-button ng-click="vm.createGroup(group)" class="md-raised md-primary">Agregar</md-button>
+<md-button ng-click="vm.create()" class="md-raised md-primary">Agregar</md-button>
 <md-table-container>
     <table md-table>
         <thead md-head md-order="myOrder">
@@ -14,7 +14,7 @@
             <td md-cell>{{group.name}}</td>
             <td md-cell>{{group.studentsNumber}}</td>
             <td md-cell>
-                <md-button class="md-icon-button md-primary"><i class="material-icons">mode_edit</i></md-button>
+                <md-button ng-click="vm.edit(group)" class="md-icon-button md-primary"><i class="material-icons">mode_edit</i></md-button>
                 <md-button ng-click="vm.confirmDeletion(group)" class="md-icon-button md-primary"><i class="material-icons">delete</i></md-button>
             </td>
         </tr>
