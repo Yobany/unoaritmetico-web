@@ -19,34 +19,34 @@ class GroupListController{
             .ok('SI')
             .cancel('NO');
 
-        this.$mdDialog.show(confirm).then(() => remove(group));
+        this.$mdDialog.show(confirm).then(() => remove(group), () => {});
 
         let component = this;
         let remove = (group) => {
             group.remove().then(() => {
                 component.fetchGroups();
-            });
+            }, () => {});
         }
     }
 
     create() {
         this.$mdDialog.show({
-            template: '<md-dialog aria-label="grupos"><group-form></group-form></md-dialog>',
+            template: '<md-dialog flex="60" aria-label="grupos"><group-form></group-form></md-dialog>',
             clickOutsideToClose:true
-        }).then( () => this.fetchGroups());
+        }).then( () => this.fetchGroups(), () => {});
     }
 
     edit(group){
         this.$mdDialog.show({
-            template: "<md-dialog aria-label='grupos'><group-form group='" + JSON.stringify(group) + "'></group-form></md-dialog>",
+            template: "<md-dialog flex='60' aria-label='grupos'><group-form group='" + JSON.stringify(group) + "'></group-form></md-dialog>",
             clickOutsideToClose:true
-        }).then(() => this.fetchGroups());
+        }).then(() => this.fetchGroups(), () => {});
     }
 
     fetchGroups(){
         this.API.all('groups').getList().then((results)=>{
             this.groups = results;
-        });
+        }, () => {});
     }
 }
 

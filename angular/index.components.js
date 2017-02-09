@@ -1,3 +1,4 @@
+import {StudentFormComponent} from './app/components/student-form/student-form.component';
 import {GroupFormComponent} from './app/components/group-form/group-form.component';
 import {StudentListComponent} from './app/components/student-list/student-list.component';
 import {GroupListComponent} from './app/components/group-list/group-list.component';
@@ -11,6 +12,7 @@ import {RegisterFormComponent} from './app/components/register-form/register-for
 import {ActivateAccountComponent} from './app/components/activate-account/activate-account.component';
 
 angular.module('app.components')
+	.component('studentForm', StudentFormComponent)
 	.component('groupForm', GroupFormComponent)
 	.component('studentList', StudentListComponent)
 	.component('groupList', GroupListComponent)

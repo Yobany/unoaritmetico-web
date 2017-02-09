@@ -8,9 +8,7 @@ class StudentListController{
 
     $onInit(){
         this.students = [];
-        this.API.all('students').getList().then((results)=>{
-            this.students = results;
-        });
+        this.fetchStudents();
     }
 
 
@@ -26,27 +24,29 @@ class StudentListController{
 
         this.$mdDialog.show(confirm).then(function() {
             student.remove().then(()=>{
-                component.$state.reload();
-            });
+                component.fetchStudents();
+            }, () => {});
         });
     }
 
-    createGroup(ev) {
-        let confirm = this.$mdDialog.prompt()
-            .title('Crear nuevo estudiante')
-            .placeholder('Nombre')
-            .ariaLabel('nombre')
-            .targetEvent(ev)
-            .ok('Guardar')
-            .cancel('Cancelar');
+    create() {
+        this.$mdDialog.show({
+            template: '<md-dialog flex="60" aria-label="estudiantes"><student-form></student-form></md-dialog>',
+            clickOutsideToClose:true
+        }).then( () => this.fetchStudents(), () => {});
+    }
 
-        let component = this;
+    edit(student){
+        this.$mdDialog.show({
+            template: "<md-dialog flex='60' aria-label='estudiantes'><student-form student='" + JSON.stringify(student) + "'></student-form></md-dialog>",
+            clickOutsideToClose:true
+        }).then(() => this.fetchStudents(), () => {});
+    }
 
-        this.$mdDialog.show(confirm).then((result) => {
-            component.API.all('students').post({name : result}).then(()=>{
-                component.$state.reload();
-            });
-        });
+    fetchStudents(){
+        this.API.all('students').getList().then((results)=>{
+            this.students = results;
+        }, () => {});
     }
 }
 

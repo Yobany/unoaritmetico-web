@@ -18,9 +18,7 @@ class GroupFormController{
         let component = this;
         this.API.all('groups').post(this.group).then(() => {
             component.$mdDialog.hide();
-        }, () => {
-            component.cancel();
-        });
+        }, () => {});
     }
 
     update(){
@@ -29,9 +27,7 @@ class GroupFormController{
         updatedGroup.name = this.group.name;
         updatedGroup.put().then(() => {
             component.$mdDialog.hide();
-        }, () => {
-            component.cancel();
-        });
+        }, () => {});
     }
 
     cancel(){
