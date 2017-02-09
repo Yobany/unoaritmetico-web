@@ -1,33 +1,33 @@
 export function RoutesConfig($stateProvider, $urlRouterProvider) {
-	'ngInject';
+    'ngInject';
 
-	let getView = (viewName) => {
-		return `./views/app/pages/${viewName}/${viewName}.page.html`;
-	};
+    let getView = (viewName) => {
+        return `./views/app/pages/${viewName}/${viewName}.page.html`;
+    };
 
-	$urlRouterProvider.otherwise('/');
+    $urlRouterProvider.otherwise('/');
 
     /*
-        data: {auth: true} would require JWT auth
-        However you can't apply it to the abstract state
-        or landing state because you'll enter a redirect loop
-    */
+     data: {auth: true} would require JWT auth
+     However you can't apply it to the abstract state
+     or landing state because you'll enter a redirect loop
+     */
 
-	$stateProvider
-		.state('app', {
-			abstract: true,
+    $stateProvider
+        .state('app', {
+            abstract: true,
             data: {},
-			views: {
-				header: {
-					templateUrl: getView('header')
-				},
-				footer: {
-					templateUrl: getView('footer')
-				},
-				main: {}
-			}
-		})
-		.state('app.landing', {
+            views: {
+                header: {
+                    templateUrl: getView('header')
+                },
+                footer: {
+                    templateUrl: getView('footer')
+                },
+                main: {}
+            }
+        })
+        .state('app.landing', {
             url: '/',
             views: {
                 'main@': {
@@ -36,13 +36,13 @@ export function RoutesConfig($stateProvider, $urlRouterProvider) {
             }
         })
         .state('app.login', {
-			url: '/login',
-			views: {
-				'main@': {
-					templateUrl: getView('login')
-				}
-			}
-		})
+            url: '/login',
+            views: {
+                'main@': {
+                    templateUrl: getView('login')
+                }
+            }
+        })
         .state('app.register', {
             url: '/register',
             views: {
@@ -59,24 +59,6 @@ export function RoutesConfig($stateProvider, $urlRouterProvider) {
                 }
             }
         })
-        .state('app.groups', {
-            url: '/groups?page&per_page',
-            auth : true,
-            views: {
-                'main@': {
-                    templateUrl: getView('group-list')
-                }
-            }
-        })
-        .state('app.students', {
-            url: '/students?page&per_page',
-            auth : true,
-            views: {
-                'main@': {
-                    templateUrl: getView('student-list')
-                }
-            }
-        })
         .state('app.forgot_password', {
             url: '/auth/recover',
             views: {
@@ -90,6 +72,22 @@ export function RoutesConfig($stateProvider, $urlRouterProvider) {
             views: {
                 'main@': {
                     templateUrl: getView('reset-password')
+                }
+            }
+        })
+        .state('app.groups', {
+            url: '/groups?page&per_page',
+            views: {
+                'main@': {
+                    templateUrl: getView('group-list')
+                }
+            }
+        })
+        .state('app.students', {
+            url: '/students?page&per_page',
+            views: {
+                'main@': {
+                    templateUrl: getView('student-list')
                 }
             }
         });
