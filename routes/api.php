@@ -43,6 +43,8 @@ $api->version('v1', function($api)
                 $api->delete('/students/{studentId}', 'StudentsController@destroy');
                 $api->get('/students/{studentId}', 'StudentsController@show');
             });
+
+            $api->post('/games','GamesController@store');
         });
     });
 });

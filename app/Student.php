@@ -12,4 +12,9 @@ class Student extends Model
     {
         return $this->belongsTo(Group::class);
     }
+
+    public function games()
+    {
+        return $this->belongsToMany(Game::class);
+    }
 }
