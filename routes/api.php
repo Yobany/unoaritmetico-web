@@ -25,6 +25,7 @@ $api->version('v1', function($api)
         $api->get('/auth/activate', 'Auth\AuthController@activate');
         $api->post('/auth/password/recover', 'Auth\PasswordResetController@recover');
         $api->post('/auth/password/reset', 'Auth\PasswordResetController@reset');
+        $api->post('/games','GamesController@store');
         $api->group(['middleware' => 'auth:api'], function($api) {
             $api->post('/groups', 'GroupsController@store');
             $api->get('/groups', 'GroupsController@index');
@@ -43,8 +44,6 @@ $api->version('v1', function($api)
                 $api->delete('/students/{studentId}', 'StudentsController@destroy');
                 $api->get('/students/{studentId}', 'StudentsController@show');
             });
-
-            $api->post('/games','GamesController@store');
         });
     });
 });

@@ -6,10 +6,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class Card extends Model
 {
-    public function type()
-    {
-        return $this->belongsTo(CardType::class);
-    }
+
+    protected $fillable = ['operation_id', 'operation', 'result', 'color_id', 'card_power_id'];
+
+    public $timestamps = false;
 
     public function power()
     {

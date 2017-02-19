@@ -6,7 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Move extends Model
 {
-    protected $fillable = ['turn', 'device', 'time'];
+    protected $fillable = ['turn', 'duration', 'student_id', 'card_on_deck_id', 'card_played_id'];
+
+    public $timestamps = false;
 
     public function student()
     {

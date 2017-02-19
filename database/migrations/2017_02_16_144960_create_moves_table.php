@@ -16,9 +16,8 @@ class CreateMovesTable extends Migration
         Schema::create('moves', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('turn');
-            $table->double('time')->nullable();
-            $table->string('device')->nullable();
-            $table->integer('student_id')->unsigned();
+            $table->double('duration');
+            $table->integer('student_id')->unsigned()->nullable();
             $table->foreign('student_id')
                 ->references('id')
                 ->on('students')

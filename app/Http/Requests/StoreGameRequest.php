@@ -4,17 +4,8 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreGameRequest extends FormRequest
+class StoreGameRequest extends ApiRequest
 {
-    /**
-     * Determine if the user is authorized to make this request.
-     *
-     * @return bool
-     */
-    public function authorize()
-    {
-        return false;
-    }
 
     /**
      * Get the validation rules that apply to the request.
@@ -24,7 +15,20 @@ class StoreGameRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'played_at' => 'required|date',
+            'moves' => 'required|array',
+            'moves.*.duration' => 'required|integer',
+            'moves.*.student' => 'required|integer|exists:students,id',
+            'moves.*.card_on_deck' => 'required',
+            'moves.*.card_on_deck.operation' => 'required_with:result|string',
+            'moves.*.card_on_deck.result' => 'required_with:operation|numeric',
+            'moves.*.card_on_deck.power_up' => 'sometimes|integer|exists:card_powers,id',
+            'moves.*.card_on_deck.color' => 'sometimes|integer|exists:colors,id',
+            'moves.*.card_played' => 'required',
+            'moves.*.card_played.operation' => 'required_with:result|string',
+            'moves.*.card_played.result' => 'required_with:operation|numeric',
+            'moves.*.card_played.power_up' => 'sometimes|integer|exists:card_powers,id',
+            'moves.*.card_played.color' => 'sometimes|integer|exists:colors,id'
         ];
     }
 }

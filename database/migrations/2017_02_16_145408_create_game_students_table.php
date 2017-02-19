@@ -34,6 +34,6 @@ class CreateGameStudentsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('game_players');
+        Schema::dropIfExists('game_student');
     }
 }

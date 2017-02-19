@@ -6,27 +6,29 @@ class GroupFormController{
     }
 
     $onInit(){
-        if(typeof this.group == 'undefined'){
+        if(this.groupid){
+            this.API.one("groups", this.groupid).get().then((result)=>{
+                this.group = result;
+            });
+        }else{
             this.group = {
                 name : null
             };
         }
-        this.action = (this.group.id) ? "Editar" : "Agregar";
+        this.action = (this.groupid) ? "Editar" : "Agregar";
     }
 
     save() {
-        let component = this;
         this.API.all('groups').post(this.group).then(() => {
-            component.$mdDialog.hide();
+            this.$mdDialog.hide();
         }, () => {});
     }
 
     update(){
-        let component = this;
         let updatedGroup = this.API.one("groups", this.group.id);
         updatedGroup.name = this.group.name;
         updatedGroup.put().then(() => {
-            component.$mdDialog.hide();
+            this.$mdDialog.hide();
         }, () => {});
     }
 
@@ -48,6 +50,6 @@ export const GroupFormComponent = {
     controller: GroupFormController,
     controllerAs: 'vm',
     bindings: {
-        group : '<'
+        groupid : '@'
     }
 };

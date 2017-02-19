@@ -279,6 +279,56 @@
                 }
             }
         },
+        "/games": {
+            "post": {
+                "tags": [
+                    "Games"
+                ],
+                "summary": "Create a game",
+                "description": "Create a game",
+                "operationId": "storeGame",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "description": "Account to register",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/StoreGameRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Game was saved"
+                    },
+                    "405": {
+                        "description": "Invalid Method",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    },
+                    "422": {
+                        "description": "Invalid Fields",
+                        "schema": {
+                            "$ref": "#/definitions/Validation"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        },
         "/groups": {
             "get": {
                 "tags": [
@@ -905,6 +955,22 @@
                 }
             }
         },
+        "StoreGameRequest": {
+            "properties": {
+                "played_at": {
+                    "description": "",
+                    "type": "string",
+                    "example": "2017-02-18 21:30:19"
+                },
+                "moves": {
+                    "description": "",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/MoveItem"
+                    }
+                }
+            }
+        },
         "StoreGroupRequest": {
             "properties": {
                 "name": {
@@ -1002,6 +1068,64 @@
                     "example": "Primary 1st Matutine"
                 },
                 "studentsNumber": {
+                    "description": "",
+                    "type": "integer",
+                    "example": 1
+                }
+            }
+        },
+        "MoveItem": {
+            "properties": {
+                "duration": {
+                    "description": "",
+                    "type": "integer",
+                    "example": 122
+                },
+                "student": {
+                    "description": "",
+                    "type": "integer",
+                    "example": 1
+                },
+                "card_on_deck": {
+                    "description": "",
+                    "type": "object",
+                    "$ref": "#/definitions/OperationCardItem"
+                },
+                "card_played": {
+                    "description": "",
+                    "type": "object",
+                    "$ref": "#/definitions/PowerCardItem"
+                }
+            }
+        },
+        "OperationCardItem": {
+            "properties": {
+                "operation": {
+                    "description": "",
+                    "type": "string",
+                    "example": "2+2"
+                },
+                "result": {
+                    "description": "",
+                    "type": "number",
+                    "format": "double",
+                    "example": 4
+                },
+                "color": {
+                    "description": "",
+                    "type": "integer",
+                    "example": 1
+                }
+            }
+        },
+        "PowerCardItem": {
+            "properties": {
+                "power_up": {
+                    "description": "",
+                    "type": "integer",
+                    "example": 1
+                },
+                "color": {
                     "description": "",
                     "type": "integer",
                     "example": 1
