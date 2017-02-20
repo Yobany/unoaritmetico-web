@@ -12,8 +12,11 @@ use App\User;
 
 class UserTransformer extends MainTransformer
 {
-
-    public function transform(User $entity)
+    /**
+     * @param User $entity
+     * @return array
+     */
+    protected function transform($entity)
     {
         return [
             'id' => $entity->id,

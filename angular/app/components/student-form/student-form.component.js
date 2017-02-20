@@ -1,4 +1,5 @@
 class StudentFormController{
+
     constructor($mdDialog, API){
         'ngInject';
         this.$mdDialog = $mdDialog;
@@ -6,17 +7,18 @@ class StudentFormController{
     }
 
     $onInit(){
-        if(typeof this.student == 'undefined'){
+        if(this.studentid) {
+            this.API.one("students", this.studentid).get().then((result) => {
+                this.student = result;
+            });
+        }else{
             this.student = {
                 name : null,
                 age : null,
                 group : null
             };
         }
-        this.groups = [];
-        this.fetchGroups();
-        this.action = (this.student.id) ? "Editar" : "Agregar";
-
+        this.action = (this.studentid) ? "Editar" : "Agregar";
     }
 
     save() {
@@ -51,6 +53,7 @@ class StudentFormController{
     }
 
     fetchGroups(){
+        this.groups = [];
         this.API.all('groups').getList().then((results)=>{
             this.groups = results;
         });
@@ -62,6 +65,6 @@ export const StudentFormComponent = {
     controller: StudentFormController,
     controllerAs: 'vm',
     bindings: {
-        student : '<'
+        studentid : '@'
     }
 };

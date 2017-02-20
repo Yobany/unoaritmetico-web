@@ -38,14 +38,16 @@ class GroupListController{
 
     edit(group){
         this.$mdDialog.show({
-            template: "<md-dialog flex='60' aria-label='grupos'><group-form group='" + JSON.stringify(group) + "'></group-form></md-dialog>",
+            template: "<md-dialog flex='60' aria-label='grupos'><group-form groupid='" + group.id + "'></group-form></md-dialog>",
             clickOutsideToClose:true
         }).then(() => this.fetchGroups(), () => {});
     }
 
     fetchGroups(){
+        this.isLoading = true;
         this.API.all('groups').getList().then((results)=>{
             this.groups = results;
+            this.isLoading = false;
         }, () => {});
     }
 }

@@ -30,4 +30,20 @@ class StudentItem
      * @SWG\Property(ref="#/definitions/GroupItem")
      */
     private $group;
+
+    /**
+     * @var array
+     * @SWG\Property(
+     *     @SWG\Items(ref="#/definitions/GameItem")
+     * )
+     */
+    private $winned;
+
+    /**
+     * @var array
+     * @SWG\Property(
+     *     @SWG\Items(ref="#/definitions/GameItem")
+     * )
+     */
+    private $played;
 }

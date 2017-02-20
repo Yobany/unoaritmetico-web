@@ -279,6 +279,113 @@
                 }
             }
         },
+        "/games": {
+            "post": {
+                "tags": [
+                    "Games"
+                ],
+                "summary": "Create a game",
+                "description": "Create a game",
+                "operationId": "storeGame",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "description": "Account to register",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/StoreGameRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Game was saved"
+                    },
+                    "405": {
+                        "description": "Invalid Method",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    },
+                    "422": {
+                        "description": "Invalid Fields",
+                        "schema": {
+                            "$ref": "#/definitions/Validation"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/games/{gameId}": {
+            "get": {
+                "tags": [
+                    "Games"
+                ],
+                "summary": "Display a single game",
+                "description": "Display a single game",
+                "operationId": "getGame",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "gameId",
+                        "in": "path",
+                        "description": "Id of game to retrieve",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Game retrieved",
+                        "schema": {
+                            "$ref": "#/definitions/DetailGameResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Request format isn't valid",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    },
+                    "401": {
+                        "description": "Token is invalid",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    },
+                    "405": {
+                        "description": "Invalid Method",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        },
         "/groups": {
             "get": {
                 "tags": [
@@ -905,6 +1012,32 @@
                 }
             }
         },
+        "StoreGameRequest": {
+            "properties": {
+                "played_at": {
+                    "description": "",
+                    "type": "string",
+                    "example": "2017-02-18 21:30:19"
+                },
+                "name": {
+                    "description": "",
+                    "type": "string",
+                    "example": "Ven y juega conmigo"
+                },
+                "winner": {
+                    "description": "",
+                    "type": "integer",
+                    "example": 1
+                },
+                "moves": {
+                    "description": "",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/MoveRequestItem"
+                    }
+                }
+            }
+        },
         "StoreGroupRequest": {
             "properties": {
                 "name": {
@@ -989,6 +1122,92 @@
                 }
             }
         },
+        "ColorItem": {
+            "properties": {
+                "name": {
+                    "description": "",
+                    "type": "string",
+                    "example": "Azul"
+                }
+            }
+        },
+        "GameDetailItem": {
+            "properties": {
+                "id": {
+                    "description": "",
+                    "type": "integer",
+                    "example": 1
+                },
+                "name": {
+                    "description": "",
+                    "type": "integer",
+                    "example": "Ven y juega con jaimito"
+                },
+                "duration": {
+                    "description": "",
+                    "type": "integer",
+                    "example": 1201
+                },
+                "played_at": {
+                    "description": "",
+                    "type": "integer",
+                    "example": "2017-02-18 21:30:19"
+                },
+                "winner": {
+                    "description": "",
+                    "type": "object",
+                    "$ref": "#/definitions/StudentItem"
+                },
+                "movements": {
+                    "description": "",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/MoveItem"
+                    }
+                },
+                "students": {
+                    "description": "",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/StudentItem"
+                    }
+                }
+            }
+        },
+        "GameItem": {
+            "properties": {
+                "id": {
+                    "description": "",
+                    "type": "integer",
+                    "example": 1
+                },
+                "name": {
+                    "description": "",
+                    "type": "integer",
+                    "example": "Ven y juega con jaimito"
+                },
+                "duration": {
+                    "description": "",
+                    "type": "integer",
+                    "example": 1201
+                },
+                "played_at": {
+                    "description": "",
+                    "type": "integer",
+                    "example": "2017-02-18 21:30:19"
+                },
+                "movementsNumber": {
+                    "description": "",
+                    "type": "integer",
+                    "example": 23
+                },
+                "studentsNumber": {
+                    "description": "",
+                    "type": "integer",
+                    "example": 1
+                }
+            }
+        },
         "GroupItem": {
             "properties": {
                 "id": {
@@ -1005,6 +1224,196 @@
                     "description": "",
                     "type": "integer",
                     "example": 1
+                }
+            }
+        },
+        "MoveItem": {
+            "properties": {
+                "turn": {
+                    "description": "",
+                    "type": "integer",
+                    "example": 1
+                },
+                "duration": {
+                    "description": "",
+                    "type": "integer",
+                    "example": 122
+                },
+                "student": {
+                    "description": "",
+                    "type": "object",
+                    "$ref": "#/definitions/StudentMovementItem"
+                },
+                "by_color": {
+                    "description": "",
+                    "type": "boolean",
+                    "example": false
+                },
+                "card_on_deck": {
+                    "description": "",
+                    "type": "object",
+                    "$ref": "#/definitions/OperationCardItem"
+                },
+                "card_played": {
+                    "description": "",
+                    "type": "object",
+                    "$ref": "#/definitions/PowerCardItem"
+                }
+            }
+        },
+        "MoveRequestItem": {
+            "properties": {
+                "turn": {
+                    "description": "",
+                    "type": "integer",
+                    "example": 1
+                },
+                "duration": {
+                    "description": "",
+                    "type": "integer",
+                    "example": 122
+                },
+                "student": {
+                    "description": "",
+                    "type": "integer",
+                    "example": 1
+                },
+                "by_color": {
+                    "description": "",
+                    "type": "boolean",
+                    "example": false
+                },
+                "card_on_deck": {
+                    "description": "",
+                    "type": "object",
+                    "$ref": "#/definitions/OperationCardRequestItem"
+                },
+                "card_played": {
+                    "description": "",
+                    "type": "object",
+                    "$ref": "#/definitions/PowerCardRequestItem"
+                }
+            }
+        },
+        "OperationCardItem": {
+            "properties": {
+                "operation": {
+                    "description": "",
+                    "type": "string",
+                    "example": "2+2"
+                },
+                "operator": {
+                    "description": "",
+                    "type": "object",
+                    "$ref": "#/definitions/OperatorItem"
+                },
+                "result": {
+                    "description": "",
+                    "type": "number",
+                    "format": "double",
+                    "example": 4
+                },
+                "power": {
+                    "description": "",
+                    "type": "integer",
+                    "$ref": "#/definitions/PowerItem"
+                },
+                "color": {
+                    "description": "",
+                    "type": "object",
+                    "$ref": "#/definitions/ColorItem"
+                }
+            }
+        },
+        "OperationCardRequestItem": {
+            "properties": {
+                "operation": {
+                    "description": "",
+                    "type": "string",
+                    "example": "2+2"
+                },
+                "result": {
+                    "description": "",
+                    "type": "number",
+                    "format": "double",
+                    "example": 4
+                },
+                "color": {
+                    "description": "",
+                    "type": "integer",
+                    "example": 1
+                }
+            }
+        },
+        "OperatorItem": {
+            "properties": {
+                "name": {
+                    "description": "",
+                    "type": "string",
+                    "example": "addition"
+                },
+                "symbol": {
+                    "description": "",
+                    "type": "string",
+                    "example": "+"
+                }
+            }
+        },
+        "PowerCardItem": {
+            "properties": {
+                "operation": {
+                    "description": "",
+                    "type": "string",
+                    "example": "2+2"
+                },
+                "operator": {
+                    "description": "",
+                    "type": "object",
+                    "$ref": "#/definitions/OperatorItem"
+                },
+                "result": {
+                    "description": "",
+                    "type": "number",
+                    "format": "double",
+                    "example": 4
+                },
+                "power": {
+                    "description": "",
+                    "type": "integer",
+                    "$ref": "#/definitions/PowerItem"
+                },
+                "color": {
+                    "description": "",
+                    "type": "integer",
+                    "$ref": "#/definitions/ColorItem"
+                }
+            }
+        },
+        "PowerCardRequestItem": {
+            "properties": {
+                "power": {
+                    "description": "",
+                    "type": "integer",
+                    "example": 1
+                },
+                "color": {
+                    "description": "",
+                    "type": "integer",
+                    "example": 1
+                }
+            }
+        },
+        "PowerItem": {
+            "properties": {
+                "name": {
+                    "description": "",
+                    "type": "string",
+                    "example": "M\u00e1s 2"
+                },
+                "description": {
+                    "description": "",
+                    "type": "integer",
+                    "example": "Agrega dos cartas a tu oponente"
                 }
             }
         },
@@ -1029,6 +1438,34 @@
                     "description": "",
                     "type": "object",
                     "$ref": "#/definitions/GroupItem"
+                },
+                "winned": {
+                    "description": "",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/GameItem"
+                    }
+                },
+                "played": {
+                    "description": "",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/GameItem"
+                    }
+                }
+            }
+        },
+        "StudentMovementItem": {
+            "properties": {
+                "id": {
+                    "description": "",
+                    "type": "integer",
+                    "example": 1
+                },
+                "name": {
+                    "description": "",
+                    "type": "string",
+                    "example": "Rick Grimes"
                 }
             }
         },
@@ -1094,6 +1531,20 @@
                     "items": {
                         "type": "string"
                     }
+                }
+            }
+        },
+        "DetailGameResponse": {
+            "properties": {
+                "meta": {
+                    "description": "",
+                    "type": "object",
+                    "$ref": "#/definitions/DefaultMeta"
+                },
+                "data": {
+                    "description": "",
+                    "type": "object",
+                    "$ref": "#/definitions/GameDetailItem"
                 }
             }
         },

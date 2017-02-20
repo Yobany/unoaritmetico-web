@@ -9,6 +9,7 @@
 namespace App\Repositories;
 
 
+use App\Game;
 use Bosnadev\Repositories\Eloquent\Repository;
 
 class StudentRepository extends Repository
@@ -22,5 +23,10 @@ class StudentRepository extends Repository
     public function model()
     {
         return 'App\Student';
+    }
+
+    public function gamesWinned($studentId)
+    {
+        return Game::where('student_winner_id', $studentId)->get();
     }
 }

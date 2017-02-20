@@ -2,7 +2,7 @@
 
 namespace App\Http\Requests;
 
-class LoginRequest extends ApiSimpleRequest
+class LoginRequest extends ApiRequest
 {
 
     /**

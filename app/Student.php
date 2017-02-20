@@ -12,4 +12,15 @@ class Student extends Model
     {
         return $this->belongsTo(Group::class);
     }
+
+    public function games()
+    {
+        return $this->belongsToMany(Game::class);
+    }
+
+    public function gamesWinned()
+    {
+        return Game::where('student_winner_id', $this->id)->get();
+    }
+
 }

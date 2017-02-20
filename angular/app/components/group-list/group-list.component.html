@@ -1,5 +1,14 @@
 <md-button ng-click="vm.create()" class="md-raised md-primary">Agregar</md-button>
-<md-table-container>
+<div ng-if="vm.isLoading" layout="row" layout-align="center center">
+    <md-progress-circular md-mode="indeterminate" md-diameter="96"></md-progress-circular>
+</div>
+<div flex>
+    &nbsp;
+</div>
+<div ng-if="!vm.isLoading && !vm.groups.length">
+    <h1>A&uacute;n no has registrado ning&uacute;n grupo</h1>
+</div>
+<md-table-container ng-if="vm.groups.length">
     <table md-table>
         <thead md-head md-order="myOrder">
         <th md-column md-numeric>C&oacute;digo</th>

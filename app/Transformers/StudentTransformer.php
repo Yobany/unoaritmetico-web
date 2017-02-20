@@ -9,18 +9,28 @@
 namespace App\Transformers;
 
 
+use App\Repositories\StudentRepository;
 use App\Student;
 
 class StudentTransformer extends MainTransformer
 {
-    public function transform(Student $entity)
+
+    /**
+     * @param Student $entity
+     * @return array
+     */
+    protected function transform($entity)
     {
+
         $groupTransformer = new GroupTransformer();
+        $gameTransformer = new GameTransformer();
         return [
             'id' => $entity->id,
             'name' => $entity->name,
             'age' => $entity->age,
-            'group' => $groupTransformer->transform($entity->group)
+            'group' => $groupTransformer->transformEntity($entity->group),
+            'winned' => count($gameTransformer->transformCollection($entity->gamesWinned())),
+            'played' => $gameTransformer->transformCollection($entity->games)
         ];
     }
 }

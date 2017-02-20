@@ -9,10 +9,11 @@ class AppHeaderController{
 
     $onInit(){
         this.isAuthenticated = this.$auth.isAuthenticated();
-        this.logout = () => {
-            this.$auth.logout();
-            this.$state.go('app.landing', {}, {reload:true});
-        };
+    }
+
+    logout(){
+        this.$auth.logout();
+        this.$state.go('app.landing', {}, {reload:true});
     }
 }
 

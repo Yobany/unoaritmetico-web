@@ -11,7 +11,6 @@ class StudentListController{
         this.fetchStudents();
     }
 
-
     confirmDeletion(student) {
         let confirm = this.$mdDialog.confirm()
             .title('¿Deseas eliminar el estudiante "' + student.name + '"')
@@ -38,14 +37,16 @@ class StudentListController{
 
     edit(student){
         this.$mdDialog.show({
-            template: "<md-dialog flex='60' aria-label='estudiantes'><student-form student='" + JSON.stringify(student) + "'></student-form></md-dialog>",
+            template: "<md-dialog flex='60' aria-label='estudiantes'><student-form studentid='"+student.id+"'></student-form></md-dialog>",
             clickOutsideToClose:true
         }).then(() => this.fetchStudents(), () => {});
     }
 
     fetchStudents(){
+        this.isLoading = true;
         this.API.all('students').getList().then((results)=>{
             this.students = results;
+            this.isLoading = false;
         }, () => {});
     }
 }
@@ -55,4 +56,4 @@ export const StudentListComponent = {
     controller: StudentListController,
     controllerAs: 'vm',
     bindings: {}
-}
+};

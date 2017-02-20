@@ -12,8 +12,11 @@ use App\Group;
 
 class GroupTransformer extends MainTransformer
 {
-
-    public function transform(Group $entity)
+    /**
+     * @param Group $entity
+     * @return array
+     */
+    protected function transform($entity)
     {
         return [
             'id' => $entity->id,
