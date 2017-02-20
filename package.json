@@ -2,7 +2,8 @@
   "private": true,
   "scripts": {
     "prod": "gulp --production",
-    "dev": "gulp"
+    "dev": "gulp",
+    "postinstall": "bower cache clean && bower install"
   },
   "devDependencies": {
     "babel-core": "^6.16.0",
