@@ -2,16 +2,16 @@
 /**
  * Created by PhpStorm.
  * User: pixco
- * Date: 18/02/2017
- * Time: 09:32 PM
+ * Date: 20/02/2017
+ * Time: 12:32 AM
  */
 
 namespace Swagger\Response\Data;
 
 /**
- * @SWG\Definition(definition="MoveItem")
+ * @SWG\Definition(definition="MoveRequestItem")
  */
-class MoveItem
+class MoveRequestItem
 {
     /**
      * @var integer
@@ -26,8 +26,8 @@ class MoveItem
     private $duration;
 
     /**
-     * @var object
-     * @SWG\Property(ref="#/definitions/StudentMovementItem")
+     * @var integer
+     * @SWG\Property(example = 1)
      */
     private $student;
 
@@ -39,13 +39,13 @@ class MoveItem
 
     /**
      * @var object
-     * @SWG\Property(ref="#/definitions/OperationCardItem")
+     * @SWG\Property(ref="#/definitions/OperationCardRequestItem")
      */
     private $card_on_deck;
 
     /**
      * @var object
-     * @SWG\Property(ref="#/definitions/PowerCardItem")
+     * @SWG\Property(ref="#/definitions/PowerCardRequestItem")
      */
     private $card_played;
 }

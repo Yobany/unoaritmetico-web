@@ -73,8 +73,8 @@ class GameRepository extends Repository
             $card->result = $cardInfo['result'];
         }
 
-        if(isset($cardInfo['power_up'])){
-            $card->card_power_id = $cardInfo['power_up'];
+        if(isset($cardInfo['power'])){
+            $card->card_power_id = $cardInfo['power'];
         }
 
         if(isset($cardInfo['color'])){

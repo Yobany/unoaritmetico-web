@@ -14,12 +14,12 @@ class GameDetailsController{
     getDescription(card){
         let description = "";
         if(card.operation){
-            description += "Operacion " + card.operation + " = " + card.result;
+            description += "Operacion :" + card.operation + " = " + card.result;
         }else if(card.power){
-            description += "Poder " + card.power.name;
+            description += "Poder :" + card.power.name;
         }
         if(card.color){
-            description += " Color " + card.color.name;
+            description += (description.length ? " -" : "") + " Color :" + card.color.name;
         }
         return description;
     }

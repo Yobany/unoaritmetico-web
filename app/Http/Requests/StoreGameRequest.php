@@ -25,12 +25,12 @@ class StoreGameRequest extends ApiRequest
             'moves.*.card_on_deck' => 'required',
             'moves.*.card_on_deck.operation' => 'required_with:result|string',
             'moves.*.card_on_deck.result' => 'required_with:operation|numeric',
-            'moves.*.card_on_deck.power_up' => 'sometimes|integer|exists:card_powers,id',
+            'moves.*.card_on_deck.power' => 'sometimes|integer|exists:card_powers,id',
             'moves.*.card_on_deck.color' => 'sometimes|integer|exists:colors,id',
             'moves.*.card_played' => 'required',
             'moves.*.card_played.operation' => 'required_with:result|string',
             'moves.*.card_played.result' => 'required_with:operation|numeric',
-            'moves.*.card_played.power_up' => 'sometimes|integer|exists:card_powers,id',
+            'moves.*.card_played.power' => 'sometimes|integer|exists:card_powers,id',
             'moves.*.card_played.color' => 'sometimes|integer|exists:colors,id'
         ];
     }

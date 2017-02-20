@@ -34,7 +34,7 @@ class StoreGameRequest
     /**
      * @var array
      * @SWG\Property(
-     *     @SWG\Items(ref="#/definitions/MoveItem")
+     *     @SWG\Items(ref="#/definitions/MoveRequestItem")
      * )
      */
     private $moves;

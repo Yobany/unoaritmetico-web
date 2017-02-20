@@ -1033,7 +1033,7 @@
                     "description": "",
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/MoveItem"
+                        "$ref": "#/definitions/MoveRequestItem"
                     }
                 }
             }
@@ -1241,7 +1241,7 @@
                 },
                 "student": {
                     "description": "",
-                    "type": "integer",
+                    "type": "object",
                     "$ref": "#/definitions/StudentMovementItem"
                 },
                 "by_color": {
@@ -1258,6 +1258,40 @@
                     "description": "",
                     "type": "object",
                     "$ref": "#/definitions/PowerCardItem"
+                }
+            }
+        },
+        "MoveRequestItem": {
+            "properties": {
+                "turn": {
+                    "description": "",
+                    "type": "integer",
+                    "example": 1
+                },
+                "duration": {
+                    "description": "",
+                    "type": "integer",
+                    "example": 122
+                },
+                "student": {
+                    "description": "",
+                    "type": "integer",
+                    "example": 1
+                },
+                "by_color": {
+                    "description": "",
+                    "type": "boolean",
+                    "example": false
+                },
+                "card_on_deck": {
+                    "description": "",
+                    "type": "object",
+                    "$ref": "#/definitions/OperationCardRequestItem"
+                },
+                "card_played": {
+                    "description": "",
+                    "type": "object",
+                    "$ref": "#/definitions/PowerCardRequestItem"
                 }
             }
         },
@@ -1288,6 +1322,26 @@
                     "description": "",
                     "type": "object",
                     "$ref": "#/definitions/ColorItem"
+                }
+            }
+        },
+        "OperationCardRequestItem": {
+            "properties": {
+                "operation": {
+                    "description": "",
+                    "type": "string",
+                    "example": "2+2"
+                },
+                "result": {
+                    "description": "",
+                    "type": "number",
+                    "format": "double",
+                    "example": 4
+                },
+                "color": {
+                    "description": "",
+                    "type": "integer",
+                    "example": 1
                 }
             }
         },
@@ -1332,6 +1386,20 @@
                     "description": "",
                     "type": "integer",
                     "$ref": "#/definitions/ColorItem"
+                }
+            }
+        },
+        "PowerCardRequestItem": {
+            "properties": {
+                "power": {
+                    "description": "",
+                    "type": "integer",
+                    "example": 1
+                },
+                "color": {
+                    "description": "",
+                    "type": "integer",
+                    "example": 1
                 }
             }
         },
