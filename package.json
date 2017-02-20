@@ -3,7 +3,7 @@
   "scripts": {
     "prod": "gulp --production",
     "dev": "gulp",
-    "postinstall": "bower cache clean && bower install"
+    "postinstall": "./node_modules/bower/bin/bower install"
   },
   "devDependencies": {
     "babel-core": "^6.16.0",
