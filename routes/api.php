@@ -44,8 +44,8 @@ $api->version('v1', function($api)
                 $api->get('/students/{studentId}', 'StudentsController@show');
             });
 
-            $api->post('/games','GamesController@import');
-            $api->post('/games/{gameId}','GamesController@show');
+            $api->post('/games','GamesController@store');
+            $api->get('/games/{gameId}','GamesController@show');
         });
     });
 });

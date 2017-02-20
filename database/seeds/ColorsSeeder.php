@@ -12,9 +12,9 @@ class ColorsSeeder extends Seeder
      */
     public function run()
     {
-        Color::create(['name'=>'Blue']);
-        Color::create(['name'=>'Yellow']);
-        Color::create(['name'=>'Red']);
-        Color::create(['name'=>'Green']);
+        Color::create(['name'=>'Azul']);
+        Color::create(['name'=>'Amarillo']);
+        Color::create(['name'=>'Rojo']);
+        Color::create(['name'=>'Verde']);
     }
 }

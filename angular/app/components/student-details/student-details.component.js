@@ -1,20 +1,22 @@
 class StudentDetailsController{
-    constructor($stateParams, API, $window){
+    constructor($stateParams, API, $mdDialog){
         'ngInject';
         this.$stateParams = $stateParams;
         this.API = API;
-        this.$window = $window;
+        this.$mdDialog = $mdDialog;
     }
 
     $onInit(){
         this.API.one("students", this.$stateParams.id).get().then((result) => {
             this.student = result;
-            this.$window.console.log(result);
         });
     }
 
     show(game){
-
+        this.$mdDialog.show({
+            template: "<md-dialog flex='60' aria-label='juegos'><game-details gameid='"+game.id+"'></game-details></md-dialog>",
+            clickOutsideToClose:true
+        }).then(() => {}, () => {});
     }
 }
 

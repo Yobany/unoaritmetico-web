@@ -1,5 +1,5 @@
 export class APIService {
-    constructor(Restangular, ToastService, $window, $state) {
+    constructor(Restangular, ToastService, $window, $state, $auth) {
         'ngInject';
         let headers = {
             'Content-Type': 'application/json',
@@ -12,6 +12,7 @@ export class APIService {
                 .setDefaultHeaders(headers)
                 .setErrorInterceptor(function(response) {
                     if(response.status === 401){
+                        $auth.logout();
                         $state.go('app.landing',{},{reload:true});
                     }
                     if (response.status === 422) {

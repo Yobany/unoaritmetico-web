@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Game;
 use App\Http\Requests\StoreGameRequest;
 use App\Repositories\GameRepository;
+use App\Transformers\GameDetailsTransformer;
 use Illuminate\Http\Request;
 
 class GamesController extends Controller
@@ -73,7 +74,7 @@ class GamesController extends Controller
      *     consumes={"application/json"},
      *     produces={"application/json"},
      *     @SWG\Parameter(
-     *         name="groupId",
+     *         name="gameId",
      *         in="path",
      *         description="Id of game to retrieve",
      *         required=true,
@@ -106,9 +107,9 @@ class GamesController extends Controller
      *     ),
      * )
      */
-    public function show($id)
+    public function show($gameId)
     {
-        return $this->gameRepository->find($id);
+        return $this->responseTransformed($this->gameRepository->find($gameId), new GameDetailsTransformer());
     }
 
 }

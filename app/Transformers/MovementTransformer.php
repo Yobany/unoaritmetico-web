@@ -21,7 +21,10 @@ class MovementTransformer extends MainTransformer
         $cardTransformer = new CardTransformer();
         return [
             'turn' => $entity->turn,
-            'student' => $studentTransformer->transformEntity($entity->student),
+            'student' => is_null($entity->student) ? null : [
+                'id' => $entity->student->id,
+                'name' => $entity->student->name
+            ],
             'duration' => $entity->duration,
             'by_color' => $entity->by_color,
             'card_played' => $cardTransformer->transformEntity($entity->cardPlayed),

@@ -345,7 +345,7 @@
                 ],
                 "parameters": [
                     {
-                        "name": "groupId",
+                        "name": "gameId",
                         "in": "path",
                         "description": "Id of game to retrieve",
                         "required": true,
@@ -1122,6 +1122,15 @@
                 }
             }
         },
+        "ColorItem": {
+            "properties": {
+                "name": {
+                    "description": "",
+                    "type": "string",
+                    "example": "Azul"
+                }
+            }
+        },
         "GameDetailItem": {
             "properties": {
                 "id": {
@@ -1220,6 +1229,11 @@
         },
         "MoveItem": {
             "properties": {
+                "turn": {
+                    "description": "",
+                    "type": "integer",
+                    "example": 1
+                },
                 "duration": {
                     "description": "",
                     "type": "integer",
@@ -1228,7 +1242,7 @@
                 "student": {
                     "description": "",
                     "type": "integer",
-                    "example": 1
+                    "$ref": "#/definitions/StudentMovementItem"
                 },
                 "by_color": {
                     "description": "",
@@ -1254,30 +1268,84 @@
                     "type": "string",
                     "example": "2+2"
                 },
+                "operator": {
+                    "description": "",
+                    "type": "object",
+                    "$ref": "#/definitions/OperatorItem"
+                },
                 "result": {
                     "description": "",
                     "type": "number",
                     "format": "double",
                     "example": 4
                 },
-                "color": {
+                "power": {
                     "description": "",
                     "type": "integer",
-                    "example": 1
+                    "$ref": "#/definitions/PowerItem"
+                },
+                "color": {
+                    "description": "",
+                    "type": "object",
+                    "$ref": "#/definitions/ColorItem"
+                }
+            }
+        },
+        "OperatorItem": {
+            "properties": {
+                "name": {
+                    "description": "",
+                    "type": "string",
+                    "example": "addition"
+                },
+                "symbol": {
+                    "description": "",
+                    "type": "string",
+                    "example": "+"
                 }
             }
         },
         "PowerCardItem": {
             "properties": {
-                "power_up": {
+                "operation": {
+                    "description": "",
+                    "type": "string",
+                    "example": "2+2"
+                },
+                "operator": {
+                    "description": "",
+                    "type": "object",
+                    "$ref": "#/definitions/OperatorItem"
+                },
+                "result": {
+                    "description": "",
+                    "type": "number",
+                    "format": "double",
+                    "example": 4
+                },
+                "power": {
                     "description": "",
                     "type": "integer",
-                    "example": 1
+                    "$ref": "#/definitions/PowerItem"
                 },
                 "color": {
                     "description": "",
                     "type": "integer",
-                    "example": 1
+                    "$ref": "#/definitions/ColorItem"
+                }
+            }
+        },
+        "PowerItem": {
+            "properties": {
+                "name": {
+                    "description": "",
+                    "type": "string",
+                    "example": "M\u00e1s 2"
+                },
+                "description": {
+                    "description": "",
+                    "type": "integer",
+                    "example": "Agrega dos cartas a tu oponente"
                 }
             }
         },
@@ -1302,6 +1370,34 @@
                     "description": "",
                     "type": "object",
                     "$ref": "#/definitions/GroupItem"
+                },
+                "winned": {
+                    "description": "",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/GameItem"
+                    }
+                },
+                "played": {
+                    "description": "",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/GameItem"
+                    }
+                }
+            }
+        },
+        "StudentMovementItem": {
+            "properties": {
+                "id": {
+                    "description": "",
+                    "type": "integer",
+                    "example": 1
+                },
+                "name": {
+                    "description": "",
+                    "type": "string",
+                    "example": "Rick Grimes"
                 }
             }
         },

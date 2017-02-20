@@ -71,24 +71,32 @@
         </md-card>
     </div>
 </md-content>
+<md-toolbar>
+    <div class="md-toolbar-tools">
+        <h2>Partidas jugadas de {{vm.student.name}}</h2>
+    </div>
+</md-toolbar>
+<br>
 <md-table-container ng-if="vm.student.played.length">
     <table md-table>
         <thead md-head md-order="myOrder">
         <th md-column md-numeric>C&oacute;digo</th>
         <th md-column>Nombre</th>
         <th md-column md-numeric>Jugadores</th>
+        <th md-column md-numeric>Movimientos</th>
         <th md-column>Fecha</th>
-        <th md-column md-numeric>Acciones</th>
+        <th md-column>Acciones</th>
         </thead>
         <tbody md-body>
         <!-- we can let ng-repeat sort the columns for us -->
         <tr ng-repeat="game in vm.student.played">
             <td md-cell>{{game.id}}</td>
             <td md-cell>{{game.name}}</td>
-            <td md-cell>{{game.students.length}}</td>
+            <td md-cell>{{game.studentsNumber}}</td>
+            <td md-cell>{{game.movementsNumber}}</td>
             <td md-cell>{{game.played_at}}</td>
             <td md-cell>
-                <md-button ui-sref="vm.show(game)" class="md-icon-button md-primary"><i class="material-icons">details</i></md-button>
+                <md-button ng-click="vm.show(game)" class="md-icon-button md-primary"><i class="material-icons">details</i></md-button>
             </td>
         </tr>
         </tbody>

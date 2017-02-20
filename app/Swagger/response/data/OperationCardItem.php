@@ -20,6 +20,12 @@ class OperationCardItem
     private $operation;
 
     /**
+     * @var object
+     * @SWG\Property(ref="#/definitions/OperatorItem")
+     */
+    private $operator;
+
+    /**
      * @var double
      * @SWG\Property( example = 4)
      */
@@ -27,7 +33,13 @@ class OperationCardItem
 
     /**
      * @var integer
-     * @SWG\Property( example = 1)
+     * @SWG\Property(ref="#/definitions/PowerItem")
+     */
+    private $power;
+
+    /**
+     * @var object
+     * @SWG\Property(ref="#/definitions/ColorItem")
      */
     private $color;
 }

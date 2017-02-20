@@ -22,7 +22,7 @@ class Move extends Model
 
     public function cardPlayed()
     {
-        return $this->belongsTo(Student::class, 'card_played_id');
+        return $this->belongsTo(Card::class, 'card_played_id');
     }
 
     public function game()

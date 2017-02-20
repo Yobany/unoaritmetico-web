@@ -13,12 +13,12 @@ class Card extends Model
 
     public function power()
     {
-        return $this->belongsTo(CardPower::class);
+        return $this->belongsTo(CardPower::class, 'card_power_id');
     }
 
-    public function operation()
+    public function operator()
     {
-        return $this->belongsTo(Operation::class);
+        return $this->belongsTo(Operation::class, 'operation_id');
     }
 
     public function color()

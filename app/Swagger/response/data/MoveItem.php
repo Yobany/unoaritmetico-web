@@ -15,13 +15,19 @@ class MoveItem
 {
     /**
      * @var integer
+     * @SWG\Property( example = 1)
+     */
+    private $turn;
+
+    /**
+     * @var integer
      * @SWG\Property( example = 122)
      */
     private $duration;
 
     /**
      * @var integer
-     * @SWG\Property( example = 1)
+     * @SWG\Property(ref="#/definitions/StudentMovementItem")
      */
     private $student;
 

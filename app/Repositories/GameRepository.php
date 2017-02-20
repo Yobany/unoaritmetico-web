@@ -35,6 +35,7 @@ class GameRepository extends Repository
         $game->played_at = Carbon::parse($gameInfo['played_at']);
         $game->name = $gameInfo['name'];
         $game->student_winner_id = isset($gameInfo['winner']) ? $gameInfo['winner'] : null;
+        $game->duration = 0;
         $game->save();
         $students = [];
         $turn = 1;
@@ -67,8 +68,7 @@ class GameRepository extends Repository
     private function makeCard($cardInfo){
         $card = new Card();
         if(isset($cardInfo['operation']) && isset($cardInfo['result'])){
-            $operationCode = $this->getOperationCode($cardInfo['operation']);
-            $card->operation_id = $operationCode;
+            $card->operation_id = $this->getOperationCode($cardInfo['operation']);
             $card->operation = $cardInfo['operation'];
             $card->result = $cardInfo['result'];
         }

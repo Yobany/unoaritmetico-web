@@ -14,14 +14,32 @@ namespace Swagger\Response\Data;
 class PowerCardItem
 {
     /**
-     * @var integer
-     * @SWG\Property( example = 1)
+     * @var string
+     * @SWG\Property( example = "2+2")
      */
-    private $power_up;
+    private $operation;
+
+    /**
+     * @var object
+     * @SWG\Property(ref="#/definitions/OperatorItem")
+     */
+    private $operator;
+
+    /**
+     * @var double
+     * @SWG\Property( example = 4)
+     */
+    private $result;
 
     /**
      * @var integer
-     * @SWG\Property( example = 1)
+     * @SWG\Property(ref="#/definitions/PowerItem")
+     */
+    private $power;
+
+    /**
+     * @var integer
+     * @SWG\Property(ref="#/definitions/ColorItem")
      */
     private $color;
 }

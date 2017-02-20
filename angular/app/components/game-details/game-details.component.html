@@ -1,0 +1,118 @@
+<div ng-init="vm.fetchGroups()">
+    <md-toolbar>
+        <div class="md-toolbar-tools">
+            <h2>Detalles de partida "{{vm.game.name}}"</h2>
+            <span flex></span>
+            <md-button class="md-icon-button" ng-click="vm.cancel()">
+                <i class="material-icons">clear</i>
+            </md-button>
+        </div>
+    </md-toolbar>
+    <md-content flex layout-padding>
+        <div layout-gt-xs="row">
+            <md-card flex>
+                <md-card-header>
+                    <md-card-avatar>
+                        <md-icon class="material-icons md-light md-48">videogame_asset</md-icon>
+                    </md-card-avatar>
+                    <md-card-header-text>
+                        <span class="md-title">Nombre</span>
+                        <span class="md-subhead">{{vm.game.name}}</span>
+                    </md-card-header-text>
+                </md-card-header>
+            </md-card>
+            <md-card flex>
+                <md-card-header>
+                    <md-card-avatar>
+                        <md-icon class="material-icons md-light md-48">mood</md-icon>
+                    </md-card-avatar>
+                    <md-card-header-text>
+                        <span class="md-title">Ganador</span>
+                        <span class="md-subhead">{{(vm.winner) ? vm.winner.name : "Invitado"}}</span>
+                    </md-card-header-text>
+                </md-card-header>
+            </md-card>
+        </div>
+        <div layout-gt-xs="row">
+            <md-card flex>
+                <md-card-header>
+                    <md-card-avatar>
+                        <md-icon class="material-icons md-light md-48">date_range</md-icon>
+                    </md-card-avatar>
+                    <md-card-header-text>
+                        <span class="md-title">Fecha y hora de partida</span>
+                        <span class="md-subhead">{{vm.game.name}}</span>
+                    </md-card-header-text>
+                </md-card-header>
+            </md-card>
+            <md-card flex>
+                <md-card-header>
+                    <md-card-avatar>
+                        <md-icon class="material-icons md-light md-48">timer</md-icon>
+                    </md-card-avatar>
+                    <md-card-header-text>
+                        <span class="md-title">Duraci&oacute;n de partida</span>
+                        <span class="md-subhead">{{vm.game.duration + " segundos"}}</span>
+                    </md-card-header-text>
+                </md-card-header>
+            </md-card>
+        </div>
+    </md-content>
+    <md-toolbar>
+        <div class="md-toolbar-tools">
+            <h4>Jugadores</h4>
+        </div>
+    </md-toolbar>
+    <div layout-gt-xs="row">
+        <md-table-container ng-if="vm.game.students" flex>
+            <table md-table>
+                <thead md-head md-order="myOrder">
+                <th layout-align="center" md-column md-numeric>C&oacute;digo</th>
+                <th layout-align="center" md-column>Nombre</th>
+                <th layout-align="center" md-column md-numeric>Grupo</th>
+                </thead>
+                <tbody md-body>
+                <!-- we can let ng-repeat sort the columns for us -->
+                <tr ng-repeat="student in vm.game.students">
+                    <td layout-align="center" md-cell>{{student.id}}</td>
+                    <td layout-align="center" md-cell>{{student.name}}</td>
+                    <td layout-align="center" md-cell>{{student.group.name}}</td>
+                </tr>
+                </tbody>
+            </table>
+        </md-table-container>
+    </div>
+    <md-toolbar>
+        <div class="md-toolbar-tools">
+            <h2>Movimientos</h2>
+        </div>
+    </md-toolbar>
+    <md-dialog-content>
+        <md-table-container ng-if="vm.game.movements" flex>
+            <table md-table>
+                <thead md-head md-order="myOrder">
+                <th md-column md-numeric>Turno</th>
+                <th md-column>Carta en mazo</th>
+                <th md-column md-numeric>Carta jugada</th>
+                <th md-column md-numeric>Jugador</th>
+                <th md-column>Duraci&oacute;n</th>
+                </thead>
+                <tbody md-body>
+                <!-- we can let ng-repeat sort the columns for us -->
+                <tr ng-repeat="movement in vm.game.movements">
+                    <td md-cell>{{movement.turn}}</td>
+                    <td md-cell>{{vm.getDescription(movement.card_on_deck)}}</td>
+                    <td md-cell>{{vm.getDescription(movement.card_played)}}</td>
+                    <td md-cell>{{(movement.student) ? movement.student.name : "Invitado"}}</td>
+                    <td md-cell>{{movement.duration}}</td>
+                </tr>
+                </tbody>
+            </table>
+        </md-table-container>
+    </md-dialog-content>
+    <md-dialog-actions layout="row">
+        <md-button ng-click="vm.cancel()">
+            Cerrar
+        </md-button>
+    </md-dialog-actions>
+</div>

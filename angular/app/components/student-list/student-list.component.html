@@ -24,7 +24,7 @@
             <td md-cell>{{student.name}}</td>
             <td md-cell>{{student.age}}</td>
             <td md-cell>{{student.group.name}}</td>
-            <td md-cell>{{0}}</td>
+            <td md-cell>{{student.played.length}}</td>
             <td md-cell>
                 <md-button ui-sref="app.student-details({id:student.id})" class="md-icon-button md-primary"><i class="material-icons">details</i></md-button>
                 <md-button ng-click="vm.edit(student)" class="md-icon-button md-primary"><i class="material-icons">mode_edit</i></md-button>
