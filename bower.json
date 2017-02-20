@@ -21,6 +21,6 @@
     "angular-material-data-table": "^0.10.10"
   },
   "resolutions": {
-    "angular": "~1.5"
+    "angular": "1.6.2"
   }
 }
