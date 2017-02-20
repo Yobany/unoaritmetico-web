@@ -1,12 +1,13 @@
 {
   "private": true,
   "scripts": {
-    "postinstall": "bower install && gulp --production"
+    "postinstall": "bower cache clean && bower install && gulp"
   },
   "engines": {
-    "node": "6.9.4"
+    "node": "6.9.4",
+    "npm" : "3.10.10"
   },
-  "devDependencies": {
+  "dependencies": {
     "babel-core": "^6.16.0",
     "babel-loader": "^6.2.5",
     "babel-preset-es2015": "^6.16.0",
@@ -23,12 +24,7 @@
     "lodash": "^4.14.0",
     "main-bower-files": "^2.13.1",
     "ng-annotate-loader": "^0.1.1",
-    "sw-precache": "^4.0.0"
-  },
-  "dependencies": {
-    "bower": "1.8.0",
-    "laravel-elixir": "^6.0.0-9",
-    "gulp": "^3.9.1"
-
+    "sw-precache": "^4.0.0",
+    "bower": "1.8.0"
   }
 }
