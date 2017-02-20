@@ -15,6 +15,13 @@ class CreateGamesTable extends Migration
     {
         Schema::create('games', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('name');
+            $table->integer('duration');
+            $table->integer('student_winner_id')->unsigned()->nullable();
+            $table->foreign('student_winner_id')
+                ->references('id')
+                ->on('students')
+                ->onDelete('cascade');
             $table->dateTime('played_at');
         });
     }

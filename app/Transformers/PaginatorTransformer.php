@@ -10,17 +10,20 @@ namespace App\Transformers;
 
 
 use Illuminate\Pagination\AbstractPaginator;
+use Illuminate\Pagination\Paginator;
 
 class PaginatorTransformer extends MainTransformer
 {
-
-    public function transform($data)
+    /**
+     * @param Paginator $entity
+     * @return array
+     */
+    protected function transform($entity)
     {
         return [
-            'total' => intval($data->count()),
-            'per_page' => intval($data->perPage()),
-            'current_page' => intval($data->currentPage())
+            'total' => intval($entity->count()),
+            'per_page' => intval($entity->perPage()),
+            'current_page' => intval($entity->currentPage())
         ];
     }
-
 }

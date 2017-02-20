@@ -44,8 +44,10 @@ class GroupListController{
     }
 
     fetchGroups(){
+        this.isLoading = true;
         this.API.all('groups').getList().then((results)=>{
             this.groups = results;
+            this.isLoading = false;
         }, () => {});
     }
 }

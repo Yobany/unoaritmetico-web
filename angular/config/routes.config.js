@@ -90,5 +90,13 @@ export function RoutesConfig($stateProvider, $urlRouterProvider) {
                     templateUrl: getView('student-list')
                 }
             }
+        })
+        .state('app.student-details', {
+            url: '/students/:id',
+            views: {
+                'main@': {
+                    templateUrl: getView('student-details')
+                }
+            }
         });
 }

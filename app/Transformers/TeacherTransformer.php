@@ -13,7 +13,11 @@ use App\User;
 
 class TeacherTransformer extends MainTransformer
 {
-    public function trasform(User $entity)
+    /**
+     * @param User $entity
+     * @return array
+     */
+    protected function transform($entity)
     {
         $groupTransformer = new GroupTransformer();
         return [

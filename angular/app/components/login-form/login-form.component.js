@@ -25,7 +25,8 @@ class LoginFormController {
         this.isLoginIn = true;
 
         this.$auth.login(user)
-            .then(()=> {
+            .then((response)=> {
+                this.$auth.setToken(response.data.meta.token);
                 this.isLoginIn = false;
                 this.$state.go('app.landing', {}, {reload:true});
             })

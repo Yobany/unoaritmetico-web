@@ -29,18 +29,22 @@ class GameRepository extends Repository
         return 'App\Game';
     }
 
-    public function saveFromRequest(array $request){
+    public function saveFromRequest(array $gameInfo){
         DB::beginTransaction();
         $game = new Game();
-        $game->played_at = Carbon::parse($request['played_at']);
+        $game->played_at = Carbon::parse($gameInfo['played_at']);
+        $game->name = $gameInfo['name'];
+        $game->student_winner_id = isset($gameInfo['winner']) ? $gameInfo['winner'] : null;
         $game->save();
         $students = [];
         $turn = 1;
-        foreach ($request['moves'] as $current){
+        $duration = 0;
+        foreach ($gameInfo['moves'] as $current){
             $move = new Move();
             $move->turn = $turn;
             $move->duration = $current['duration'];
             $move->student_id = $current['student'];
+            $move->by_color = $current['by_color'];
             $move->cardOnDeck()->associate($this->makeCard($current['card_on_deck']));
             $move->cardPlayed()->associate($this->makeCard($current['card_played']));
             $move->game()->associate($game);
@@ -48,12 +52,15 @@ class GameRepository extends Repository
             if(!in_array(intval($current['student']), $students)){
                 $students[] = intval($current['student']);
             }
+            $duration += $current['duration'];
             $turn++;
         }
 
         foreach($students as $current){
             $game->students()->attach($current);
         }
+        $game->duration = $duration;
+        $game->save();
         DB::commit();
     }
 

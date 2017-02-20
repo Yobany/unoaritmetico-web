@@ -20,6 +20,18 @@ class StoreGameRequest
     private $played_at;
 
     /**
+     * @var string
+     * @SWG\Property( example = "Ven y juega conmigo")
+     */
+    private $name;
+
+    /**
+     * @var integer
+     * @SWG\Property( example = 1)
+     */
+    private $winner;
+
+    /**
      * @var array
      * @SWG\Property(
      *     @SWG\Items(ref="#/definitions/MoveItem")

@@ -329,6 +329,63 @@
                 }
             }
         },
+        "/games/{gameId}": {
+            "get": {
+                "tags": [
+                    "Games"
+                ],
+                "summary": "Display a single game",
+                "description": "Display a single game",
+                "operationId": "getGame",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "groupId",
+                        "in": "path",
+                        "description": "Id of game to retrieve",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Game retrieved",
+                        "schema": {
+                            "$ref": "#/definitions/DetailGameResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Request format isn't valid",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    },
+                    "401": {
+                        "description": "Token is invalid",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    },
+                    "405": {
+                        "description": "Invalid Method",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        },
         "/groups": {
             "get": {
                 "tags": [
@@ -962,6 +1019,16 @@
                     "type": "string",
                     "example": "2017-02-18 21:30:19"
                 },
+                "name": {
+                    "description": "",
+                    "type": "string",
+                    "example": "Ven y juega conmigo"
+                },
+                "winner": {
+                    "description": "",
+                    "type": "integer",
+                    "example": 1
+                },
                 "moves": {
                     "description": "",
                     "type": "array",
@@ -1055,6 +1122,83 @@
                 }
             }
         },
+        "GameDetailItem": {
+            "properties": {
+                "id": {
+                    "description": "",
+                    "type": "integer",
+                    "example": 1
+                },
+                "name": {
+                    "description": "",
+                    "type": "integer",
+                    "example": "Ven y juega con jaimito"
+                },
+                "duration": {
+                    "description": "",
+                    "type": "integer",
+                    "example": 1201
+                },
+                "played_at": {
+                    "description": "",
+                    "type": "integer",
+                    "example": "2017-02-18 21:30:19"
+                },
+                "winner": {
+                    "description": "",
+                    "type": "object",
+                    "$ref": "#/definitions/StudentItem"
+                },
+                "movements": {
+                    "description": "",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/MoveItem"
+                    }
+                },
+                "students": {
+                    "description": "",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/StudentItem"
+                    }
+                }
+            }
+        },
+        "GameItem": {
+            "properties": {
+                "id": {
+                    "description": "",
+                    "type": "integer",
+                    "example": 1
+                },
+                "name": {
+                    "description": "",
+                    "type": "integer",
+                    "example": "Ven y juega con jaimito"
+                },
+                "duration": {
+                    "description": "",
+                    "type": "integer",
+                    "example": 1201
+                },
+                "played_at": {
+                    "description": "",
+                    "type": "integer",
+                    "example": "2017-02-18 21:30:19"
+                },
+                "movementsNumber": {
+                    "description": "",
+                    "type": "integer",
+                    "example": 23
+                },
+                "studentsNumber": {
+                    "description": "",
+                    "type": "integer",
+                    "example": 1
+                }
+            }
+        },
         "GroupItem": {
             "properties": {
                 "id": {
@@ -1085,6 +1229,11 @@
                     "description": "",
                     "type": "integer",
                     "example": 1
+                },
+                "by_color": {
+                    "description": "",
+                    "type": "boolean",
+                    "example": false
                 },
                 "card_on_deck": {
                     "description": "",
@@ -1218,6 +1367,20 @@
                     "items": {
                         "type": "string"
                     }
+                }
+            }
+        },
+        "DetailGameResponse": {
+            "properties": {
+                "meta": {
+                    "description": "",
+                    "type": "object",
+                    "$ref": "#/definitions/DefaultMeta"
+                },
+                "data": {
+                    "description": "",
+                    "type": "object",
+                    "$ref": "#/definitions/GameDetailItem"
                 }
             }
         },

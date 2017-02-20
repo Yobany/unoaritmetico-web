@@ -17,6 +17,7 @@ class CreateMovesTable extends Migration
             $table->increments('id');
             $table->integer('turn');
             $table->double('duration');
+            $table->boolean('by_color')->default(false);
             $table->integer('student_id')->unsigned()->nullable();
             $table->foreign('student_id')
                 ->references('id')

@@ -26,6 +26,12 @@ class MoveItem
     private $student;
 
     /**
+     * @var boolean
+     * @SWG\Property( example = false)
+     */
+    private $by_color;
+
+    /**
      * @var object
      * @SWG\Property(ref="#/definitions/OperationCardItem")
      */

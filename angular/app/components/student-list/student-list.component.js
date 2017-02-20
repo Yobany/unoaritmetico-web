@@ -11,7 +11,6 @@ class StudentListController{
         this.fetchStudents();
     }
 
-
     confirmDeletion(student) {
         let confirm = this.$mdDialog.confirm()
             .title('¿Deseas eliminar el estudiante "' + student.name + '"')
@@ -44,8 +43,10 @@ class StudentListController{
     }
 
     fetchStudents(){
+        this.isLoading = true;
         this.API.all('students').getList().then((results)=>{
             this.students = results;
+            this.isLoading = false;
         }, () => {});
     }
 }

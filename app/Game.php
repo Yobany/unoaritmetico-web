@@ -19,4 +19,9 @@ class Game extends Model
     {
         return $this->belongsToMany(Move::class);
     }
+
+    public function winner()
+    {
+        return $this->belongsTo(Student::class, 'student_winner_id');
+    }
 }

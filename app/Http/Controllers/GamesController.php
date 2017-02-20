@@ -63,5 +63,52 @@ class GamesController extends Controller
         return $this->response->noContent();
     }
 
+    /**
+     * @SWG\Get(
+     *     path="/games/{gameId}",
+     *     summary="Display a single game",
+     *     tags={"Games"},
+     *     description="Display a single game",
+     *     operationId="getGame",
+     *     consumes={"application/json"},
+     *     produces={"application/json"},
+     *     @SWG\Parameter(
+     *         name="groupId",
+     *         in="path",
+     *         description="Id of game to retrieve",
+     *         required=true,
+     *         type="integer"
+     *     ),
+     *     @SWG\Response(
+     *         response=200,
+     *         description="Game retrieved",
+     *          @SWG\Schema(ref="#/definitions/DetailGameResponse")
+     *     ),
+     *     @SWG\Response(
+     *         response=400,
+     *         description="Request format isn't valid",
+     *         @SWG\Schema(ref="#/definitions/Error"),
+     *     ),
+     *    @SWG\Response(
+     *         response=401,
+     *         description="Token is invalid",
+     *         @SWG\Schema(ref="#/definitions/Error"),
+     *     ),
+     *     @SWG\Response(
+     *         response=405,
+     *         description="Invalid Method",
+     *          @SWG\Schema(ref="#/definitions/Error"),
+     *     ),
+     *     @SWG\Response(
+     *         response=500,
+     *         description="Internal Error",
+     *          @SWG\Schema(ref="#/definitions/Error"),
+     *     ),
+     * )
+     */
+    public function show($id)
+    {
+        return $this->gameRepository->find($id);
+    }
 
 }
