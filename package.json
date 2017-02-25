@@ -1,7 +1,7 @@
 {
   "private": true,
   "scripts": {
-    "postinstall": "bower cache clean && bower install && gulp --production"
+    "postinstall": "bower cache clean && bower install"
   },
   "engines": {
     "node": "6.9.4",
