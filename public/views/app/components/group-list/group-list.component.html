@@ -1,0 +1,32 @@
+<md-button ng-click="vm.create()" class="md-raised md-primary">Agregar</md-button>
+<div ng-if="vm.isLoading" layout="row" layout-align="center center">
+    <md-progress-circular md-mode="indeterminate" md-diameter="96"></md-progress-circular>
+</div>
+<div flex>
+    &nbsp;
+</div>
+<div ng-if="!vm.isLoading && !vm.groups.length">
+    <h1>A&uacute;n no has registrado ning&uacute;n grupo</h1>
+</div>
+<md-table-container ng-if="vm.groups.length">
+    <table md-table>
+        <thead md-head md-order="myOrder">
+        <th md-column md-numeric>C&oacute;digo</th>
+        <th md-column>Nombre</th>
+        <th md-column md-numeric>Estudiantes</th>
+        <th md-column>Acciones</th>
+        </thead>
+        <tbody md-body>
+        <!-- we can let ng-repeat sort the columns for us -->
+        <tr ng-repeat="group in vm.groups">
+            <td md-cell>{{group.id}}</td>
+            <td md-cell>{{group.name}}</td>
+            <td md-cell>{{group.studentsNumber}}</td>
+            <td md-cell>
+                <md-button ng-click="vm.edit(group)" class="md-icon-button md-primary"><i class="material-icons">mode_edit</i></md-button>
+                <md-button ng-click="vm.confirmDeletion(group)" class="md-icon-button md-primary"><i class="material-icons">delete</i></md-button>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</md-table-container>

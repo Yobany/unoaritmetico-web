@@ -1,0 +1,36 @@
+<md-button ng-click="vm.create()" class="md-raised md-primary">Agregar</md-button>
+<div ng-if="vm.isLoading" layout="row" layout-align="center center">
+    <md-progress-circular md-mode="indeterminate" md-diameter="96"></md-progress-circular>
+</div>
+<div flex>
+    &nbsp;
+</div>
+<div ng-if="!vm.isLoading && !vm.students.length">
+    <h1>A&uacute;n no has registrado ning&uacute;n estudiante</h1>
+</div>
+<md-table-container ng-if="vm.students.length">
+    <table md-table>
+        <thead md-head md-order="myOrder">
+        <th md-column md-numeric>C&oacute;digo</th>
+        <th md-column>Nombre</th>
+        <th md-column md-numeric>Edad</th>
+        <th md-column>Grupo</th>
+        <th md-column md-numeric>Partidas</th>
+        </thead>
+        <tbody md-body>
+        <!-- we can let ng-repeat sort the columns for us -->
+        <tr ng-repeat="student in vm.students">
+            <td md-cell>{{student.id}}</td>
+            <td md-cell>{{student.name}}</td>
+            <td md-cell>{{student.age}}</td>
+            <td md-cell>{{student.group.name}}</td>
+            <td md-cell>{{student.played.length}}</td>
+            <td md-cell>
+                <md-button ui-sref="app.student-details({id:student.id})" class="md-icon-button md-primary"><i class="material-icons">details</i></md-button>
+                <md-button ng-click="vm.edit(student)" class="md-icon-button md-primary"><i class="material-icons">mode_edit</i></md-button>
+                <md-button ng-click="vm.confirmDeletion(student)" class="md-icon-button md-primary"><i class="material-icons">delete</i></md-button>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</md-table-container>

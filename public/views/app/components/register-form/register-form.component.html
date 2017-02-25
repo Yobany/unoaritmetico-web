@@ -1,0 +1,31 @@
+<form name="registerForm" ng-submit="vm.register()">
+    <md-content layout-padding>
+        <div layout-gt-xs="row">
+            <md-input-container class="md-block" flex-gt-sm>
+                <label>Nombres</label>
+                <input name="first_name" ng-model="vm.first_name" maxlength="100" md-maxlength="100" ng-maxlength="100" required>
+            </md-input-container>
+            <md-input-container class="md-block" flex-gt-sm>
+                <label>Apellidos</label>
+                <input name="last_name" ng-model="vm.last_name" maxlength="100" md-maxlength="100" ng-maxlength="100" required>
+            </md-input-container>
+        </div>
+        <div layout-gt-xs="row">
+            <md-input-container class="md-block" flex-gt-sm>
+                <label>Email</label>
+                <input name="email" ng-model="vm.email" maxlength="100" md-maxlength="100" ng-maxlength="100" required>
+            </md-input-container>
+        </div>
+        <div layout-gt-xs="row">
+            <md-input-container class="md-block" flex-gt-sm>
+                <label>Contrase&ntilde;a</label>
+                <input name="password" type="password" ng-model="vm.password" maxlength="100" md-maxlength="100" ng-maxlength="100" required>
+            </md-input-container>
+            <md-input-container class="md-block" flex-gt-sm>
+                <label>Confirmaci&oacute;n de contrase&ntilde;a</label>
+                <input name="password_confirmation" type="password" ng-model="vm.password_confirmation" maxlength="100" md-maxlength="100" ng-maxlength="100" required>
+            </md-input-container>
+        </div>
+    </md-content>
+	<md-button type="submit" ng-disabled="vm.isRegistering || registerForm.$invalid" class="RegisterForm-submit md-primary md-raised">Registrarme</md-button>
+</form>
