@@ -26,6 +26,7 @@ class SwaggerController extends Controller
         fwrite( $jsonFile, $jsonContent );
         fclose( $jsonFile );
 
-        return redirect("/documentation");
+
+        return (app_is_https()) ? redirect()->secure("/documentation") : redirect("/documentation");
     }
 }
