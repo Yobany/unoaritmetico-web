@@ -12,7 +12,7 @@
         },
         "version": "1.0.0"
     },
-    "host": "unoaritmetico.com",
+    "host": "unoaritmeticoweb.herokuapp.com",
     "basePath": "/api",
     "schemes": [
         "http"
