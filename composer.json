@@ -27,7 +27,8 @@
             "database"
         ],
         "files" : [
-            "app/Constants/operations.php"
+            "app/Constants/operations.php",
+            "app/Helpers/assets.php"
         ],
         "psr-4": {
             "App\\": "app/"
@@ -49,8 +50,7 @@
         "post-install-cmd": [
             "Illuminate\\Foundation\\ComposerScripts::postInstall",
             "php artisan optimize",
-            "composer dump-autoload",
-            "php artisan migrate:refresh --seed"
+            "composer dump-autoload"
         ],
         "post-update-cmd": [
             "Illuminate\\Foundation\\ComposerScripts::postUpdate",
