@@ -4,7 +4,7 @@
         "title": "UNOARITMETICO",
         "description": "API unoaritmetico, to use endpoints that need authentication use the 'Set Globally' function first",
         "contact": {
-            "email": "snakeflix@gmail.com"
+            "email": "snakefllix@gmail.com"
         },
         "license": {
             "name": "Apache 2.0",
@@ -12,10 +12,11 @@
         },
         "version": "1.0.0"
     },
-    "host": "unoaritmeticoweb.herokuapp.com",
+    "host": "unoaritmetico.com",
     "basePath": "/api",
     "schemes": [
-        "http", "https"
+        "http",
+        "https"
     ],
     "paths": {
         "/auth/login": {

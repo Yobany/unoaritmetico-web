@@ -1,7 +1,7 @@
 <?php
 /**
  * @SWG\Swagger(
- *     schemes={"http"},
+ *     schemes={"http", "https"},
  *     host="",
  *     basePath="",
  *     @SWG\Info(
@@ -9,7 +9,7 @@
  *         title="UNOARITMETICO",
  *         description="API unoaritmetico, to use endpoints that need authentication use the 'Set Globally' function first",
  *         @SWG\Contact(
- *             email="walook.com.mx"
+ *             email="snakefllix@gmail.com"
  *         ),
  *         @SWG\License(
  *             name="Apache 2.0",

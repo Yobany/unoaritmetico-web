@@ -26,6 +26,6 @@ class SwaggerController extends Controller
         fwrite( $jsonFile, $jsonContent );
         fclose( $jsonFile );
 
-        return redirect()->to('/documentation');
+        return redirect("/documentation");
     }
 }
