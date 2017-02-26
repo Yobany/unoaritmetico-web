@@ -1,7 +1,7 @@
 <?php
 /**
  * @SWG\Swagger(
- *     schemes={"http", "https"},
+ *     schemes={"https","http"},
  *     host="",
  *     basePath="",
  *     @SWG\Info(
