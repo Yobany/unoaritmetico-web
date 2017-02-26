@@ -1,11 +1,11 @@
 {
   "private": true,
-  "scripts": {
-    "postinstall": "bower cache clean && bower install"
-  },
   "engines": {
     "node": "6.9.4",
     "npm" : "3.10.10"
+  },
+  "scripts": {
+    "postinstall": "bower cache clean && bower install"
   },
   "dependencies": {
     "babel-core": "^6.16.0",
