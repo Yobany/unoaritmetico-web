@@ -6,6 +6,7 @@ use App\Http\Requests\ConsultRequest;
 use App\Http\Requests\CreateStudentRequest;
 use App\Http\Requests\UpdateStudentRequest;
 use App\Repositories\Criterias\FromGroup;
+use App\Repositories\Criterias\FromUser;
 use App\Repositories\GroupRepository;
 use App\Repositories\StudentRepository;
 use App\Student;
@@ -76,6 +77,7 @@ class StudentsController extends Controller
     public function index(ConsultRequest $request)
     {
         $perPage = $request->has('per_page') ? $request->input('per_page') : 10;
+        $this->studentRepository->pushCriteria(new FromUser($request->user()->id));
         $students = $this->studentRepository->paginate($perPage);
         return $this->responseTransformed($students, new StudentTransformer());
     }
