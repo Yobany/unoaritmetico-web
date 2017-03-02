@@ -5,7 +5,7 @@ namespace App\Repositories\Criterias;
 use Bosnadev\Repositories\Contracts\RepositoryInterface as Repository;
 use Bosnadev\Repositories\Criteria\Criteria;
 
-class FromUser extends Criteria
+class GroupFromUser extends Criteria
 {
 
     private $userId;

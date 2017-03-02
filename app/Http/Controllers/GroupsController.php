@@ -7,6 +7,7 @@ use App\Http\Requests\ConsultRequest;
 use App\Http\Requests\CreateGroupRequest;
 use App\Http\Requests\UpdateGroupRequest;
 use App\Repositories\Criterias\FromUser;
+use App\Repositories\Criterias\GroupFromUser;
 use App\Repositories\GroupRepository;
 use App\Transformers\GroupTransformer;
 
@@ -71,8 +72,8 @@ class GroupsController extends Controller
      */
     public function index(ConsultRequest $request)
     {
-        $this->groupRepository->pushCriteria(new FromUser($request->user()->id));
         $perPage = $request->has('per_page') ? $request->input('per_page') : 10;
+        $this->groupRepository->pushCriteria(new GroupFromUser($request->user()->id));
         $groups = $this->groupRepository->paginate($perPage);
         return $this->responseTransformed($groups, new GroupTransformer());
     }
