@@ -13,5 +13,7 @@
 
 Route::get('/', 'AngularController@serveApp');
 Route::get('/unsupported-browser', 'AngularController@unsupported');
-Route::get('/documentation', 'SwaggerController@show');
-Route::get('/documentation/build', 'SwaggerController@build');
+Route::group(['middleware'=>'cors'], function(){
+    Route::get('/documentation', 'SwaggerController@show');
+    Route::get('/documentation/build', 'SwaggerController@build');
+});

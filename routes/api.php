@@ -18,7 +18,7 @@ use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
 $api = app('Dingo\Api\Routing\Router');
 $api->version('v1', function($api)
 {
-    $api->group(['namespace'=>'App\Http\Controllers'], function($api)
+    $api->group(['namespace'=>'App\Http\Controllers', 'middleware' => 'cors'], function($api)
     {
         $api->post('/auth/register', 'Auth\AuthController@register');
         $api->post('/auth/login', 'Auth\AuthController@login');
