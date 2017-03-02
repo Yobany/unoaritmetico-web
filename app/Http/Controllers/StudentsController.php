@@ -7,8 +7,10 @@ use App\Http\Requests\CreateStudentRequest;
 use App\Http\Requests\UpdateStudentRequest;
 use App\Repositories\Criterias\FromGroup;
 use App\Repositories\Criterias\FromUser;
+use App\Repositories\Criterias\StudentFromUser;
 use App\Repositories\GroupRepository;
 use App\Repositories\StudentRepository;
+use App\Repositories\UserRepository;
 use App\Student;
 use App\Transformers\StudentTransformer;
 
@@ -17,11 +19,13 @@ class StudentsController extends Controller
 {
     private $studentRepository;
     private $groupRepository;
+    private $userRepository;
 
-    function __construct(StudentRepository $studentRepository, GroupRepository $groupRepository)
+    function __construct(StudentRepository $studentRepository, GroupRepository $groupRepository, UserRepository $userRepository)
     {
         $this->studentRepository = $studentRepository;
         $this->groupRepository = $groupRepository;
+        $this->userRepository = $userRepository;
     }
 
     /**
@@ -77,8 +81,7 @@ class StudentsController extends Controller
     public function index(ConsultRequest $request)
     {
         $perPage = $request->has('per_page') ? $request->input('per_page') : 10;
-        $this->studentRepository->pushCriteria(new FromUser($request->user()->id));
-        $students = $this->studentRepository->paginate($perPage);
+        $students = $this->userRepository->find($request->user()->id)->students()->paginate($perPage);
         return $this->responseTransformed($students, new StudentTransformer());
     }
 
