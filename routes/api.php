@@ -44,8 +44,18 @@ $api->version('v1', function($api)
                 $api->get('/students/{studentId}', 'StudentsController@show');
             });
 
+            $api->group(['middleware' => 'verify.admin.role'], function($api)
+            {
+                $api->post('/users', 'UsersController@store');
+                $api->get('/users', 'UsersController@index');
+                $api->put('/users/{studentId}', 'UsersController@update');
+                $api->delete('/users/{studentId}', 'UsersController@destroy');
+                $api->get('/users/{studentId}', 'UsersController@show');
+            });
+
             $api->post('/games','GamesController@store');
             $api->get('/games/{gameId}','GamesController@show');
+            //$api->get('/games/{gameId}/export','GamesController@export');
         });
     });
 });

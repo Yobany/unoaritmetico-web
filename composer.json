@@ -13,7 +13,8 @@
         "barryvdh/laravel-cors": "^0.8.2",
         "bosnadev/repositories": " 0.*",
         "dingo/api": "1.0.x@dev",
-        "zircote/swagger-php": "^2.0"
+        "zircote/swagger-php": "^2.0",
+        "barryvdh/laravel-dompdf": "^0.8.0"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
@@ -50,6 +51,7 @@
         "post-install-cmd": [
             "Illuminate\\Foundation\\ComposerScripts::postInstall",
             "php artisan optimize",
+            "php artisan db:seed",
             "composer dump-autoload"
         ],
         "post-update-cmd": [

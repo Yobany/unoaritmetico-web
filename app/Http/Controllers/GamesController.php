@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Game;
+
 use App\Http\Requests\StoreGameRequest;
 use App\Repositories\GameRepository;
 use App\Transformers\GameDetailsTransformer;
-use Illuminate\Http\Request;
+use App\Transformers\GameFileTransformer;
+use Barryvdh\DomPDF\PDF;
+use Illuminate\Support\Facades\App;
+
 
 class GamesController extends Controller
 {
@@ -112,4 +115,53 @@ class GamesController extends Controller
         return $this->responseTransformed($this->gameRepository->find($gameId), new GameDetailsTransformer());
     }
 
+
+    /**
+     * @SWG\Get(
+     *     path="/games/{gameId}/export",
+     *     summary="Exports a single game",
+     *     tags={"Games"},
+     *     description="Exports a single game",
+     *     operationId="exportGame",
+     *     consumes={"application/json"},
+     *     produces={"application/json"},
+     *     @SWG\Parameter(
+     *         name="gameId",
+     *         in="path",
+     *         description="Id of game to retrieve",
+     *         required=true,
+     *         type="integer"
+     *     ),
+     *     @SWG\Response(
+     *         response=200,
+     *         description="Game retrieved",
+     *          @SWG\Schema(ref="#/definitions/ExportGameResponse")
+     *     ),
+     *     @SWG\Response(
+     *         response=400,
+     *         description="Request format isn't valid",
+     *         @SWG\Schema(ref="#/definitions/Error"),
+     *     ),
+     *    @SWG\Response(
+     *         response=401,
+     *         description="Token is invalid",
+     *         @SWG\Schema(ref="#/definitions/Error"),
+     *     ),
+     *     @SWG\Response(
+     *         response=405,
+     *         description="Invalid Method",
+     *          @SWG\Schema(ref="#/definitions/Error"),
+     *     ),
+     *     @SWG\Response(
+     *         response=500,
+     *         description="Internal Error",
+     *          @SWG\Schema(ref="#/definitions/Error"),
+     *     ),
+     * )
+     */
+    public function export($gameId)
+    {
+        $pdf = PDF::loadView('report.game', ['game' => $this->gameRepository->find($gameId)]);
+        return $this->responseTransformed($pdf->stream(), new GameFileTransformer());
+    }
 }

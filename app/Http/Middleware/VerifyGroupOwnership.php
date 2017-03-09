@@ -5,7 +5,7 @@ namespace App\Http\Middleware;
 use App\Repositories\GroupRepository;
 use Closure;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
+
 
 class VerifyGroupOwnership
 {

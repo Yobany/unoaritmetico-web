@@ -6,7 +6,7 @@
  * Time: 10:38 PM
  */
 
-namespace Swagger\Response\Groups;
+namespace Swagger\Response\Students;
 
 /**
  * @SWG\Definition(definition="UpdateStudentResponse")

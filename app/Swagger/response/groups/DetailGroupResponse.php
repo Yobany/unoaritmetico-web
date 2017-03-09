@@ -21,7 +21,7 @@ class DetailGroupResponse
 
     /**
      * @var object
-     * @SWG\Property(ref="#/definitions/GroupItem")
+     * @SWG\Property(ref="#/definitions/GroupDetailItem")
      */
     private $data;
 }

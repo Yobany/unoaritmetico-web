@@ -23,7 +23,8 @@ class UserTransformer extends MainTransformer
             'first_name' => $entity->first_name,
             'last_name' => $entity->last_name,
             'role' => $entity->role,
-            'email' => $entity->email
+            'email' => $entity->email,
+            'active' => $entity->active
         ];
     }
 }

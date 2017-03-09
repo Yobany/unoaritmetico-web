@@ -42,4 +42,10 @@ class UserItem
      * @SWG\Property(example = "TEACHER")
      */
     private $role;
+
+    /**
+     * @var integer
+     * @SWG\Property(example = 1)
+     */
+    private $active;
 }

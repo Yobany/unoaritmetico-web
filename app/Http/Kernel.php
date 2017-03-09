@@ -2,6 +2,7 @@
 
 namespace App\Http;
 
+use App\Http\Middleware\VerifyAdminRole;
 use App\Http\Middleware\VerifyGroupOwnership;
 use App\Http\Middleware\VerifyStudentOwnership;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
@@ -57,5 +58,6 @@ class Kernel extends HttpKernel
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verify.group.ownership' => VerifyGroupOwnership::class,
         'verify.student.ownership' => VerifyStudentOwnership::class,
+        'verify.admin.role' => VerifyAdminRole::class,
     ];
 }

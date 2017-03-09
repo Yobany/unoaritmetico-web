@@ -1,11 +1,11 @@
 <?php
 
-namespace Swagger\Response\Students;
+namespace Swagger\Response\Users;
 
 /**
- * @SWG\Definition(definition="GetStudentsResponse")
+ * @SWG\Definition(definition="GetUsersResponse")
  */
-class GetStudentsResponse
+class GetUsersResponse
 {
     /**
      * @var object
@@ -16,7 +16,7 @@ class GetStudentsResponse
     /**
      * @var array
      * @SWG\Property(
-     *     @SWG\Items(ref="#/definitions/StudentItem")
+     *     @SWG\Items(ref="#/definitions/UserItem")
      * )
      */
     private $data;

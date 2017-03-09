@@ -2,32 +2,29 @@
 
 namespace App\Http\Controllers;
 
-use App\Group;
 use App\Http\Requests\ConsultRequest;
-use App\Http\Requests\CreateGroupRequest;
-use App\Http\Requests\UpdateGroupRequest;
-use App\Repositories\Criterias\FromUser;
-use App\Repositories\Criterias\GroupFromUser;
-use App\Repositories\GroupRepository;
-use App\Transformers\GroupDetailsTransformer;
-use App\Transformers\GroupTransformer;
+use App\Http\Requests\CreateUserRequest;
+use App\Http\Requests\UpdateUserRequest;
+use App\Repositories\UserRepository;
+use App\Transformers\UserTransformer;
+use App\User;
 
-class GroupsController extends Controller
+class UsersController extends Controller
 {
-    private $groupRepository;
+    private $userRepository;
 
-    function __construct(GroupRepository $groupRepository)
+    function __construct(UserRepository $userRepository)
     {
-        $this->groupRepository = $groupRepository;
+        $this->userRepository = $userRepository;
     }
 
     /**
      * @SWG\Get(
-     *     path="/groups",
-     *     summary="Obtains groups",
-     *     tags={"Groups"},
-     *     description="Obtains groups",
-     *     operationId="getGroups",
+     *     path="/users",
+     *     summary="Obtains users",
+     *     tags={"Users"},
+     *     description="Obtains users",
+     *     operationId="getUsers",
      *     consumes={"application/json"},
      *     produces={"application/json"},
      *     @SWG\Parameter(
@@ -46,8 +43,8 @@ class GroupsController extends Controller
      *     ),
      *     @SWG\Response(
      *         response=200,
-     *         description="Groups created by user",
-     *          @SWG\Schema(ref="#/definitions/GetGroupsResponse")
+     *         description="Users created by user",
+     *          @SWG\Schema(ref="#/definitions/GetUsersResponse")
      *     ),
      *     @SWG\Response(
      *         response=400,
@@ -74,18 +71,17 @@ class GroupsController extends Controller
     public function index(ConsultRequest $request)
     {
         $perPage = $request->has('per_page') ? $request->input('per_page') : 10;
-        $this->groupRepository->pushCriteria(new GroupFromUser($request->user()->id));
-        $groups = $this->groupRepository->paginate($perPage);
-        return $this->responseTransformed($groups, new GroupTransformer());
+        $users = $this->userRepository->paginate($perPage);
+        return $this->responseTransformed($users, new UserTransformer());
     }
 
     /**
      * @SWG\Post(
-     *     path="/groups",
-     *     summary="Create a group",
-     *     tags={"Groups"},
-     *     description="Create a group",
-     *     operationId="storeGroup",
+     *     path="/users",
+     *     summary="Create a user",
+     *     tags={"Users"},
+     *     description="Create a user",
+     *     operationId="storeUser",
      *     consumes={"application/json"},
      *     produces={"application/json"},
      *     @SWG\Parameter(
@@ -93,12 +89,12 @@ class GroupsController extends Controller
      *         in="body",
      *         description="Account to register",
      *         required=true,
-     *         @SWG\Schema(ref="#/definitions/StoreGroupRequest")
+     *         @SWG\Schema(ref="#/definitions/StoreUserRequest")
      *     ),
      *     @SWG\Response(
      *         response=200,
      *         description="Account was registered",
-     *         @SWG\Schema(ref="#/definitions/StoreGroupResponse")
+     *         @SWG\Schema(ref="#/definitions/StoreUserResponse")
      *     ),
      *     @SWG\Response(
      *         response=405,
@@ -117,33 +113,34 @@ class GroupsController extends Controller
      *     ),
      * )
      */
-    public function store(CreateGroupRequest $request)
+    public function store(CreateUserRequest $request)
     {
-        $group = new Group($request->only(['name']));
-        $request->user()->groups()->save($group);
-        return $this->responseTransformed($group, new GroupTransformer());
+        $user = new User($request->only(['first_name', 'last_name', 'email', 'role', 'password']));
+        $user->active = true;
+        $user->save();
+        return $this->responseTransformed($user, new UserTransformer());
     }
 
     /**
      * @SWG\Get(
-     *     path="/groups/{groupId}",
-     *     summary="Display a single group",
-     *     tags={"Groups"},
-     *     description="Display a single group",
-     *     operationId="getGroups",
+     *     path="/users/{userId}",
+     *     summary="Display a single user",
+     *     tags={"Users"},
+     *     description="Display a single user",
+     *     operationId="getUsers",
      *     consumes={"application/json"},
      *     produces={"application/json"},
      *     @SWG\Parameter(
-     *         name="groupId",
+     *         name="userId",
      *         in="path",
-     *         description="Id of group to retrieve",
+     *         description="Id of user to retrieve",
      *         required=true,
      *         type="integer"
      *     ),
      *     @SWG\Response(
      *         response=200,
-     *         description="Groups created by user",
-     *          @SWG\Schema(ref="#/definitions/DetailGroupResponse")
+     *         description="Users created by user",
+     *          @SWG\Schema(ref="#/definitions/DetailUserResponse")
      *     ),
      *     @SWG\Response(
      *         response=400,
@@ -167,38 +164,38 @@ class GroupsController extends Controller
      *     ),
      * )
      */
-    public function show($groupId)
+    public function show($userId)
     {
-        return $this->responseTransformed($this->groupRepository->find($groupId), new GroupDetailsTransformer());
+        return $this->responseTransformed($this->userRepository->find($userId), new UserTransformer());
     }
 
     /**
      * @SWG\Put(
-     *     path="/groups/{groupId}",
-     *     summary="Update a group",
-     *     tags={"Groups"},
-     *     description="Update a group",
-     *     operationId="updateGroup",
+     *     path="/users/{userId}",
+     *     summary="Update a user",
+     *     tags={"Users"},
+     *     description="Update a user",
+     *     operationId="updateUser",
      *     consumes={"application/json"},
      *     produces={"application/json"},
      *     @SWG\Parameter(
      *         name="body",
      *         in="body",
-     *         description="Group to update",
+     *         description="User to update",
      *         required=true,
-     *         @SWG\Schema(ref="#/definitions/UpdateGroupRequest")
+     *         @SWG\Schema(ref="#/definitions/UpdateUserRequest")
      *     ),
      *     @SWG\Parameter(
-     *         name="groupId",
+     *         name="userId",
      *         in="path",
-     *         description="Id of group to retrieve",
+     *         description="Id of user to retrieve",
      *         required=true,
      *         type="integer"
      *     ),
      *     @SWG\Response(
      *         response=200,
-     *         description="Group was updated",
-     *         @SWG\Schema(ref="#/definitions/UpdateGroupResponse")
+     *         description="User was updated",
+     *         @SWG\Schema(ref="#/definitions/UpdateUserResponse")
      *     ),
      *     @SWG\Response(
      *         response=405,
@@ -217,33 +214,33 @@ class GroupsController extends Controller
      *     ),
      * )
      */
-    public function update(UpdateGroupRequest $request, $groupId)
+    public function update(UpdateUserRequest $request, $userId)
     {
-        $group = $this->groupRepository->find($groupId);
-        $group->fill($request->only(['name']));
-        $group->save();
-        return $this->responseTransformed($group, new GroupTransformer());
+        $user = $this->userRepository->find($userId);
+        $user->fill($request->only(['first_name', 'last_name', 'email', 'role', 'active']));
+        $user->save();
+        return $this->responseTransformed($user, new UserTransformer());
     }
 
     /**
      * @SWG\Delete(
-     *     path="/groups/{groupId}",
-     *     summary="Delete a group",
-     *     tags={"Groups"},
-     *     description="Delete a group",
-     *     operationId="deleteGroup",
+     *     path="/users/{userId}",
+     *     summary="Delete a user",
+     *     tags={"Users"},
+     *     description="Delete a user",
+     *     operationId="deleteUser",
      *     consumes={"application/json"},
      *     produces={"application/json"},
      *     @SWG\Parameter(
-     *         name="groupId",
+     *         name="userId",
      *         in="path",
-     *         description="Id of group to delete",
+     *         description="Id of user to delete",
      *         required=true,
      *         type="integer"
      *     ),
      *     @SWG\Response(
      *         response=204,
-     *         description="Group was deleted"
+     *         description="User was deleted"
      *     ),
      *     @SWG\Response(
      *         response=405,
@@ -262,9 +259,9 @@ class GroupsController extends Controller
      *     ),
      * )
      */
-    public function destroy($groupId)
+    public function destroy($userId)
     {
-        $this->groupRepository->delete($groupId);
+        $this->userRepository->delete($userId);
         return $this->response->noContent();
     }
 }
