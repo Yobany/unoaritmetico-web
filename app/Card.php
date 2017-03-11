@@ -25,4 +25,20 @@ class Card extends Model
     {
         return $this->belongsTo(Color::class);
     }
+
+    public function getReadableDescription()
+    {
+        $description = "";
+        if(!is_null($this->operator)){
+            $description .= " Operación: " . $this->operation . " = " . $this->result;
+        }else if(!is_null($this->power)){
+            $description .= " Poder: " . $this->power->name;
+        }
+
+        if(!is_null($this->color)){
+            $description .= " Color:" . $this->color->name;
+        }
+
+        return $description;
+    }
 }

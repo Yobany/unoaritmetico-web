@@ -1,15 +1,10 @@
 <?php
-
 namespace App\Http\Controllers;
-
 
 use App\Http\Requests\StoreGameRequest;
 use App\Repositories\GameRepository;
 use App\Transformers\GameDetailsTransformer;
-use App\Transformers\GameFileTransformer;
-use Barryvdh\DomPDF\PDF;
-use Illuminate\Support\Facades\App;
-
+use Barryvdh\DomPDF\Facade as PDF;
 
 class GamesController extends Controller
 {
@@ -115,16 +110,15 @@ class GamesController extends Controller
         return $this->responseTransformed($this->gameRepository->find($gameId), new GameDetailsTransformer());
     }
 
-
     /**
      * @SWG\Get(
      *     path="/games/{gameId}/export",
      *     summary="Exports a single game",
      *     tags={"Games"},
-     *     description="Exports a single game",
+     *     description="Display a single game",
      *     operationId="exportGame",
      *     consumes={"application/json"},
-     *     produces={"application/json"},
+     *     produces={"application/pdf"},
      *     @SWG\Parameter(
      *         name="gameId",
      *         in="path",
@@ -134,8 +128,7 @@ class GamesController extends Controller
      *     ),
      *     @SWG\Response(
      *         response=200,
-     *         description="Game retrieved",
-     *          @SWG\Schema(ref="#/definitions/ExportGameResponse")
+     *         description="File retrieved"
      *     ),
      *     @SWG\Response(
      *         response=400,
@@ -161,7 +154,8 @@ class GamesController extends Controller
      */
     public function export($gameId)
     {
-        $pdf = PDF::loadView('report.game', ['game' => $this->gameRepository->find($gameId)]);
-        return $this->responseTransformed($pdf->stream(), new GameFileTransformer());
+        $game = $this->gameRepository->find($gameId);
+        $pdf = PDF::loadView('report.game', ['game' => $game]);
+        return $pdf->download('Game_' . $game->id . '.pdf');
     }
 }

@@ -55,7 +55,7 @@ $api->version('v1', function($api)
 
             $api->post('/games','GamesController@store');
             $api->get('/games/{gameId}','GamesController@show');
-            //$api->get('/games/{gameId}/export','GamesController@export');
+            $api->get('/games/{gameId}/export','GamesController@export');
         });
     });
 });
