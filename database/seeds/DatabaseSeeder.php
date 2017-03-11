@@ -14,6 +14,6 @@ class DatabaseSeeder extends Seeder
         //$this->call(CardPowersSeeder::class);
         //$this->call(ColorsSeeder::class);
         //$this->call(OperationsSeeder::class);
-        $this->call(UserAdminSeeder::class);
+        //$this->call(UserAdminSeeder::class);
     }
 }
