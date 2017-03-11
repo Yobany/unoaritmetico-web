@@ -118,7 +118,7 @@ class GamesController extends Controller
      *     description="Display a single game",
      *     operationId="exportGame",
      *     consumes={"application/json"},
-     *     produces={"application/pdf"},
+     *     produces={"application/json"},
      *     @SWG\Parameter(
      *         name="gameId",
      *         in="path",
