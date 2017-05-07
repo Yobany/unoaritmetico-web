@@ -22,6 +22,7 @@ $api->version('v1', function($api)
     {
         $api->post('/auth/register', 'Auth\AuthController@register');
         $api->post('/auth/login', 'Auth\AuthController@login');
+        $api->get('/games/{gameId}/export','GamesController@export');
         $api->get('/auth/activate', 'Auth\AuthController@activate');
         $api->post('/auth/password/recover', 'Auth\PasswordResetController@recover');
         $api->post('/auth/password/reset', 'Auth\PasswordResetController@reset');
@@ -55,7 +56,6 @@ $api->version('v1', function($api)
 
             $api->post('/games','GamesController@store');
             $api->get('/games/{gameId}','GamesController@show');
-            $api->get('/games/{gameId}/export','GamesController@export');
         });
     });
 });

@@ -23,4 +23,19 @@ class Student extends Model
         return Game::where('student_winner_id', $this->id)->get();
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function moves()
+    {
+        return $this->belongsTo(Move::class);
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function cardsPlayed()
+    {
+        return $this->belongsToMany(Card::class, 'moves', 'student_id', 'card_played_id');
+    }
 }

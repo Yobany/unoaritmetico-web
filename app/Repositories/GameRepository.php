@@ -29,32 +29,30 @@ class GameRepository extends Repository
         return 'App\Game';
     }
 
-    public function saveFromRequest(array $gameInfo){
+    public function saveFromRequest(array $gameData){
         DB::beginTransaction();
         $game = new Game();
-        $game->played_at = Carbon::parse($gameInfo['played_at']);
-        $game->name = $gameInfo['name'];
-        $game->student_winner_id = isset($gameInfo['winner']) ? $gameInfo['winner'] : null;
+        $game->played_at = Carbon::parse($gameData['played_at']);
+        $game->name = $gameData['name'];
+        $game->student_winner_id = isset($gameData['winner']) ? $gameData['winner'] : null;
         $game->duration = 0;
         $game->save();
         $students = [];
-        $turn = 1;
         $duration = 0;
-        foreach ($gameInfo['moves'] as $current){
+        foreach ($gameData['moves'] as $current){
             $move = new Move();
-            $move->turn = $turn;
+            $move->turn = $current['turn'];
             $move->duration = $current['duration'];
-            $move->student_id = $current['student'];
+            $move->student_id = isset($current['student']) ? $current['student'] : null;
             $move->by_color = $current['by_color'];
             $move->cardOnDeck()->associate($this->makeCard($current['card_on_deck']));
             $move->cardPlayed()->associate($this->makeCard($current['card_played']));
             $move->game()->associate($game);
             $move->save();
-            if(!in_array(intval($current['student']), $students)){
+            if(isset($current['student']) && !in_array(intval($current['student']), $students)){
                 $students[] = intval($current['student']);
             }
             $duration += $current['duration'];
-            $turn++;
         }
 
         foreach($students as $current){

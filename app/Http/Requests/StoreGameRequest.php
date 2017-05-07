@@ -17,10 +17,11 @@ class StoreGameRequest extends ApiRequest
         return [
             'played_at' => 'required|date',
             'name' => 'required|string',
-            'winner' => 'sometimes|exists:students,id',
+            'winner' => 'sometimes|integer|exists:students,id',
             'moves' => 'required|array',
+            'moves.*.turn' => 'required|integer',
             'moves.*.duration' => 'required|integer',
-            'moves.*.student' => 'required|integer|exists:students,id',
+            'moves.*.student' => 'sometimes|integer|exists:students,id',
             'moves.*.by_color' => 'required|boolean',
             'moves.*.card_on_deck' => 'required',
             'moves.*.card_on_deck.operation' => 'required_with:result|string',

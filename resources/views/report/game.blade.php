@@ -46,7 +46,7 @@
             <h5 class="title">Duración:</h5>
         </div>
         <div class="col-xs-6 text-left">
-            <h5>{{$game->duration}}</h5>
+            <h5>{{$game->duration}} segundos</h5>
         </div>
     </div>
     <hr>
@@ -81,6 +81,7 @@
             <th>Carta en mazo</th>
             <th>Carta jugada</th>
             <th>Jugador</th>
+            <th>Grupo</th>
             <th>Duración</th>
         </tr>
         </thead>
@@ -91,7 +92,8 @@
                 <th>{{$move->cardOnDeck->getReadableDescription()}}</th>
                 <th>{{$move->cardPlayed->getReadableDescription()}}</th>
                 <th>{{is_null($move->student) ? "CPU" : $move->student->name}}</th>
-                <th>{{$move->duration}}</th>
+                <th>{{$move->student->group->name}}</th>
+                <th>{{$move->duration}} segundos</th>
             </tr>
         @endforeach
         </tbody>

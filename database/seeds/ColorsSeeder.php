@@ -16,5 +16,6 @@ class ColorsSeeder extends Seeder
         Color::create(['name'=>'Amarillo']);
         Color::create(['name'=>'Rojo']);
         Color::create(['name'=>'Verde']);
+        Color::create(['name'=>'Morado']);
     }
 }

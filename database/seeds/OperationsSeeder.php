@@ -12,9 +12,9 @@ class OperationsSeeder extends Seeder
      */
     public function run()
     {
-        Operation::create(['name'=>'suma', 'symbol'=>'+', 'description'=>'add one number to another']);
-        Operation::create(['name'=>'resta', 'symbol'=>'-', 'description'=>'substract one number to another']);
-        Operation::create(['name'=>'multiplicación', 'symbol'=>'*', 'description'=>'multiply one number to another']);
-        Operation::create(['name'=>'división', 'symbol'=>'/', 'description'=>'divide one number to another']);
+        Operation::create(['name'=>'Suma', 'symbol'=>'+', 'description'=>'add one number to another']);
+        Operation::create(['name'=>'Resta', 'symbol'=>'-', 'description'=>'substract one number to another']);
+        Operation::create(['name'=>'Multiplicación', 'symbol'=>'*', 'description'=>'multiply one number to another']);
+        Operation::create(['name'=>'División', 'symbol'=>'/', 'description'=>'divide one number to another']);
     }
 }
