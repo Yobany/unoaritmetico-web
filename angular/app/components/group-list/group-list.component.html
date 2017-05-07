@@ -1,7 +1,4 @@
 <md-button ng-click="vm.create()" class="md-raised md-primary">Agregar</md-button>
-<div ng-if="vm.isLoading" layout="row" layout-align="center center">
-    <md-progress-circular md-mode="indeterminate" md-diameter="96"></md-progress-circular>
-</div>
 <div ng-if="!vm.isLoading && !vm.groups.length">
     <h1>A&uacute;n no has registrado ning&uacute;n grupo</h1>
 </div>
@@ -14,7 +11,7 @@
         <th>Acciones</th>
     </tr>
     </thead>
-    <tbody md-body>
+    <tbody>
     <!-- we can let ng-repeat sort the columns for us -->
     <tr ng-repeat="group in vm.groups">
         <td>{{group.id}}</td>
