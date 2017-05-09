@@ -42,4 +42,10 @@ class StudentItem
      * @SWG\Property(ref="#/definitions/WrappedGameList")
      */
     private $played;
+    
+    /**
+     * @var object
+     * @SWG\Property(ref="#/definitions/StadisticItem")
+     */
+    private $stadistics;
 }

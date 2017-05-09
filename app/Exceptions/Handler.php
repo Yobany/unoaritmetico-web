@@ -3,12 +3,14 @@
 namespace App\Exceptions;
 
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Arr;
 use Route;
 use Exception;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class Handler extends ExceptionHandler
 {
@@ -48,8 +50,14 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $exception)
     {
-        if ($exception instanceof ValidationException && $this->isApiRoute($request)) {
-            return response()->error($exception->validator, 422);
+        if($this->isHttpException($exception)){
+            return $this->getApiResponse($exception);
+        }
+
+        if($request->wantsJson() || $request->expectsJson()){
+            return $this->getApiResponse(
+                new HttpException(Response::HTTP_INTERNAL_SERVER_ERROR, 'Ocurrio un error inesperado')
+            );
         }
 
         return parent::render($request, $exception);
@@ -71,14 +79,17 @@ class Handler extends ExceptionHandler
         return redirect()->guest('login');
     }
 
-    /**
-     * Check for api routes.
-     *
-     * @param Request $request
-     * @return bool
-     */
-    protected function isApiRoute($request)
+
+    private function getApiResponse(HttpException $exception, $headers = [])
     {
-        return $request->route() && in_array('api', $request->route()->middleware());
+        return response(
+            [
+                'code' => $exception->getStatusCode(),
+                'message' => $exception->getMessage()
+            ],
+            $exception->getStatusCode(),
+            $headers
+        );
     }
+
 }

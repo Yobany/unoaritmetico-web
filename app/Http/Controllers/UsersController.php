@@ -224,7 +224,7 @@ class UsersController extends Controller
      */
     public function update(UpdateUserRequest $request, User $user)
     {
-        return fractal($this->service->update($request, $user), new UserTransformer());
+        return fractal($this->service->update($request, $user), new UserTransformer())->respond();
     }
 
     /**

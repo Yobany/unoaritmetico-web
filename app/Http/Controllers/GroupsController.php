@@ -224,7 +224,7 @@ class GroupsController extends Controller
      */
     public function update(UpdateGroupRequest $request, Group $group)
     {
-        return fractal($this->service->update($request, $group))->respond();
+        return fractal($this->service->update($request, $group), new GroupTransformer())->respond();
     }
 
     /**

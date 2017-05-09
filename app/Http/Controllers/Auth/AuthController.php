@@ -69,7 +69,9 @@ class AuthController extends Controller
         }
         $token = $this->issueJWT($request->only(['email','password']));
         return fractal($user, new UserTransformer())
-            ->respond(Response::HTTP_OK, ['token', $token]);
+            ->addMeta(['token' => $token])
+            ->respond()
+            ->withHeaders(['token', $token]);
     }
 
     /**
