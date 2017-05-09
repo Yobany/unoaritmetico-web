@@ -26,7 +26,7 @@ class GroupService
         $this->groups->pushCriteria(new UserOwnershipCriteria($request->user()->id));
 
         if($request->has('name')){
-            $this->groups->pushCriteria(new NameCriteria($request->get('name')));
+            $this->groups->pushCriteria(new NameCriteria($request->get('name'), 'groups'));
         }
         if($request->has('size')){
             return $this->groups->paginate($request->get('size'));

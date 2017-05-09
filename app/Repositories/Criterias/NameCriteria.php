@@ -17,10 +17,12 @@ class NameCriteria extends Criteria
 {
 
     private $name;
+    private $table;
 
-    function __construct($name)
+    function __construct($name, $table = null)
     {
         $this->name = $name;
+        $this->table = $table;
     }
 
     /**
@@ -30,6 +32,9 @@ class NameCriteria extends Criteria
      */
     public function apply($model, Repository $repository)
     {
-        return $model->where('name','LIKE', '%' . $this->name . '%');
+        if(is_null($this->table)){
+            return $model->where('name','LIKE', '%' . $this->name . '%');
+        }
+        return $model->where($this->table . '.name','LIKE', '%' . $this->name . '%');
     }
 }

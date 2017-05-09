@@ -22,7 +22,7 @@ class StudentTransformer extends TransformerAbstract
      * @param Student $entity
      * @return array
      */
-    public function transform($entity)
+    public function transform(Student $entity)
     {
         $playedCount = $entity->games()->get()->count();
         $winnedCount = count($entity->gamesWinned());

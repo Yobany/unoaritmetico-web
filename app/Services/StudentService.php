@@ -38,7 +38,7 @@ class StudentService
     {
         $this->students->pushCriteria(new UserOwnershipThroughGroupCriteria($request->user()->id));
         if($request->has('name')){
-            $this->students->pushCriteria(new NameCriteria($request->get('name')));
+            $this->students->pushCriteria(new NameCriteria($request->get('name'), 'students'));
         }
         if($request->has('group')){
             $this->students->pushCriteria(new GroupOwnershipCriteria($request->get('group')));
