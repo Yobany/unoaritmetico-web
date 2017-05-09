@@ -28,6 +28,8 @@ class UserOwnershipThroughGroupCriteria extends Criteria
      */
     public function apply($model, Repository $repository)
     {
-        return $model->join('groups', 'students.group_id', '=', 'groups.id')->where('user_id', $this->userId);
+        return $model->join('groups', function($join)  {
+            $join->on('students.group_id','=','groups.id')->where('groups.user_id', $this->userId);
+        });
     }
 }
