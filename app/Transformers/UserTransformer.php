@@ -9,14 +9,15 @@
 namespace App\Transformers;
 
 use App\User;
+use League\Fractal\TransformerAbstract;
 
-class UserTransformer extends MainTransformer
+class UserTransformer extends TransformerAbstract
 {
     /**
      * @param User $entity
      * @return array
      */
-    protected function transform($entity)
+    public function transform(User $entity)
     {
         return [
             'id' => $entity->id,

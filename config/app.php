@@ -180,8 +180,7 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         App\Providers\ResponseMacroServiceProvider::class,
-        Barryvdh\DomPDF\ServiceProvider::class,
-        Dingo\Api\Provider\LaravelServiceProvider::class
+        Barryvdh\DomPDF\ServiceProvider::class
 
     ],
 

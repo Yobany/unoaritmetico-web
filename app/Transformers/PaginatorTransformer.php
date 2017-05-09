@@ -11,8 +11,9 @@ namespace App\Transformers;
 
 use Illuminate\Pagination\AbstractPaginator;
 use Illuminate\Pagination\Paginator;
+use League\Fractal\TransformerAbstract;
 
-class PaginatorTransformer extends MainTransformer
+class PaginatorTransformer extends TransformerAbstract
 {
     /**
      * @param Paginator $entity

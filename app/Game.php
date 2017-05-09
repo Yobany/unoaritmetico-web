@@ -24,4 +24,9 @@ class Game extends Model
     {
         return $this->belongsTo(Student::class, 'student_winner_id');
     }
+
+    public function group()
+    {
+        return $this->belongsTo(Group::class);
+    }
 }

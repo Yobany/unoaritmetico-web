@@ -8,17 +8,16 @@
 
 namespace App\Transformers;
 
-
 use App\Color;
-use Illuminate\Database\Eloquent\Model;
+use League\Fractal\TransformerAbstract;
 
-class ColorTransformer extends MainTransformer
+class ColorTransformer extends TransformerAbstract
 {
     /**
      * @param Color $entity
      * @return array
      */
-    protected function transform($entity)
+    public function transform(Color $entity)
     {
         return [
             'name' => $entity->name

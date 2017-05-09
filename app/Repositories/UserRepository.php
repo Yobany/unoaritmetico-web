@@ -4,6 +4,7 @@ namespace App\Repositories;
 
 use App\Mail\ActivationLink;
 use App\Mail\ResetPasswordLink;
+use App\User;
 use Bosnadev\Repositories\Eloquent\Repository;
 use Illuminate\Support\Facades\Mail;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
@@ -18,7 +19,7 @@ class UserRepository extends Repository
      */
     public function model()
     {
-        return 'App\User';
+        return User::class;
     }
 
     public function activateAccount($token)

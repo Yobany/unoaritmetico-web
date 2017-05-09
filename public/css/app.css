@@ -61,10 +61,10 @@ md-toast[md-theme=warn] .md-toast-content {
   text-align: center;
 }
 
-
 .ForgotPassword-input {
   margin-bottom: 0;
 }
+
 
 
 
@@ -151,6 +151,49 @@ md-toast[md-theme=warn] .md-toast-content {
   margin-bottom: 80px;
 }
 
+
+.DemoHeader {
+  height: 64px;
+  background-color: white;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 10;
+}
+
+.DemoHeader-container {
+  height: 100%;
+}
+
+.DemoHeader-logo {
+  width: 171px;
+  height: 41px;
+  padding-top: 13px;
+}
+
+.DemoHeader-link {
+  text-decoration: none;
+  color: #535362 !important;
+  padding: 0 20px;
+  display: inline-block;
+  -webkit-transition: 250ms background-color;
+  transition: 250ms background-color;
+  line-height: 64px;
+}
+
+.DemoHeader-link:hover {
+  background-color: #F6F9FA;
+}
+
+.DemoHeader-github {
+  margin-top: 17px;
+  margin-left: 10px;
+}
+
+.DemoHeader-spacer {
+  padding-top: 64px;
+}
 
 body {
   font-family: 'Lato', sans-serif;
@@ -349,49 +392,6 @@ body {
 
 .Landing-featuresEntry--generators md-icon {
   width: 80px;
-}
-
-.DemoHeader {
-  height: 64px;
-  background-color: white;
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  z-index: 10;
-}
-
-.DemoHeader-container {
-  height: 100%;
-}
-
-.DemoHeader-logo {
-  width: 171px;
-  height: 41px;
-  padding-top: 13px;
-}
-
-.DemoHeader-link {
-  text-decoration: none;
-  color: #535362 !important;
-  padding: 0 20px;
-  display: inline-block;
-  -webkit-transition: 250ms background-color;
-  transition: 250ms background-color;
-  line-height: 64px;
-}
-
-.DemoHeader-link:hover {
-  background-color: #F6F9FA;
-}
-
-.DemoHeader-github {
-  margin-top: 17px;
-  margin-left: 10px;
-}
-
-.DemoHeader-spacer {
-  padding-top: 64px;
 }
 
 .Login-formContainer {

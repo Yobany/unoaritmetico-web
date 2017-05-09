@@ -15,53 +15,42 @@ use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
 |
 */
 
-$api = app('Dingo\Api\Routing\Router');
-$api->version('v1', function($api)
-{
-    $api->group(['namespace'=>'App\Http\Controllers'], function($api)
+
+Route::post('/auth/register', 'Auth\AuthController@register');
+Route::post('/auth/login', 'Auth\AuthController@login');
+Route::get('/games/{game}/export','GamesController@export');
+Route::get('/auth/activate', 'Auth\AuthController@activate');
+Route::post('/auth/password/recover', 'Auth\PasswordResetController@recover');
+Route::post('/auth/password/reset', 'Auth\PasswordResetController@reset');
+Route::group(['middleware' => 'auth:api'], function() {
+    Route::post('/groups', 'GroupsController@store');
+    Route::get('/groups', 'GroupsController@index');
+    Route::group(['middleware' => 'verify.group.ownership'], function()
     {
-        $api->post('/auth/register', 'Auth\AuthController@register');
-        $api->post('/auth/login', 'Auth\AuthController@login');
-        $api->get('/games/{gameId}/export','GamesController@export');
-        $api->get('/auth/activate', 'Auth\AuthController@activate');
-        $api->post('/auth/password/recover', 'Auth\PasswordResetController@recover');
-        $api->post('/auth/password/reset', 'Auth\PasswordResetController@reset');
-        $api->group(['middleware' => 'auth:api'], function($api) {
-            $api->post('/groups', 'GroupsController@store');
-            $api->get('/groups', 'GroupsController@index');
-            $api->group(['middleware' => 'verify.group.ownership'], function($api)
-            {
-                $api->put('/groups/{groupId}', 'GroupsController@update');
-                $api->delete('/groups/{groupId}', 'GroupsController@destroy');
-                $api->get('/groups/{groupId}', 'GroupsController@show');
-            });
-
-            $api->post('/students', 'StudentsController@store');
-            $api->get('/students', 'StudentsController@index');
-            $api->group(['middleware' => 'verify.student.ownership'], function($api)
-            {
-                $api->put('/students/{studentId}', 'StudentsController@update');
-                $api->delete('/students/{studentId}', 'StudentsController@destroy');
-                $api->get('/students/{studentId}', 'StudentsController@show');
-            });
-
-            $api->group(['middleware' => 'verify.admin.role'], function($api)
-            {
-                $api->post('/users', 'UsersController@store');
-                $api->get('/users', 'UsersController@index');
-                $api->put('/users/{studentId}', 'UsersController@update');
-                $api->delete('/users/{studentId}', 'UsersController@destroy');
-                $api->get('/users/{studentId}', 'UsersController@show');
-            });
-
-            $api->post('/games','GamesController@store');
-            $api->get('/games/{gameId}','GamesController@show');
-        });
+        Route::put('/groups/{group}', 'GroupsController@update');
+        Route::delete('/groups/{group}', 'GroupsController@destroy');
+        Route::get('/groups/{group}', 'GroupsController@show');
     });
-});
 
-$exceptionHandler = app('Dingo\Api\Exception\Handler');
+    Route::post('/students', 'StudentsController@store');
+    Route::get('/students', 'StudentsController@index');
+    Route::group(['middleware' => 'verify.student.ownership'], function()
+    {
+        Route::put('/students/{student}', 'StudentsController@update');
+        Route::delete('/students/{student}', 'StudentsController@destroy');
+        Route::get('/students/{student}', 'StudentsController@show');
+    });
 
-$exceptionHandler->register(function (AuthenticationException $exception) {
-    throw new UnauthorizedHttpException($exception->getMessage(), "Invalid token");
+    Route::group(['middleware' => 'verify.admin.role'], function()
+    {
+        Route::post('/users', 'UsersController@store');
+        Route::get('/users', 'UsersController@index');
+        Route::put('/users/{user}', 'UsersController@update');
+        Route::delete('/users/{user}', 'UsersController@destroy');
+        Route::get('/users/{user}', 'UsersController@show');
+    });
+
+    Route::post('/games','GamesController@store');
+    Route::get('/games','GamesController@index');
+    Route::get('/games/{game}','GamesController@show');
 });

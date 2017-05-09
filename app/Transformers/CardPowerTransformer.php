@@ -10,14 +10,16 @@ namespace App\Transformers;
 
 
 use App\CardPower;
+use League\Fractal\TransformerAbstract;
 
-class CardPowerTransformer extends MainTransformer
+class CardPowerTransformer extends TransformerAbstract
 {
+
     /**
      * @param CardPower $entity
      * @return array
      */
-    protected function transform($entity)
+    public function transform(CardPower $entity)
     {
         return [
             'name' => $entity->name,

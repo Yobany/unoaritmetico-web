@@ -8,7 +8,9 @@
 
 namespace App\Http\Requests;
 
-use Dingo\Api\Http\FormRequest;
+use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Contracts\Validation\Validator;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
 class ApiRequest extends FormRequest
 {
@@ -21,6 +23,14 @@ class ApiRequest extends FormRequest
     {
         return true;
     }
+
+
+    /**
+     * @param Validator $validator
+     */
+      public function failedValidation(Validator $validator) {
+          throw new BadRequestHttpException($validator->getMessageBag()->first());
+      }
 
     /**
      * Get the validation rules that apply to the request.

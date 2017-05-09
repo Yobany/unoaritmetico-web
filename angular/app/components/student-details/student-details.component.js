@@ -9,7 +9,6 @@ class StudentDetailsController{
     $onInit(){
         this.API.one("students", this.$stateParams.id).get().then((result) => {
             this.student = result;
-            console.log(result);
             let operationData = this.student.stadistics.operation;
             this.operationsGraph = {
                 data: [

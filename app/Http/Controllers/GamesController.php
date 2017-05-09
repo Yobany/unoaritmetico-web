@@ -1,22 +1,30 @@
 <?php
 namespace App\Http\Controllers;
 
+use App\Game;
+use App\Http\Requests\ConsultRequest;
 use App\Http\Requests\StoreGameRequest;
-use App\Repositories\GameRepository;
+use App\Services\GameService;
 use App\Transformers\GameDetailsTransformer;
-use Barryvdh\DomPDF\Facade as PDF;
+use App\Transformers\GameTransformer;
 
 class GamesController extends Controller
 {
-    private $gameRepository;
+    private $service;
 
     /**
      * GamesController constructor.
-     * @param $gameRepository
+     * @param $gameService
      */
-    public function __construct(GameRepository $gameRepository)
+    public function __construct(GameService $gameService)
     {
-        $this->gameRepository = $gameRepository;
+        $this->service = $gameService;
+    }
+
+
+    public function index(ConsultRequest $request)
+    {
+        return fractal($this->service->get($request), new GameTransformer())->respond();
     }
 
     /**
@@ -58,8 +66,7 @@ class GamesController extends Controller
      */
     public function store(StoreGameRequest $request)
     {
-        $this->gameRepository->saveFromRequest($request->all());
-        return $this->response->noContent();
+        return fractal($this->service->save($request), new GameTransformer())->respond();
     }
 
     /**
@@ -104,10 +111,12 @@ class GamesController extends Controller
      *          @SWG\Schema(ref="#/definitions/Error"),
      *     ),
      * )
+     * @param Game $game
+     * @return
      */
-    public function show($gameId)
+    public function show(Game $game)
     {
-        return $this->responseTransformed($this->gameRepository->find($gameId), new GameDetailsTransformer());
+        return fractal($game, new GameDetailsTransformer())->respond();
     }
 
     /**
@@ -152,10 +161,8 @@ class GamesController extends Controller
      *     ),
      * )
      */
-    public function export($gameId)
+    public function export(Game $game)
     {
-        $game = $this->gameRepository->find($gameId);
-        $pdf = PDF::loadView('report.game', ['game' => $game]);
-        return $pdf->download('Game_' . $game->id . '.pdf');
+        return $this->service->export($game);
     }
 }

@@ -2,8 +2,13 @@
 
 namespace App\Providers;
 
+use App\Game;
+use App\Group;
+use App\Student;
+use App\User;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class RouteServiceProvider extends ServiceProvider
 {
@@ -23,9 +28,20 @@ class RouteServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
-
         parent::boot();
+
+        Route::model('group', Group::class, function(){
+            throw new NotFoundHttpException('Group not found');
+        });
+        Route::model('student', Student::class, function(){
+            throw new NotFoundHttpException('Student not found');
+        });
+        Route::model('game', Game::class, function(){
+            throw new NotFoundHttpException('Game not found');
+        });
+        Route::model('user', User::class, function(){
+            throw new NotFoundHttpException('User not found');
+        });
     }
 
     /**

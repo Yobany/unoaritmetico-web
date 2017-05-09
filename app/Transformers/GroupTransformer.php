@@ -9,19 +9,20 @@
 namespace App\Transformers;
 
 use App\Group;
+use League\Fractal\TransformerAbstract;
 
-class GroupTransformer extends MainTransformer
+class GroupTransformer extends TransformerAbstract
 {
     /**
      * @param Group $entity
      * @return array
      */
-    protected function transform($entity)
+    public function transform(Group $entity)
     {
         return [
             'id' => $entity->id,
             'name' => $entity->name,
-            'studentsNumber' => count($entity->students)
+            'studentsCount' => count($entity->students)
         ];
     }
 }

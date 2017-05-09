@@ -8,14 +8,16 @@
 
 namespace App\Transformers;
 
-class GameFileTransformer extends MainTransformer
+use League\Fractal\TransformerAbstract;
+
+class GameFileTransformer extends TransformerAbstract
 {
 
     /**
      * @param $base64
      * @return array
      */
-    protected function transform($base64)
+    public function transform($base64)
     {
         return [
             'base64' => $base64

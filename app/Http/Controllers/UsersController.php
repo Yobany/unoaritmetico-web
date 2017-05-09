@@ -6,16 +6,18 @@ use App\Http\Requests\ConsultRequest;
 use App\Http\Requests\CreateUserRequest;
 use App\Http\Requests\UpdateUserRequest;
 use App\Repositories\UserRepository;
+use App\Services\UserService;
 use App\Transformers\UserTransformer;
 use App\User;
+use Illuminate\Http\Response;
 
 class UsersController extends Controller
 {
-    private $userRepository;
+    private $service;
 
-    function __construct(UserRepository $userRepository)
+    function __construct(UserService $userService)
     {
-        $this->userRepository = $userRepository;
+        $this->service = $userService;
     }
 
     /**
@@ -67,12 +69,12 @@ class UsersController extends Controller
      *          @SWG\Schema(ref="#/definitions/Error"),
      *     ),
      * )
+     * @param ConsultRequest $request
+     * @return \Spatie\Fractal\Fractal
      */
     public function index(ConsultRequest $request)
     {
-        $perPage = $request->has('per_page') ? $request->input('per_page') : 10;
-        $users = $this->userRepository->paginate($perPage);
-        return $this->responseTransformed($users, new UserTransformer());
+        return fractal($this->service->get($request), new UserTransformer())->respond();
     }
 
     /**
@@ -115,10 +117,7 @@ class UsersController extends Controller
      */
     public function store(CreateUserRequest $request)
     {
-        $user = new User($request->only(['first_name', 'last_name', 'email', 'role', 'password']));
-        $user->active = true;
-        $user->save();
-        return $this->responseTransformed($user, new UserTransformer());
+        return fractal($this->service->save($request), new UserTransformer())->respond();
     }
 
     /**
@@ -164,9 +163,9 @@ class UsersController extends Controller
      *     ),
      * )
      */
-    public function show($userId)
+    public function show(User $user)
     {
-        return $this->responseTransformed($this->userRepository->find($userId), new UserTransformer());
+        return fractal($user, new UserTransformer())->respond();
     }
 
     /**
@@ -213,13 +212,13 @@ class UsersController extends Controller
      *          @SWG\Schema(ref="#/definitions/Error"),
      *     ),
      * )
+     * @param UpdateUserRequest $request
+     * @param User $user
+     * @return \Spatie\Fractal\Fractal
      */
-    public function update(UpdateUserRequest $request, $userId)
+    public function update(UpdateUserRequest $request, User $user)
     {
-        $user = $this->userRepository->find($userId);
-        $user->fill($request->only(['first_name', 'last_name', 'email', 'role', 'active']));
-        $user->save();
-        return $this->responseTransformed($user, new UserTransformer());
+        return fractal($this->service->update($request, $user), new UserTransformer());
     }
 
     /**
@@ -258,10 +257,12 @@ class UsersController extends Controller
      *          @SWG\Schema(ref="#/definitions/Error"),
      *     ),
      * )
+     * @param User $user
+     * @return \Spatie\Fractal\Fractal
      */
-    public function destroy($userId)
+    public function destroy(User $user)
     {
-        $this->userRepository->delete($userId);
-        return $this->response->noContent();
+        $this->service->delete($user);
+        return fractal('', Response::HTTP_NO_CONTENT);
     }
 }

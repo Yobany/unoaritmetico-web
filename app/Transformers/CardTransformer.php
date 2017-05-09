@@ -9,25 +9,51 @@
 namespace App\Transformers;
 
 use App\Card;
+use League\Fractal\TransformerAbstract;
 
-class CardTransformer extends MainTransformer
+class CardTransformer extends TransformerAbstract
 {
+    protected $defaultIncludes = ['operator', 'power', 'color'];
+
     /**
      * @param Card $entity
      * @return array
      */
-    protected function transform($entity)
+    public function transform(Card $entity)
     {
-        $operationTransformer = new OperationTransformer();
-        $cardPowerTransformer = new CardPowerTransformer();
-        $colorTransformer = new ColorTransformer();
         return [
             'id' => $entity->id,
             'operation' => $entity->operation,
-            'result' => $entity->result,
-            'operator' => $operationTransformer->transformEntity($entity->operator),
-            'power' => $cardPowerTransformer->transformEntity($entity->power),
-            'color' => $colorTransformer->transformEntity($entity->color),
+            'result' => $entity->result
         ];
     }
+
+    /**
+     * @param Card $card
+     * @return \League\Fractal\Resource\Item
+     */
+    public function includeOperator(Card $card)
+    {
+        return $this->item($card->operator, new OperationTransformer());
+    }
+
+    /**
+     * @param Card $card
+     * @return \League\Fractal\Resource\Item
+     */
+    public function includePower(Card $card)
+    {
+        return $this->item($card->power, new CardPowerTransformer());
+    }
+
+    /**
+     * @param Card $card
+     * @return \League\Fractal\Resource\Item
+     */
+    public function includeColor(Card $card)
+    {
+        return $this->item($card->color, new ColorTransformer());
+    }
+
+
 }

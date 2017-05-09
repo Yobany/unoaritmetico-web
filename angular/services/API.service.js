@@ -29,7 +29,7 @@ export class APIService {
                 })
                 .addResponseInterceptor(function(data) {
                     let extractedData;
-                    if(typeof data.meta != 'undefined' && typeof data.data != 'undefined'){
+                    if(typeof data.meta !== 'undefined' && typeof data.data !== 'undefined'){
                         extractedData = data.data;
                         extractedData.meta = data.meta;
                     }else{

@@ -2,25 +2,36 @@
 <div ng-if="!vm.isLoading && !vm.groups.length">
     <h1>A&uacute;n no has registrado ning&uacute;n grupo</h1>
 </div>
-<table>
-    <thead>
-    <tr>
-        <th>C&oacute;digo</th>
-        <th>Nombre</th>
-        <th>Estudiantes</th>
-        <th>Acciones</th>
-    </tr>
-    </thead>
-    <tbody>
-    <!-- we can let ng-repeat sort the columns for us -->
-    <tr ng-repeat="group in vm.groups">
-        <td>{{group.id}}</td>
-        <td>{{group.name}}</td>
-        <td>{{group.studentsNumber}}</td>
-        <td>
-            <md-button ng-click="vm.edit(group)" class="md-icon-button md-primary"><i class="material-icons">mode_edit</i></md-button>
-            <md-button ng-click="vm.confirmDeletion(group)" class="md-icon-button md-primary"><i class="material-icons">delete</i></md-button>
-        </td>
-    </tr>
-    </tbody>
-</table>
+
+<md-content>
+    <table md-table>
+        <thead md-head>
+        <tr md-row>
+            <th md-column>C&oacute;digo</th>
+            <th md-column>Nombre</th>
+            <th md-column>Estudiantes</th>
+            <th md-column>Acciones</th>
+        </tr>
+        </thead>
+        <tbody md-body>
+        <!-- we can let ng-repeat sort the columns for us -->
+        <tr ng-repeat="group in vm.groups">
+            <td md-cell>{{group.id}}</td>
+            <td md-cell>{{group.name}}</td>
+            <td md-cell>{{group.studentsNumber}}</td>
+            <td md-cell>
+                <md-button ng-click="vm.edit(group)" class="md-icon-button md-primary"><i class="material-icons">mode_edit</i></md-button>
+                <md-button ng-click="vm.confirmDeletion(group)" class="md-icon-button md-primary"><i class="material-icons">delete</i></md-button>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</md-content>
+<md-table-pagination
+        md-limit="vm.pagination.per_page"
+        md-limit-options="[5, 10, 15]"
+        md-page="vm.pagination.page"
+        md-total="{{vm.groups.length}}"
+        md-on-paginate="vm.fetchGroups"
+        md-page-select>
+</md-table-pagination>

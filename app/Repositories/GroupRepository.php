@@ -9,6 +9,7 @@
 namespace App\Repositories;
 
 
+use App\Group;
 use Bosnadev\Repositories\Eloquent\Repository;
 
 class GroupRepository extends Repository
@@ -21,6 +22,6 @@ class GroupRepository extends Repository
      */
     public function model()
     {
-        return 'App\Group';
+        return Group::class;
     }
 }

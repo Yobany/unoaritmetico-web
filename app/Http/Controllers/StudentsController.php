@@ -7,25 +7,23 @@ use App\Http\Requests\CreateStudentRequest;
 use App\Http\Requests\UpdateStudentRequest;
 use App\Repositories\Criterias\FromGroup;
 use App\Repositories\Criterias\FromUser;
-use App\Repositories\Criterias\StudentFromUser;
+use App\Repositories\Criterias\GroupOwnershipCriteria;
 use App\Repositories\GroupRepository;
 use App\Repositories\StudentRepository;
 use App\Repositories\UserRepository;
+use App\Services\StudentService;
 use App\Student;
 use App\Transformers\StudentTransformer;
+use Illuminate\Http\Response;
 
 
 class StudentsController extends Controller
 {
-    private $studentRepository;
-    private $groupRepository;
-    private $userRepository;
+    private $service;
 
-    function __construct(StudentRepository $studentRepository, GroupRepository $groupRepository, UserRepository $userRepository)
+    function __construct(StudentService $studentService)
     {
-        $this->studentRepository = $studentRepository;
-        $this->groupRepository = $groupRepository;
-        $this->userRepository = $userRepository;
+        $this->service = $studentService;
     }
 
     /**
@@ -80,9 +78,7 @@ class StudentsController extends Controller
      */
     public function index(ConsultRequest $request)
     {
-        $perPage = $request->has('per_page') ? $request->input('per_page') : 10;
-        $students = $this->userRepository->find($request->user()->id)->students()->paginate($perPage);
-        return $this->responseTransformed($students, new StudentTransformer());
+        return fractal($this->service->get($request), new StudentTransformer())->respond();
     }
 
 
@@ -126,9 +122,7 @@ class StudentsController extends Controller
      */
     public function store(CreateStudentRequest $request)
     {
-        $student = new Student($request->only(['name', 'age']));
-        $this->groupRepository->find($request->input('group_id'))->students()->save($student);
-        return $this->responseTransformed($student, new StudentTransformer());
+        return fractal($this->service->save($request), new StudentTransformer())->respond();
     }
 
     /**
@@ -173,10 +167,12 @@ class StudentsController extends Controller
      *          @SWG\Schema(ref="#/definitions/Error"),
      *     ),
      * )
+     * @param Student $student
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function show($studentId)
+    public function show(Student $student)
     {
-        return $this->responseTransformed($this->studentRepository->find($studentId), new StudentTransformer());
+        return fractal($student, new StudentTransformer())->respond();
     }
 
 
@@ -225,12 +221,9 @@ class StudentsController extends Controller
      *     ),
      * )
      */
-    public function update(UpdateStudentRequest $request, $studentId)
+    public function update(UpdateStudentRequest $request, Student $student)
     {
-        $student = $this->studentRepository->find($studentId);
-        $student->fill($request->only(['name', 'age']));
-        $student->save();
-        return $this->responseTransformed($student, new StudentTransformer());
+        return fractal($this->service->update($request, $student), new StudentTransformer())->respond();
     }
 
     /**
@@ -270,9 +263,9 @@ class StudentsController extends Controller
      *     ),
      * )
      */
-    public function destroy($studentId)
+    public function destroy(Student $student)
     {
-        $this->studentRepository->delete($studentId);
-        return $this->response->noContent();
+        $this->service->delete($student);
+        return response('' , Response::HTTP_NO_CONTENT);
     }
 }

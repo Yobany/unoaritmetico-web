@@ -10,14 +10,15 @@ namespace App\Transformers;
 
 
 use App\Operation;
+use League\Fractal\TransformerAbstract;
 
-class OperationTransformer extends MainTransformer
+class OperationTransformer extends TransformerAbstract
 {
     /**
      * @param Operation $entity
      * @return array
      */
-    protected function transform($entity)
+    public function transform(Operation $entity)
     {
         return [
             'name' => $entity->name,

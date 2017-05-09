@@ -107410,6 +107410,1493 @@ restangular.provider('Restangular', function() {
 }));
 
 
+/*
+ * Angular Material Data Table
+ * https://github.com/daniel-nagy/md-data-table
+ * @license MIT
+ * v0.10.9
+ */
+(function (window, angular, undefined) {
+'use strict';
+
+angular.module('md.table.templates', ['md-table-pagination.html', 'md-table-progress.html', 'arrow-up.svg', 'navigate-before.svg', 'navigate-first.svg', 'navigate-last.svg', 'navigate-next.svg']);
+
+angular.module('md-table-pagination.html', []).run(['$templateCache', function($templateCache) {
+  $templateCache.put('md-table-pagination.html',
+    '<div class="page-select" ng-if="$pagination.showPageSelect()">\n' +
+    '  <div class="label">{{$pagination.label.page}}</div>\n' +
+    '\n' +
+    '  <md-select virtual-page-select total="{{$pagination.pages()}}" class="md-table-select" ng-model="$pagination.page" md-container-class="md-pagination-select" ng-change="$pagination.onPaginationChange()" ng-disabled="$pagination.disabled" aria-label="Page">\n' +
+    '    <md-content>\n' +
+    '      <md-option ng-repeat="page in $pageSelect.pages" ng-value="page">{{page}}</md-option>\n' +
+    '    </md-content>\n' +
+    '  </md-select>\n' +
+    '</div>\n' +
+    '\n' +
+    '<div class="limit-select" ng-if="$pagination.limitOptions">\n' +
+    '  <div class="label">{{$pagination.label.rowsPerPage}}</div>\n' +
+    '\n' +
+    '  <md-select class="md-table-select" ng-model="$pagination.limit" md-container-class="md-pagination-select" ng-disabled="$pagination.disabled" aria-label="Rows" placeholder="{{ $pagination.limitOptions[0] }}">\n' +
+    '    <md-option ng-repeat="option in $pagination.limitOptions" ng-value="option.value ? $pagination.eval(option.value) : option">{{::option.label ? option.label : option}}</md-option>\n' +
+    '  </md-select>\n' +
+    '</div>\n' +
+    '\n' +
+    '<div class="buttons">\n' +
+    '  <div class="label">{{$pagination.min()}} - {{$pagination.max()}} {{$pagination.label.of}} {{$pagination.total}}</div>\n' +
+    '\n' +
+    '  <md-button class="md-icon-button" type="button" ng-if="$pagination.showBoundaryLinks()" ng-click="$pagination.first()" ng-disabled="$pagination.disabled || !$pagination.hasPrevious()" aria-label="First">\n' +
+    '    <md-icon md-svg-icon="navigate-first.svg"></md-icon>\n' +
+    '  </md-button>\n' +
+    '\n' +
+    '  <md-button class="md-icon-button" type="button" ng-click="$pagination.previous()" ng-disabled="$pagination.disabled || !$pagination.hasPrevious()" aria-label="Previous">\n' +
+    '    <md-icon md-svg-icon="navigate-before.svg"></md-icon>\n' +
+    '  </md-button>\n' +
+    '\n' +
+    '  <md-button class="md-icon-button" type="button" ng-click="$pagination.next()" ng-disabled="$pagination.disabled || !$pagination.hasNext()" aria-label="Next">\n' +
+    '    <md-icon md-svg-icon="navigate-next.svg"></md-icon>\n' +
+    '  </md-button>\n' +
+    '\n' +
+    '  <md-button class="md-icon-button" type="button" ng-if="$pagination.showBoundaryLinks()" ng-click="$pagination.last()" ng-disabled="$pagination.disabled || !$pagination.hasNext()" aria-label="Last">\n' +
+    '    <md-icon md-svg-icon="navigate-last.svg"></md-icon>\n' +
+    '  </md-button>\n' +
+    '</div>');
+}]);
+
+angular.module('md-table-progress.html', []).run(['$templateCache', function($templateCache) {
+  $templateCache.put('md-table-progress.html',
+    '<tr>\n' +
+    '  <th colspan="{{columnCount()}}">\n' +
+    '    <md-progress-linear ng-show="deferred()" md-mode="indeterminate"></md-progress-linear>\n' +
+    '  </th>\n' +
+    '</tr>');
+}]);
+
+angular.module('arrow-up.svg', []).run(['$templateCache', function($templateCache) {
+  $templateCache.put('arrow-up.svg',
+    '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M4 12l1.41 1.41L11 7.83V20h2V7.83l5.58 5.59L20 12l-8-8-8 8z"/></svg>');
+}]);
+
+angular.module('navigate-before.svg', []).run(['$templateCache', function($templateCache) {
+  $templateCache.put('navigate-before.svg',
+    '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/></svg>');
+}]);
+
+angular.module('navigate-first.svg', []).run(['$templateCache', function($templateCache) {
+  $templateCache.put('navigate-first.svg',
+    '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M7 6 v12 h2 v-12 h-2z M17.41 7.41L16 6l-6 6 6 6 1.41-1.41L12.83 12z"/></svg>');
+}]);
+
+angular.module('navigate-last.svg', []).run(['$templateCache', function($templateCache) {
+  $templateCache.put('navigate-last.svg',
+    '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M15 6 v12 h2 v-12 h-2z M8 6L6.59 7.41 11.17 12l-4.58 4.59L8 18l6-6z"/></svg>');
+}]);
+
+angular.module('navigate-next.svg', []).run(['$templateCache', function($templateCache) {
+  $templateCache.put('navigate-next.svg',
+    '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg>');
+}]);
+
+
+angular.module('md.data.table', ['md.table.templates']);
+
+angular.module('md.data.table').directive('mdBody', mdBody);
+
+function mdBody() {
+
+  function compile(tElement) {
+    tElement.addClass('md-body');
+  }
+
+  return {
+    compile: compile,
+    restrict: 'A'
+  };
+}
+
+angular.module('md.data.table').directive('mdCell', mdCell);
+
+function mdCell() {
+  
+  function compile(tElement) {
+    var select = tElement.find('md-select');
+    
+    if(select.length) {
+      select.addClass('md-table-select').attr('md-container-class', 'md-table-select');
+    }
+    
+    tElement.addClass('md-cell');
+    
+    return postLink;
+  }
+  
+  // empty controller to be bind properties to in postLink function
+  function Controller() {
+    
+  }
+  
+  function postLink(scope, element, attrs, ctrls) {
+    var select = element.find('md-select');
+    var cellCtrl = ctrls.shift();
+    var tableCtrl = ctrls.shift();
+    
+    if(attrs.ngClick) {
+      element.addClass('md-clickable');
+    }
+    
+    if(select.length) {
+      select.on('click', function (event) {
+        event.stopPropagation();
+      });
+      
+      element.addClass('md-clickable').on('click', function (event) {
+        event.stopPropagation();
+        select[0].click();
+      });
+    }
+    
+    cellCtrl.getTable = tableCtrl.getElement;
+    
+    function getColumn() {
+      return tableCtrl.$$columns[getIndex()];
+    }
+    
+    function getIndex() {
+      return Array.prototype.indexOf.call(element.parent().children(), element[0]);
+    }
+    
+    scope.$watch(getColumn, function (column) {
+      if(!column) {
+        return;
+      }
+      
+      if(column.numeric) {
+        element.addClass('md-numeric');
+      } else {
+        element.removeClass('md-numeric');
+      }
+    });
+  }
+  
+  return {
+    controller: Controller,
+    compile: compile,
+    require: ['mdCell', '^^mdTable'],
+    restrict: 'A'
+  };
+}
+
+angular.module('md.data.table').directive('mdColumn', mdColumn);
+
+function mdColumn($compile, $mdUtil) {
+
+  function compile(tElement) {
+    tElement.addClass('md-column');
+    return postLink;
+  }
+
+  function postLink(scope, element, attrs, ctrls) {
+    var headCtrl = ctrls.shift();
+    var tableCtrl = ctrls.shift();
+
+    function attachSortIcon() {
+      var sortIcon = angular.element('<md-icon md-svg-icon="arrow-up.svg">');
+
+      $compile(sortIcon.addClass('md-sort-icon').attr('ng-class', 'getDirection()'))(scope);
+
+      if(element.hasClass('md-numeric')) {
+        element.prepend(sortIcon);
+      } else {
+        element.append(sortIcon);
+      }
+    }
+
+    function detachSortIcon() {
+      Array.prototype.some.call(element.find('md-icon'), function (icon) {
+        return icon.classList.contains('md-sort-icon') && element[0].removeChild(icon);
+      });
+    }
+
+    function disableSorting() {
+      detachSortIcon();
+      element.removeClass('md-sort').off('click', setOrder);
+    }
+
+    function enableSorting() {
+      attachSortIcon();
+      element.addClass('md-sort').on('click', setOrder);
+    }
+
+    function getIndex() {
+      return Array.prototype.indexOf.call(element.parent().children(), element[0]);
+    }
+
+    function isActive() {
+      return scope.orderBy && (headCtrl.order === scope.orderBy || headCtrl.order === '-' + scope.orderBy);
+    }
+
+    function isNumeric() {
+      return attrs.mdNumeric === '' || scope.numeric;
+    }
+
+    function setOrder() {
+      scope.$applyAsync(function () {
+        if(isActive()) {
+          headCtrl.order = scope.getDirection() === 'md-asc' ? '-' + scope.orderBy : scope.orderBy;
+        } else {
+          headCtrl.order = scope.getDirection() === 'md-asc' ? scope.orderBy : '-' + scope.orderBy;
+        }
+
+        if(angular.isFunction(headCtrl.onReorder)) {
+          $mdUtil.nextTick(function () {
+            headCtrl.onReorder(headCtrl.order);
+          });
+        }
+      });
+    }
+
+    function updateColumn(index, column) {
+      tableCtrl.$$columns[index] = column;
+
+      if(column.numeric) {
+        element.addClass('md-numeric');
+      } else {
+        element.removeClass('md-numeric');
+      }
+    }
+
+    scope.getDirection = function () {
+      if(isActive()) {
+        return headCtrl.order.charAt(0) === '-' ? 'md-desc' : 'md-asc';
+      }
+
+      return attrs.mdDesc === '' || scope.$eval(attrs.mdDesc) ? 'md-desc' : 'md-asc';
+    };
+
+    scope.$watch(isActive, function (active) {
+      if(active) {
+        element.addClass('md-active');
+      } else {
+        element.removeClass('md-active');
+      }
+    });
+
+    scope.$watch(getIndex, function (index) {
+      updateColumn(index, {'numeric': isNumeric()});
+    });
+
+    scope.$watch(isNumeric, function (numeric) {
+      updateColumn(getIndex(), {'numeric': numeric});
+    });
+
+    scope.$watch('orderBy', function (orderBy) {
+      if(orderBy) {
+        if(!element.hasClass('md-sort')) {
+          enableSorting();
+        }
+      } else if(element.hasClass('md-sort')) {
+        disableSorting();
+      }
+    });
+  }
+
+  return {
+    compile: compile,
+    require: ['^^mdHead', '^^mdTable'],
+    restrict: 'A',
+    scope: {
+      numeric: '=?mdNumeric',
+      orderBy: '@?mdOrderBy'
+    }
+  };
+}
+
+mdColumn.$inject = ['$compile', '$mdUtil'];
+
+angular.module('md.data.table')
+  .decorator('$controller', controllerDecorator)
+  .factory('$mdEditDialog', mdEditDialog);
+
+/*
+ * A decorator for ng.$controller to optionally bind properties to the
+ * controller before invoking the constructor. Stolen from the ngMock.
+ *
+ * https://docs.angularjs.org/api/ngMock/service/$controller
+ */
+function controllerDecorator($delegate) {
+  return function(expression, locals, later, ident) {
+    if(later && typeof later === 'object') {
+      var create = $delegate(expression, locals, true, ident);
+      angular.extend(create.instance, later);
+      return create();
+    }
+    return $delegate(expression, locals, later, ident);
+  };
+}
+
+controllerDecorator.$inject = ['$delegate'];
+  
+function mdEditDialog($compile, $controller, $document, $mdUtil, $q, $rootScope, $templateCache, $templateRequest, $window) {
+  /* jshint validthis: true */
+  
+  var ESCAPE = 27;
+  
+  var busy = false;
+  var body = angular.element($document.prop('body'));
+  
+  /*
+   * bindToController
+   * controller
+   * controllerAs
+   * locals
+   * resolve
+   * scope
+   * targetEvent
+   * template
+   * templateUrl
+   */
+  var defaultOptions = {
+    clickOutsideToClose: true,
+    disableScroll: true,
+    escToClose: true,
+    focusOnOpen: true
+  };
+  
+  function build(template, options) {
+    var scope = $rootScope.$new();
+    var element = $compile(template)(scope);
+    var backdrop = $mdUtil.createBackdrop(scope, 'md-edit-dialog-backdrop');
+    var controller;
+    
+    if(options.controller) {
+      controller = getController(options, scope, {$element: element, $scope: scope});
+    } else {
+      angular.extend(scope, options.scope);
+    }
+    
+    if(options.disableScroll) {
+      disableScroll(element);
+    }
+    
+    body.prepend(backdrop).append(element.addClass('md-whiteframe-1dp'));
+    
+    positionDialog(element, options.target);
+    
+    if(options.focusOnOpen) {
+      focusOnOpen(element);
+    }
+    
+    if(options.clickOutsideToClose) {
+      backdrop.on('click', function () {
+        element.remove();
+      });
+    }
+    
+    if(options.escToClose) {
+      escToClose(element);
+    }
+    
+    element.on('$destroy', function () {
+      busy = false;
+      backdrop.remove();
+    });
+    
+    return controller;
+  }
+  
+  function disableScroll(element) {
+    var restoreScroll = $mdUtil.disableScrollAround(element, body);
+    
+    element.on('$destroy', function () {
+      restoreScroll();
+    });
+  }
+  
+  function getController(options, scope, inject) {
+    if(!options.controller) {
+      return;
+    }
+    
+    if(options.resolve) {
+      angular.extend(inject, options.resolve);
+    }
+    
+    if(options.locals) {
+      angular.extend(inject, options.locals);
+    }
+    
+    if(options.controllerAs) {
+      scope[options.controllerAs] = {};
+      
+      if(options.bindToController) {
+        angular.extend(scope[options.controllerAs], options.scope);
+      } else {
+        angular.extend(scope, options.scope);
+      }
+    } else {
+      angular.extend(scope, options.scope);
+    }
+    
+    if(options.bindToController) {
+      return $controller(options.controller, inject, scope[options.controllerAs]);
+    } else {
+      return $controller(options.controller, inject);
+    }
+  }
+  
+  function getTemplate(options) {
+    return $q(function (resolve, reject) {
+      var template = options.template;
+      
+      function illegalType(type) {
+        reject('Unexpected template value. Expected a string; received a ' + type + '.');
+      }
+      
+      if(template) {
+        return angular.isString(template) ? resolve(template) : illegalType(typeof template);
+      }
+      
+      if(options.templateUrl) {
+        template = $templateCache.get(options.templateUrl);
+        
+        if(template) {
+          return resolve(template);
+        }
+        
+        var success = function (template) {
+          return resolve(template);
+        };
+        
+        var error = function () {
+          return reject('Error retrieving template from URL.');
+        };
+        
+        return $templateRequest(options.templateUrl).then(success, error);
+      }
+      
+      reject('Template not provided.');
+    });
+  }
+  
+  function logError(error) {
+    busy = false;
+    console.error(error);
+  }
+  
+  function escToClose(element) {
+    var keyup = function (event) {
+      if(event.keyCode === ESCAPE) {
+        element.remove();
+      }
+    };
+    
+    body.on('keyup', keyup);
+    
+    element.on('$destroy', function () {
+      body.off('keyup', keyup);
+    });
+  }
+
+  function focusOnOpen(element) {
+    $mdUtil.nextTick(function () {
+      var autofocus = $mdUtil.findFocusTarget(element);
+      
+      if(autofocus) {
+        autofocus.focus();
+      }
+    }, false);
+  }
+
+  function positionDialog(element, target) {
+    var table = angular.element(target).controller('mdCell').getTable();
+    
+    var getHeight = function () {
+      return element.prop('clientHeight');
+    };
+    
+    var getSize = function () {
+      return {
+        width: getWidth(),
+        height: getHeight()
+      };
+    };
+    
+    var getTableBounds = function () {
+      var parent = table.parent();
+      
+      if(parent.prop('tagName') === 'MD-TABLE-CONTAINER') {
+        return parent[0].getBoundingClientRect();
+      } else {
+        return table[0].getBoundingClientRect();
+      }
+    };
+    
+    var getWidth = function () {
+      return element.prop('clientWidth');
+    };
+    
+    var reposition = function () {
+      var size = getSize();
+      var cellBounds = target.getBoundingClientRect();
+      var tableBounds = getTableBounds();
+      
+      if(size.width > tableBounds.right - cellBounds.left) {
+        element.css('left', tableBounds.right - size.width + 'px');
+      } else {
+        element.css('left', cellBounds.left + 'px');
+      }
+      
+      if(size.height > tableBounds.bottom - cellBounds.top) {
+        element.css('top', tableBounds.bottom - size.height + 'px');
+      } else {
+        element.css('top', cellBounds.top + 1 + 'px');
+      }
+      
+      element.css('minWidth', cellBounds.width + 'px');
+    };
+    
+    var watchWidth = $rootScope.$watch(getWidth, reposition);
+    var watchHeight = $rootScope.$watch(getHeight, reposition);
+    
+    $window.addEventListener('resize', reposition);
+    
+    element.on('$destroy', function () {
+      watchWidth();
+      watchHeight();
+      
+      $window.removeEventListener('resize', reposition);
+    });
+  }
+  
+  function preset(size, options) {
+    
+    function getAttrs() {
+      var attrs = 'type="' + (options.type || 'text') + '"';
+      
+      for(var attr in options.validators) {
+        attrs += ' ' + attr + '="' + options.validators[attr] + '"';
+      }
+      
+      return attrs;
+    }
+    
+    return {
+      controller: ['$element', '$q', 'save', '$scope', function ($element, $q, save, $scope) {
+        function update() {
+          if($scope.editDialog.$invalid) {
+            return $q.reject();
+          }
+          
+          if(angular.isFunction(save)) {
+            return $q.when(save($scope.editDialog.input));
+          }
+          
+          return $q.resolve();
+        }
+        
+        this.dismiss = function () {
+          $element.remove();
+        };
+        
+        this.getInput = function () {
+          return $scope.editDialog.input;
+        };
+        
+        $scope.dismiss = this.dismiss;
+        
+        $scope.submit = function () {
+          update().then(function () {
+            $scope.dismiss();
+          });
+        };
+      }],
+      locals: {
+        save: options.save
+      },
+      scope: {
+        cancel: options.cancel || 'Cancel',
+        messages: options.messages,
+        model: options.modelValue,
+        ok: options.ok || 'Save',
+        placeholder: options.placeholder,
+        title: options.title,
+        size: size
+      },
+      template:
+        '<md-edit-dialog>' +
+          '<div layout="column" class="md-content">' +
+            '<div ng-if="size === \'large\'" class="md-title">{{title || \'Edit\'}}</div>' +
+            '<form name="editDialog" layout="column" ng-submit="submit(model)">' +
+              '<md-input-container md-no-float>' +
+                '<input name="input" ng-model="model" md-autofocus placeholder="{{placeholder}} "' + getAttrs() + '>' +
+                '<div ng-messages="editDialog.input.$error">' +
+                  '<div ng-repeat="(key, message) in messages" ng-message="{{key}}">{{message}}</div>' +
+                '</div>' +
+              '</md-input-container>' +
+            '</form>' +
+          '</div>' +
+          '<div ng-if="size === \'large\'" layout="row" layout-align="end" class="md-actions">' +
+            '<md-button class="md-primary" ng-click="dismiss()">{{cancel}}</md-button>' +
+            '<md-button class="md-primary" ng-click="submit()">{{ok}}</md-button>' +
+          '</div>' +
+        '</md-edit-dialog>'
+    };
+  }
+  
+  this.show = function (options) {
+    if(busy) {
+      return $q.reject();
+    }
+    
+    busy = true;
+    options = angular.extend({}, defaultOptions, options);
+    
+    if(!options.targetEvent) {
+      return logError('options.targetEvent is required to align the dialog with the table cell.');
+    }
+    
+    if(!options.targetEvent.currentTarget.classList.contains('md-cell')) {
+      return logError('The event target must be a table cell.');
+    }
+    
+    if(options.bindToController && !options.controllerAs) {
+      return logError('You must define options.controllerAs when options.bindToController is true.');
+    }
+    
+    options.target = options.targetEvent.currentTarget;
+    
+    var promise = getTemplate(options);
+    var promises = [promise];
+    
+    for(var prop in options.resolve) {
+      promise = options.resolve[prop];
+      promises.push($q.when(angular.isFunction(promise) ? promise() : promise));
+    }
+    
+    promise = $q.all(promises);
+    
+    promise['catch'](logError);
+    
+    return promise.then(function (results) {
+      var template = results.shift();
+      
+      for(var prop in options.resolve) {
+        options.resolve[prop] = results.shift();
+      }
+      
+      return build(template, options);
+    });
+  };
+  
+  this.small = function (options) {
+    return this.show(angular.extend({}, options, preset('small', options)));
+  }.bind(this);
+  
+  this.large = function (options) {
+    return this.show(angular.extend({}, options, preset('large', options)));
+  }.bind(this);
+  
+  return this;
+}
+
+mdEditDialog.$inject = ['$compile', '$controller', '$document', '$mdUtil', '$q', '$rootScope', '$templateCache', '$templateRequest', '$window'];
+
+
+angular.module('md.data.table').directive('mdFoot', mdFoot);
+
+function mdFoot() {
+
+  function compile(tElement) {
+    tElement.addClass('md-foot');
+  }
+
+  return {
+    compile: compile,
+    restrict: 'A'
+  };
+}
+
+angular.module('md.data.table').directive('mdHead', mdHead);
+
+function mdHead($compile) {
+
+  function compile(tElement) {
+    tElement.addClass('md-head');
+    return postLink;
+  }
+  
+  // empty controller to be bind scope properties to
+  function Controller() {
+    
+  }
+  
+  function postLink(scope, element, attrs, tableCtrl) {
+    // because scope.$watch is unpredictable
+    var oldValue = new Array(2);
+    
+    function addCheckboxColumn() {
+      element.children().prepend('<th class="md-column md-checkbox-column">');
+    }
+    
+    function attatchCheckbox() {
+      element.prop('lastElementChild').firstElementChild.appendChild($compile(createCheckBox())(scope)[0]);
+    }
+    
+    function createCheckBox() {
+      return angular.element('<md-checkbox>').attr({
+        'aria-label': 'Select All',
+        'ng-click': 'toggleAll()',
+        'ng-checked': 'allSelected()',
+        'ng-disabled': '!getSelectableRows().length'
+      });
+    }
+    
+    function detachCheckbox() {
+      var cell = element.prop('lastElementChild').firstElementChild;
+      
+      if(cell.classList.contains('md-checkbox-column')) {
+        angular.element(cell).empty();
+      }
+    }
+    
+    function enableRowSelection() {
+      return tableCtrl.$$rowSelect;
+    }
+    
+    function mdSelectCtrl(row) {
+      return angular.element(row).controller('mdSelect');
+    }
+    
+    function removeCheckboxColumn() {
+      Array.prototype.some.call(element.find('th'), function (cell) {
+        return cell.classList.contains('md-checkbox-column') && cell.remove();
+      });
+    }
+    
+    scope.allSelected = function () {
+      var rows = scope.getSelectableRows();
+      
+      return rows.length && rows.every(function (row) {
+        return row.isSelected();
+      });
+    };
+    
+    scope.getSelectableRows = function () {
+      return tableCtrl.getBodyRows().map(mdSelectCtrl).filter(function (ctrl) {
+        return ctrl && !ctrl.disabled;
+      });
+    };
+    
+    scope.selectAll = function () {
+      tableCtrl.getBodyRows().map(mdSelectCtrl).forEach(function (ctrl) {
+        if(ctrl && !ctrl.isSelected()) {
+          ctrl.select();
+        }
+      });
+    };
+    
+    scope.toggleAll = function () {
+      return scope.allSelected() ? scope.unSelectAll() : scope.selectAll();
+    };
+    
+    scope.unSelectAll = function () {
+      tableCtrl.getBodyRows().map(mdSelectCtrl).forEach(function (ctrl) {
+        if(ctrl && ctrl.isSelected()) {
+          ctrl.deselect();
+        }
+      });
+    };
+    
+    scope.$watchGroup([enableRowSelection, tableCtrl.enableMultiSelect], function (newValue) {
+      if(newValue[0] !== oldValue[0]) {
+        if(newValue[0]) {
+          addCheckboxColumn();
+          
+          if(newValue[1]) {
+            attatchCheckbox();
+          }
+        } else {
+          removeCheckboxColumn();
+        }
+      } else if(newValue[0] && newValue[1] !== oldValue[1]) {
+        if(newValue[1]) {
+          attatchCheckbox();
+        } else {
+          detachCheckbox();
+        }
+      }
+      
+      angular.copy(newValue, oldValue);
+    });
+  }
+  
+  return {
+    bindToController: true,
+    compile: compile,
+    controller: Controller,
+    controllerAs: '$mdHead',
+    require: '^^mdTable',
+    restrict: 'A',
+    scope: {
+      order: '=?mdOrder',
+      onReorder: '=?mdOnReorder'
+    }
+  };
+}
+
+mdHead.$inject = ['$compile'];
+
+angular.module('md.data.table').directive('mdRow', mdRow);
+
+function mdRow() {
+
+  function compile(tElement) {
+    tElement.addClass('md-row');
+    return postLink;
+  }
+  
+  function postLink(scope, element, attrs, tableCtrl) {
+    function enableRowSelection() {
+      return tableCtrl.$$rowSelect;
+    }
+    
+    function isBodyRow() {
+      return tableCtrl.getBodyRows().indexOf(element[0]) !== -1;
+    }
+    
+    function isChild(node) {
+      return element[0].contains(node[0]);
+    }
+    
+    if(isBodyRow()) {
+      var cell = angular.element('<td class="md-cell">');
+      
+      scope.$watch(enableRowSelection, function (enable) {
+        // if a row is not selectable, prepend an empty cell to it
+        if(enable && !attrs.mdSelect) {
+          if(!isChild(cell)) {
+            element.prepend(cell);
+          }
+          return;
+        }
+        
+        if(isChild(cell)) {
+          cell.remove();
+        }
+      });
+    }
+  }
+
+  return {
+    compile: compile,
+    require: '^^mdTable',
+    restrict: 'A'
+  };
+}
+
+angular.module('md.data.table').directive('mdSelect', mdSelect);
+
+function mdSelect($compile, $parse) {
+
+  // empty controller to bind scope properties to
+  function Controller() {
+
+  }
+
+  function postLink(scope, element, attrs, ctrls) {
+    var self = ctrls.shift();
+    var tableCtrl = ctrls.shift();
+    var getId = $parse(attrs.mdSelectId);
+
+    self.id = getId(self.model);
+
+    if(tableCtrl.$$rowSelect && self.id) {
+      if(tableCtrl.$$hash.has(self.id)) {
+        var index = tableCtrl.selected.indexOf(tableCtrl.$$hash.get(self.id));
+
+        // if the item is no longer selected remove it
+        if(index === -1) {
+          tableCtrl.$$hash.purge(self.id);
+        }
+
+        // if the item is not a reference to the current model update the reference
+        else if(!tableCtrl.$$hash.equals(self.id, self.model)) {
+          tableCtrl.$$hash.update(self.id, self.model);
+          tableCtrl.selected.splice(index, 1, self.model);
+        }
+
+      } else {
+
+        // check if the item has been selected
+        tableCtrl.selected.some(function (item, index) {
+          if(getId(item) === self.id) {
+            tableCtrl.$$hash.update(self.id, self.model);
+            tableCtrl.selected.splice(index, 1, self.model);
+
+            return true;
+          }
+        });
+      }
+    }
+
+    self.isSelected = function () {
+      if(!tableCtrl.$$rowSelect) {
+        return false;
+      }
+
+      if(self.id) {
+        return tableCtrl.$$hash.has(self.id);
+      }
+
+      return tableCtrl.selected.indexOf(self.model) !== -1;
+    };
+
+    self.select = function () {
+      if(self.disabled) {
+        return;
+      }
+
+      if(tableCtrl.enableMultiSelect()) {
+        tableCtrl.selected.push(self.model);
+      } else {
+        tableCtrl.selected.splice(0, tableCtrl.selected.length, self.model);
+      }
+
+      if(angular.isFunction(self.onSelect)) {
+        self.onSelect(self.model);
+      }
+    };
+
+    self.deselect = function () {
+      if(self.disabled) {
+        return;
+      }
+
+      tableCtrl.selected.splice(tableCtrl.selected.indexOf(self.model), 1);
+
+      if(angular.isFunction(self.onDeselect)) {
+        self.onDeselect(self.model);
+      }
+    };
+
+    self.toggle = function (event) {
+      if(event && event.stopPropagation) {
+        event.stopPropagation();
+      }
+
+      return self.isSelected() ? self.deselect() : self.select();
+    };
+
+    function autoSelect() {
+      return attrs.mdAutoSelect === '' || self.autoSelect;
+    }
+
+    function createCheckbox() {
+      var checkbox = angular.element('<md-checkbox>').attr({
+        'aria-label': 'Select Row',
+        'ng-click': '$mdSelect.toggle($event)',
+        'ng-checked': '$mdSelect.isSelected()',
+        'ng-disabled': '$mdSelect.disabled'
+      });
+
+      return angular.element('<td class="md-cell md-checkbox-cell">').append($compile(checkbox)(scope));
+    }
+
+    function disableSelection() {
+      Array.prototype.some.call(element.children(), function (child) {
+        return child.classList.contains('md-checkbox-cell') && element[0].removeChild(child);
+      });
+
+      if(autoSelect()) {
+        element.off('click', toggle);
+      }
+    }
+
+    function enableSelection() {
+      element.prepend(createCheckbox());
+
+      if(autoSelect()) {
+        element.on('click', toggle);
+      }
+    }
+
+    function enableRowSelection() {
+      return tableCtrl.$$rowSelect;
+    }
+
+    function onSelectChange(selected) {
+      if(!self.id) {
+        return;
+      }
+
+      if(tableCtrl.$$hash.has(self.id)) {
+        // check if the item has been deselected
+        if(selected.indexOf(tableCtrl.$$hash.get(self.id)) === -1) {
+          tableCtrl.$$hash.purge(self.id);
+        }
+
+        return;
+      }
+
+      // check if the item has been selected
+      if(selected.indexOf(self.model) !== -1) {
+        tableCtrl.$$hash.update(self.id, self.model);
+      }
+    }
+
+    function toggle(event) {
+      scope.$applyAsync(function () {
+        self.toggle(event);
+      });
+    }
+
+    scope.$watch(enableRowSelection, function (enable) {
+      if(enable) {
+        enableSelection();
+      } else {
+        disableSelection();
+      }
+    });
+
+    scope.$watch(autoSelect, function (newValue, oldValue) {
+      if(newValue === oldValue) {
+        return;
+      }
+
+      if(tableCtrl.$$rowSelect && newValue) {
+        element.on('click', toggle);
+      } else {
+        element.off('click', toggle);
+      }
+    });
+
+    scope.$watch(self.isSelected, function (isSelected) {
+      return isSelected ? element.addClass('md-selected') : element.removeClass('md-selected');
+    });
+
+    scope.$watch(tableCtrl.enableMultiSelect, function (multiple) {
+      if(tableCtrl.$$rowSelect && !multiple) {
+        // remove all but the first selected item
+        tableCtrl.selected.splice(1);
+      }
+    });
+
+    tableCtrl.registerModelChangeListener(onSelectChange);
+
+    element.on('$destroy', function () {
+      tableCtrl.removeModelChangeListener(onSelectChange);
+    });
+  }
+
+  return {
+    bindToController: true,
+    controller: Controller,
+    controllerAs: '$mdSelect',
+    link: postLink,
+    require: ['mdSelect', '^^mdTable'],
+    restrict: 'A',
+    scope: {
+      model: '=mdSelect',
+      disabled: '=ngDisabled',
+      onSelect: '=?mdOnSelect',
+      onDeselect: '=?mdOnDeselect',
+      autoSelect: '=mdAutoSelect'
+    }
+  };
+}
+
+mdSelect.$inject = ['$compile', '$parse'];
+
+angular.module('md.data.table').directive('mdTable', mdTable);
+
+function Hash() {
+  var keys = {};
+  
+  this.equals = function (key, item) {
+    return keys[key] === item;
+  };
+
+  this.get = function (key) {
+    return keys[key];
+  };
+  
+  this.has = function (key) {
+    return keys.hasOwnProperty(key);
+  };
+
+  this.purge = function (key) {
+    delete keys[key];
+  };
+  
+  this.update = function (key, item) {
+    keys[key] = item;
+  };
+}
+
+function mdTable() {
+  
+  function compile(tElement, tAttrs) {
+    tElement.addClass('md-table');
+    
+    if(tAttrs.hasOwnProperty('mdProgress')) {
+      var body = tElement.find('tbody')[0];
+      var progress = angular.element('<thead class="md-table-progress" md-table-progress>');
+      
+      if(body) {
+        tElement[0].insertBefore(progress[0], body);
+      }
+    }
+  }
+  
+  function Controller($attrs, $element, $q, $scope) {
+    var self = this;
+    var queue = [];
+    var watchListener;
+    var modelChangeListeners = [];
+    
+    self.$$hash = new Hash();
+    self.$$columns = {};
+    
+    function enableRowSelection() {
+      self.$$rowSelect = true;
+      
+      watchListener = $scope.$watchCollection('$mdTable.selected', function (selected) {
+        modelChangeListeners.forEach(function (listener) {
+          listener(selected);
+        });
+      });
+      
+      $element.addClass('md-row-select');
+    }
+    
+    function disableRowSelection() {
+      self.$$rowSelect = false;
+      
+      if(angular.isFunction(watchListener)) {
+        watchListener();
+      }
+      
+      $element.removeClass('md-row-select');
+    }
+    
+    function resolvePromises() {
+      if(!queue.length) {
+        return $scope.$applyAsync();
+      }
+      
+      queue[0]['finally'](function () {
+        queue.shift();
+        resolvePromises();
+      });
+    }
+    
+    function rowSelect() {
+      return $attrs.mdRowSelect === '' || self.rowSelect;
+    }
+    
+    function validateModel() {
+      if(!self.selected) {
+        return console.error('Row selection: ngModel is not defined.');
+      }
+      
+      if(!angular.isArray(self.selected)) {
+        return console.error('Row selection: Expected an array. Recived ' + typeof self.selected + '.');
+      }
+      
+      return true;
+    }
+    
+    self.columnCount = function () {
+      return self.getRows($element[0]).reduce(function (count, row) {
+        return row.cells.length > count ? row.cells.length : count;
+      }, 0);
+    };
+    
+    self.getRows = function (element) {
+      return Array.prototype.filter.call(element.rows, function (row) {
+        return !row.classList.contains('ng-leave');
+      });
+    };
+    
+    self.getBodyRows = function () {
+      return Array.prototype.reduce.call($element.prop('tBodies'), function (result, tbody) {
+        return result.concat(self.getRows(tbody));
+      }, []);
+    };
+    
+    self.getElement = function () {
+      return $element;
+    };
+    
+    self.getHeaderRows = function () {
+      return self.getRows($element.prop('tHead'));
+    };
+    
+    self.enableMultiSelect = function () {
+      return $attrs.multiple === '' || $scope.$eval($attrs.multiple);
+    };
+    
+    self.waitingOnPromise = function () {
+      return !!queue.length;
+    };
+    
+    self.queuePromise = function (promise) {
+      if(!promise) {
+        return;
+      }
+      
+      if(queue.push(angular.isArray(promise) ? $q.all(promise) : $q.when(promise)) === 1) {
+        resolvePromises();
+      }
+    };
+    
+    self.registerModelChangeListener = function (listener) {
+      modelChangeListeners.push(listener);
+    };
+    
+    self.removeModelChangeListener = function (listener) {
+      var index = modelChangeListeners.indexOf(listener);
+      
+      if(index !== -1) {
+        modelChangeListeners.splice(index, 1);
+      }
+    };
+    
+    if($attrs.hasOwnProperty('mdProgress')) {
+      $scope.$watch('$mdTable.progress', self.queuePromise);
+    }
+    
+    $scope.$watch(rowSelect, function (enable) {
+      if(enable && !!validateModel()) {
+        enableRowSelection();
+      } else {
+        disableRowSelection();
+      }
+    });
+  }
+  
+  Controller.$inject = ['$attrs', '$element', '$q', '$scope'];
+  
+  return {
+    bindToController: true,
+    compile: compile,
+    controller: Controller,
+    controllerAs: '$mdTable',
+    restrict: 'A',
+    scope: {
+      progress: '=?mdProgress',
+      selected: '=ngModel',
+      rowSelect: '=mdRowSelect'
+    }
+  };
+}
+
+angular.module('md.data.table').directive('mdTablePagination', mdTablePagination);
+
+function mdTablePagination() {
+
+  function compile(tElement) {
+    tElement.addClass('md-table-pagination');
+  }
+
+  function Controller($attrs, $mdUtil, $scope) {
+    var self = this;
+    var defaultLabel = {
+      page: 'Page:',
+      rowsPerPage: 'Rows per page:',
+      of: 'of'
+    };
+
+    self.label = angular.copy(defaultLabel);
+
+    function isPositive(number) {
+      return parseInt(number, 10) > 0;
+    }
+
+    self.eval = function (expression) {
+      return $scope.$eval(expression);
+    };
+
+    self.first = function () {
+      self.page = 1;
+      self.onPaginationChange();
+    };
+
+    self.hasNext = function () {
+      return self.page * self.limit < self.total;
+    };
+
+    self.hasPrevious = function () {
+      return self.page > 1;
+    };
+
+    self.last = function () {
+      self.page = self.pages();
+      self.onPaginationChange();
+    };
+
+    self.max = function () {
+      return self.hasNext() ? self.page * self.limit : self.total;
+    };
+
+    self.min = function () {
+      return isPositive(self.total) ? self.page * self.limit - self.limit + 1 : 0;
+    };
+
+    self.next = function () {
+      self.page++;
+      self.onPaginationChange();
+    };
+
+    self.onPaginationChange = function () {
+      if(angular.isFunction(self.onPaginate)) {
+        $mdUtil.nextTick(function () {
+          self.onPaginate(self.page, self.limit);
+        });
+      }
+    };
+
+    self.pages = function () {
+      return isPositive(self.total) ? Math.ceil(self.total / (isPositive(self.limit) ? self.limit : 1)) : 1;
+    };
+
+    self.previous = function () {
+      self.page--;
+      self.onPaginationChange();
+    };
+
+    self.showBoundaryLinks = function () {
+      return $attrs.mdBoundaryLinks === '' || self.boundaryLinks;
+    };
+
+    self.showPageSelect = function () {
+      return $attrs.mdPageSelect === '' || self.pageSelect;
+    };
+
+    $scope.$watch('$pagination.limit', function (newValue, oldValue) {
+      if(isNaN(newValue) || isNaN(oldValue) || newValue === oldValue) {
+        return;
+      }
+
+      // find closest page from previous min
+      self.page = Math.floor(((self.page * oldValue - oldValue) + newValue) / (isPositive(newValue) ? newValue : 1));
+      self.onPaginationChange();
+    });
+
+    $attrs.$observe('mdLabel', function (label) {
+      angular.extend(self.label, defaultLabel, $scope.$eval(label));
+    });
+
+    $scope.$watch('$pagination.total', function (newValue, oldValue) {
+      if(isNaN(newValue) || newValue === oldValue) {
+        return;
+      }
+
+      if(self.page > self.pages()) {
+        self.last();
+      }
+    });
+  }
+
+  Controller.$inject = ['$attrs', '$mdUtil', '$scope'];
+
+  return {
+    bindToController: {
+      boundaryLinks: '=?mdBoundaryLinks',
+      disabled: '=ngDisabled',
+      limit: '=mdLimit',
+      page: '=mdPage',
+      pageSelect: '=?mdPageSelect',
+      onPaginate: '=?mdOnPaginate',
+      limitOptions: '=?mdLimitOptions',
+      total: '@mdTotal'
+    },
+    compile: compile,
+    controller: Controller,
+    controllerAs: '$pagination',
+    restrict: 'E',
+    scope: {},
+    templateUrl: 'md-table-pagination.html'
+  };
+}
+
+angular.module('md.data.table').directive('mdTableProgress', mdTableProgress);
+
+function mdTableProgress() {
+
+  function postLink(scope, element, attrs, tableCtrl) {
+    scope.columnCount = tableCtrl.columnCount;
+    scope.deferred = tableCtrl.waitingOnPromise;
+  }
+
+  return {
+    link: postLink,
+    require: '^^mdTable',
+    restrict: 'A',
+    scope: {},
+    templateUrl: 'md-table-progress.html'
+  };
+}
+
+angular.module('md.data.table').directive('virtualPageSelect', virtualPageSelect);
+
+function virtualPageSelect() {
+
+  function Controller($element, $scope) {
+    var self = this;
+    var content = $element.find('md-content');
+
+    self.pages = [];
+
+    function getMin(pages, total) {
+      return Math.min(pages, isFinite(total) && isPositive(total) ? total : 1);
+    }
+
+    function isPositive(number) {
+      return number > 0;
+    }
+
+    function setPages(max) {
+      if(self.pages.length > max) {
+        return self.pages.splice(max);
+      }
+
+      for(var i = self.pages.length; i < max; i++) {
+        self.pages.push(i + 1);
+      }
+    }
+
+    content.on('scroll', function () {
+      if((content.prop('clientHeight') + content.prop('scrollTop')) >= content.prop('scrollHeight')) {
+        $scope.$applyAsync(function () {
+          setPages(getMin(self.pages.length + 10, self.total));
+        });
+      }
+    });
+
+    $scope.$watch('$pageSelect.total', function (total) {
+      setPages(getMin(Math.max(self.pages.length, 10), total));
+    });
+
+    $scope.$watch('$pagination.page', function (page) {
+      for(var i = self.pages.length; i < page; i++) {
+        self.pages.push(i + 1);
+      }
+    });
+  }
+
+  Controller.$inject = ['$element', '$scope'];
+
+  return {
+    bindToController: {
+      total: '@'
+    },
+    controller: Controller,
+    controllerAs: '$pageSelect'
+  };
+}
+
+})(window, angular);
+
 //# sourceMappingURL=../public/js/vendor.js.map
 /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
@@ -107510,7 +108997,7 @@ eval("'use strict';\n\nvar _capitalize = __webpack_require__(26);\n\nvar _human_
 /***/ function(module, exports) {
 
 "use strict";
-eval("'use strict';\n\nangular.module('app', ['app.run', 'app.filters', 'app.services', 'app.components', 'app.directives', 'app.routes', 'app.config']);\n\nangular.module('app.run', []);\nangular.module('app.routes', []);\nangular.module('app.filters', []);\nangular.module('app.services', []);\nangular.module('app.config', []);\nangular.module('app.directives', []);\nangular.module('app.components', ['ui.router', 'ngMaterial', 'angular-loading-bar', 'restangular', 'ngStorage', 'satellizer', 'chart.js']);//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiNC5qcyIsInNvdXJjZXMiOlsid2VicGFjazovLy9hbmd1bGFyL2luZGV4Lm1vZHVsZXMuanM/MGYyYSJdLCJzb3VyY2VzQ29udGVudCI6WyIndXNlIHN0cmljdCc7XG5cbmFuZ3VsYXIubW9kdWxlKCdhcHAnLCBbJ2FwcC5ydW4nLCAnYXBwLmZpbHRlcnMnLCAnYXBwLnNlcnZpY2VzJywgJ2FwcC5jb21wb25lbnRzJywgJ2FwcC5kaXJlY3RpdmVzJywgJ2FwcC5yb3V0ZXMnLCAnYXBwLmNvbmZpZyddKTtcblxuYW5ndWxhci5tb2R1bGUoJ2FwcC5ydW4nLCBbXSk7XG5hbmd1bGFyLm1vZHVsZSgnYXBwLnJvdXRlcycsIFtdKTtcbmFuZ3VsYXIubW9kdWxlKCdhcHAuZmlsdGVycycsIFtdKTtcbmFuZ3VsYXIubW9kdWxlKCdhcHAuc2VydmljZXMnLCBbXSk7XG5hbmd1bGFyLm1vZHVsZSgnYXBwLmNvbmZpZycsIFtdKTtcbmFuZ3VsYXIubW9kdWxlKCdhcHAuZGlyZWN0aXZlcycsIFtdKTtcbmFuZ3VsYXIubW9kdWxlKCdhcHAuY29tcG9uZW50cycsIFsndWkucm91dGVyJywgJ25nTWF0ZXJpYWwnLCAnYW5ndWxhci1sb2FkaW5nLWJhcicsICdyZXN0YW5ndWxhcicsICduZ1N0b3JhZ2UnLCAnc2F0ZWxsaXplcicsICdjaGFydC5qcyddKTtcblxuXG4vLyBXRUJQQUNLIEZPT1RFUiAvL1xuLy8gYW5ndWxhci9pbmRleC5tb2R1bGVzLmpzIl0sIm1hcHBpbmdzIjoiQUFBQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBIiwic291cmNlUm9vdCI6IiJ9");
+eval("'use strict';\n\nangular.module('app', ['app.run', 'app.filters', 'app.services', 'app.components', 'app.directives', 'app.routes', 'app.config']);\n\nangular.module('app.run', []);\nangular.module('app.routes', []);\nangular.module('app.filters', []);\nangular.module('app.services', []);\nangular.module('app.config', []);\nangular.module('app.directives', []);\nangular.module('app.components', ['ui.router', 'ngMaterial', 'angular-loading-bar', 'restangular', 'ngStorage', 'satellizer', 'chart.js', 'ngMaterial', 'md.data.table']);//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiNC5qcyIsInNvdXJjZXMiOlsid2VicGFjazovLy9hbmd1bGFyL2luZGV4Lm1vZHVsZXMuanM/MGYyYSJdLCJzb3VyY2VzQ29udGVudCI6WyIndXNlIHN0cmljdCc7XG5cbmFuZ3VsYXIubW9kdWxlKCdhcHAnLCBbJ2FwcC5ydW4nLCAnYXBwLmZpbHRlcnMnLCAnYXBwLnNlcnZpY2VzJywgJ2FwcC5jb21wb25lbnRzJywgJ2FwcC5kaXJlY3RpdmVzJywgJ2FwcC5yb3V0ZXMnLCAnYXBwLmNvbmZpZyddKTtcblxuYW5ndWxhci5tb2R1bGUoJ2FwcC5ydW4nLCBbXSk7XG5hbmd1bGFyLm1vZHVsZSgnYXBwLnJvdXRlcycsIFtdKTtcbmFuZ3VsYXIubW9kdWxlKCdhcHAuZmlsdGVycycsIFtdKTtcbmFuZ3VsYXIubW9kdWxlKCdhcHAuc2VydmljZXMnLCBbXSk7XG5hbmd1bGFyLm1vZHVsZSgnYXBwLmNvbmZpZycsIFtdKTtcbmFuZ3VsYXIubW9kdWxlKCdhcHAuZGlyZWN0aXZlcycsIFtdKTtcbmFuZ3VsYXIubW9kdWxlKCdhcHAuY29tcG9uZW50cycsIFsndWkucm91dGVyJywgJ25nTWF0ZXJpYWwnLCAnYW5ndWxhci1sb2FkaW5nLWJhcicsICdyZXN0YW5ndWxhcicsICduZ1N0b3JhZ2UnLCAnc2F0ZWxsaXplcicsICdjaGFydC5qcycsICduZ01hdGVyaWFsJywgJ21kLmRhdGEudGFibGUnXSk7XG5cblxuLy8gV0VCUEFDSyBGT09URVIgLy9cbi8vIGFuZ3VsYXIvaW5kZXgubW9kdWxlcy5qcyJdLCJtYXBwaW5ncyI6IkFBQUE7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQSIsInNvdXJjZVJvb3QiOiIifQ==");
 
 /***/ },
 /* 5 */
@@ -107580,7 +109067,7 @@ eval("\"use strict\";\n\nObject.defineProperty(exports, \"__esModule\", {\n    v
 /***/ function(module, exports) {
 
 "use strict";
-eval("'use strict';\n\nObject.defineProperty(exports, \"__esModule\", {\n    value: true\n});\n\nvar _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if (\"value\" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();\n\nfunction _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError(\"Cannot call a class as a function\"); } }\n\nvar GroupListController = function () {\n    GroupListController.$inject = [\"API\", \"$mdDialog\", \"$state\"];\n    function GroupListController(API, $mdDialog, $state) {\n        'ngInject';\n\n        _classCallCheck(this, GroupListController);\n\n        this.API = API;\n        this.$mdDialog = $mdDialog;\n        this.$state = $state;\n    }\n\n    _createClass(GroupListController, [{\n        key: '$onInit',\n        value: function $onInit() {\n            this.groups = [];\n            this.fetchGroups();\n        }\n    }, {\n        key: 'confirmDeletion',\n        value: function confirmDeletion(group) {\n            var confirm = this.$mdDialog.confirm().title('¿Deseas eliminar el grupo \"' + group.name + '\"').textContent('Todos los alumnos pertenecientes al grupo se eliminaran').ariaLabel('Confirmar operación').ok('SI').cancel('NO');\n\n            this.$mdDialog.show(confirm).then(function () {\n                return remove(group);\n            }, function () {});\n\n            var component = this;\n            var remove = function remove(group) {\n                group.remove().then(function () {\n                    component.fetchGroups();\n                }, function () {});\n            };\n        }\n    }, {\n        key: 'create',\n        value: function create() {\n            var _this = this;\n\n            this.$mdDialog.show({\n                template: '<md-dialog flex=\"60\" aria-label=\"grupos\"><group-form></group-form></md-dialog>',\n                clickOutsideToClose: true\n            }).then(function () {\n                return _this.fetchGroups();\n            }, function () {});\n        }\n    }, {\n        key: 'edit',\n        value: function edit(group) {\n            var _this2 = this;\n\n            this.$mdDialog.show({\n                template: \"<md-dialog flex='60' aria-label='grupos'><group-form groupid='\" + group.id + \"'></group-form></md-dialog>\",\n                clickOutsideToClose: true\n            }).then(function () {\n                return _this2.fetchGroups();\n            }, function () {});\n        }\n    }, {\n        key: 'fetchGroups',\n        value: function fetchGroups() {\n            var _this3 = this;\n\n            this.isLoading = true;\n            this.API.all('groups').getList().then(function (results) {\n                _this3.groups = results;\n                _this3.isLoading = false;\n            }, function () {});\n        }\n    }]);\n\n    return GroupListController;\n}();\n\nvar GroupListComponent = exports.GroupListComponent = {\n    templateUrl: './views/app/components/group-list/group-list.component.html',\n    controller: GroupListController,\n    controllerAs: 'vm',\n    bindings: {}\n};//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiMTQuanMiLCJzb3VyY2VzIjpbIndlYnBhY2s6Ly8vYW5ndWxhci9hcHAvY29tcG9uZW50cy9ncm91cC1saXN0L2dyb3VwLWxpc3QuY29tcG9uZW50LmpzPzI1MjgiXSwic291cmNlc0NvbnRlbnQiOlsiJ3VzZSBzdHJpY3QnO1xuXG5PYmplY3QuZGVmaW5lUHJvcGVydHkoZXhwb3J0cywgXCJfX2VzTW9kdWxlXCIsIHtcbiAgICB2YWx1ZTogdHJ1ZVxufSk7XG5cbnZhciBfY3JlYXRlQ2xhc3MgPSBmdW5jdGlvbiAoKSB7IGZ1bmN0aW9uIGRlZmluZVByb3BlcnRpZXModGFyZ2V0LCBwcm9wcykgeyBmb3IgKHZhciBpID0gMDsgaSA8IHByb3BzLmxlbmd0aDsgaSsrKSB7IHZhciBkZXNjcmlwdG9yID0gcHJvcHNbaV07IGRlc2NyaXB0b3IuZW51bWVyYWJsZSA9IGRlc2NyaXB0b3IuZW51bWVyYWJsZSB8fCBmYWxzZTsgZGVzY3JpcHRvci5jb25maWd1cmFibGUgPSB0cnVlOyBpZiAoXCJ2YWx1ZVwiIGluIGRlc2NyaXB0b3IpIGRlc2NyaXB0b3Iud3JpdGFibGUgPSB0cnVlOyBPYmplY3QuZGVmaW5lUHJvcGVydHkodGFyZ2V0LCBkZXNjcmlwdG9yLmtleSwgZGVzY3JpcHRvcik7IH0gfSByZXR1cm4gZnVuY3Rpb24gKENvbnN0cnVjdG9yLCBwcm90b1Byb3BzLCBzdGF0aWNQcm9wcykgeyBpZiAocHJvdG9Qcm9wcykgZGVmaW5lUHJvcGVydGllcyhDb25zdHJ1Y3Rvci5wcm90b3R5cGUsIHByb3RvUHJvcHMpOyBpZiAoc3RhdGljUHJvcHMpIGRlZmluZVByb3BlcnRpZXMoQ29uc3RydWN0b3IsIHN0YXRpY1Byb3BzKTsgcmV0dXJuIENvbnN0cnVjdG9yOyB9OyB9KCk7XG5cbmZ1bmN0aW9uIF9jbGFzc0NhbGxDaGVjayhpbnN0YW5jZSwgQ29uc3RydWN0b3IpIHsgaWYgKCEoaW5zdGFuY2UgaW5zdGFuY2VvZiBDb25zdHJ1Y3RvcikpIHsgdGhyb3cgbmV3IFR5cGVFcnJvcihcIkNhbm5vdCBjYWxsIGEgY2xhc3MgYXMgYSBmdW5jdGlvblwiKTsgfSB9XG5cbnZhciBHcm91cExpc3RDb250cm9sbGVyID0gZnVuY3Rpb24gKCkge1xuICAgIEdyb3VwTGlzdENvbnRyb2xsZXIuJGluamVjdCA9IFtcIkFQSVwiLCBcIiRtZERpYWxvZ1wiLCBcIiRzdGF0ZVwiXTtcbiAgICBmdW5jdGlvbiBHcm91cExpc3RDb250cm9sbGVyKEFQSSwgJG1kRGlhbG9nLCAkc3RhdGUpIHtcbiAgICAgICAgJ25nSW5qZWN0JztcblxuICAgICAgICBfY2xhc3NDYWxsQ2hlY2sodGhpcywgR3JvdXBMaXN0Q29udHJvbGxlcik7XG5cbiAgICAgICAgdGhpcy5BUEkgPSBBUEk7XG4gICAgICAgIHRoaXMuJG1kRGlhbG9nID0gJG1kRGlhbG9nO1xuICAgICAgICB0aGlzLiRzdGF0ZSA9ICRzdGF0ZTtcbiAgICB9XG5cbiAgICBfY3JlYXRlQ2xhc3MoR3JvdXBMaXN0Q29udHJvbGxlciwgW3tcbiAgICAgICAga2V5OiAnJG9uSW5pdCcsXG4gICAgICAgIHZhbHVlOiBmdW5jdGlvbiAkb25Jbml0KCkge1xuICAgICAgICAgICAgdGhpcy5ncm91cHMgPSBbXTtcbiAgICAgICAgICAgIHRoaXMuZmV0Y2hHcm91cHMoKTtcbiAgICAgICAgfVxuICAgIH0sIHtcbiAgICAgICAga2V5OiAnY29uZmlybURlbGV0aW9uJyxcbiAgICAgICAgdmFsdWU6IGZ1bmN0aW9uIGNvbmZpcm1EZWxldGlvbihncm91cCkge1xuICAgICAgICAgICAgdmFyIGNvbmZpcm0gPSB0aGlzLiRtZERpYWxvZy5jb25maXJtKCkudGl0bGUoJ8K/RGVzZWFzIGVsaW1pbmFyIGVsIGdydXBvIFwiJyArIGdyb3VwLm5hbWUgKyAnXCInKS50ZXh0Q29udGVudCgnVG9kb3MgbG9zIGFsdW1ub3MgcGVydGVuZWNpZW50ZXMgYWwgZ3J1cG8gc2UgZWxpbWluYXJhbicpLmFyaWFMYWJlbCgnQ29uZmlybWFyIG9wZXJhY2nDs24nKS5vaygnU0knKS5jYW5jZWwoJ05PJyk7XG5cbiAgICAgICAgICAgIHRoaXMuJG1kRGlhbG9nLnNob3coY29uZmlybSkudGhlbihmdW5jdGlvbiAoKSB7XG4gICAgICAgICAgICAgICAgcmV0dXJuIHJlbW92ZShncm91cCk7XG4gICAgICAgICAgICB9LCBmdW5jdGlvbiAoKSB7fSk7XG5cbiAgICAgICAgICAgIHZhciBjb21wb25lbnQgPSB0aGlzO1xuICAgICAgICAgICAgdmFyIHJlbW92ZSA9IGZ1bmN0aW9uIHJlbW92ZShncm91cCkge1xuICAgICAgICAgICAgICAgIGdyb3VwLnJlbW92ZSgpLnRoZW4oZnVuY3Rpb24gKCkge1xuICAgICAgICAgICAgICAgICAgICBjb21wb25lbnQuZmV0Y2hHcm91cHMoKTtcbiAgICAgICAgICAgICAgICB9LCBmdW5jdGlvbiAoKSB7fSk7XG4gICAgICAgICAgICB9O1xuICAgICAgICB9XG4gICAgfSwge1xuICAgICAgICBrZXk6ICdjcmVhdGUnLFxuICAgICAgICB2YWx1ZTogZnVuY3Rpb24gY3JlYXRlKCkge1xuICAgICAgICAgICAgdmFyIF90aGlzID0gdGhpcztcblxuICAgICAgICAgICAgdGhpcy4kbWREaWFsb2cuc2hvdyh7XG4gICAgICAgICAgICAgICAgdGVtcGxhdGU6ICc8bWQtZGlhbG9nIGZsZXg9XCI2MFwiIGFyaWEtbGFiZWw9XCJncnVwb3NcIj48Z3JvdXAtZm9ybT48L2dyb3VwLWZvcm0+PC9tZC1kaWFsb2c+JyxcbiAgICAgICAgICAgICAgICBjbGlja091dHNpZGVUb0Nsb3NlOiB0cnVlXG4gICAgICAgICAgICB9KS50aGVuKGZ1bmN0aW9uICgpIHtcbiAgICAgICAgICAgICAgICByZXR1cm4gX3RoaXMuZmV0Y2hHcm91cHMoKTtcbiAgICAgICAgICAgIH0sIGZ1bmN0aW9uICgpIHt9KTtcbiAgICAgICAgfVxuICAgIH0sIHtcbiAgICAgICAga2V5OiAnZWRpdCcsXG4gICAgICAgIHZhbHVlOiBmdW5jdGlvbiBlZGl0KGdyb3VwKSB7XG4gICAgICAgICAgICB2YXIgX3RoaXMyID0gdGhpcztcblxuICAgICAgICAgICAgdGhpcy4kbWREaWFsb2cuc2hvdyh7XG4gICAgICAgICAgICAgICAgdGVtcGxhdGU6IFwiPG1kLWRpYWxvZyBmbGV4PSc2MCcgYXJpYS1sYWJlbD0nZ3J1cG9zJz48Z3JvdXAtZm9ybSBncm91cGlkPSdcIiArIGdyb3VwLmlkICsgXCInPjwvZ3JvdXAtZm9ybT48L21kLWRpYWxvZz5cIixcbiAgICAgICAgICAgICAgICBjbGlja091dHNpZGVUb0Nsb3NlOiB0cnVlXG4gICAgICAgICAgICB9KS50aGVuKGZ1bmN0aW9uICgpIHtcbiAgICAgICAgICAgICAgICByZXR1cm4gX3RoaXMyLmZldGNoR3JvdXBzKCk7XG4gICAgICAgICAgICB9LCBmdW5jdGlvbiAoKSB7fSk7XG4gICAgICAgIH1cbiAgICB9LCB7XG4gICAgICAgIGtleTogJ2ZldGNoR3JvdXBzJyxcbiAgICAgICAgdmFsdWU6IGZ1bmN0aW9uIGZldGNoR3JvdXBzKCkge1xuICAgICAgICAgICAgdmFyIF90aGlzMyA9IHRoaXM7XG5cbiAgICAgICAgICAgIHRoaXMuaXNMb2FkaW5nID0gdHJ1ZTtcbiAgICAgICAgICAgIHRoaXMuQVBJLmFsbCgnZ3JvdXBzJykuZ2V0TGlzdCgpLnRoZW4oZnVuY3Rpb24gKHJlc3VsdHMpIHtcbiAgICAgICAgICAgICAgICBfdGhpczMuZ3JvdXBzID0gcmVzdWx0cztcbiAgICAgICAgICAgICAgICBfdGhpczMuaXNMb2FkaW5nID0gZmFsc2U7XG4gICAgICAgICAgICB9LCBmdW5jdGlvbiAoKSB7fSk7XG4gICAgICAgIH1cbiAgICB9XSk7XG5cbiAgICByZXR1cm4gR3JvdXBMaXN0Q29udHJvbGxlcjtcbn0oKTtcblxudmFyIEdyb3VwTGlzdENvbXBvbmVudCA9IGV4cG9ydHMuR3JvdXBMaXN0Q29tcG9uZW50ID0ge1xuICAgIHRlbXBsYXRlVXJsOiAnLi92aWV3cy9hcHAvY29tcG9uZW50cy9ncm91cC1saXN0L2dyb3VwLWxpc3QuY29tcG9uZW50Lmh0bWwnLFxuICAgIGNvbnRyb2xsZXI6IEdyb3VwTGlzdENvbnRyb2xsZXIsXG4gICAgY29udHJvbGxlckFzOiAndm0nLFxuICAgIGJpbmRpbmdzOiB7fVxufTtcblxuXG4vLyBXRUJQQUNLIEZPT1RFUiAvL1xuLy8gYW5ndWxhci9hcHAvY29tcG9uZW50cy9ncm91cC1saXN0L2dyb3VwLWxpc3QuY29tcG9uZW50LmpzIl0sIm1hcHBpbmdzIjoiQUFBQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0EiLCJzb3VyY2VSb290IjoiIn0=");
+eval("'use strict';\n\nObject.defineProperty(exports, \"__esModule\", {\n    value: true\n});\n\nvar _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if (\"value\" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();\n\nfunction _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError(\"Cannot call a class as a function\"); } }\n\nvar GroupListController = function () {\n    GroupListController.$inject = [\"API\", \"$mdDialog\", \"$state\"];\n    function GroupListController(API, $mdDialog, $state) {\n        'ngInject';\n\n        _classCallCheck(this, GroupListController);\n\n        this.API = API;\n        this.$mdDialog = $mdDialog;\n        this.$state = $state;\n    }\n\n    _createClass(GroupListController, [{\n        key: '$onInit',\n        value: function $onInit() {\n            this.groups = [];\n            this.pagination = {\n                per_page: 5,\n                page: 1\n            };\n            this.fetchGroups();\n        }\n    }, {\n        key: 'confirmDeletion',\n        value: function confirmDeletion(group) {\n            var confirm = this.$mdDialog.confirm().title('¿Deseas eliminar el grupo \"' + group.name + '\"').textContent('Todos los alumnos pertenecientes al grupo se eliminaran').ariaLabel('Confirmar operación').ok('SI').cancel('NO');\n\n            this.$mdDialog.show(confirm).then(function () {\n                return remove(group);\n            }, function () {});\n\n            var component = this;\n            var remove = function remove(group) {\n                group.remove().then(function () {\n                    component.fetchGroups();\n                }, function () {});\n            };\n        }\n    }, {\n        key: 'create',\n        value: function create() {\n            var _this = this;\n\n            this.$mdDialog.show({\n                template: '<md-dialog flex=\"60\" aria-label=\"grupos\"><group-form></group-form></md-dialog>',\n                clickOutsideToClose: true\n            }).then(function () {\n                return _this.fetchGroups();\n            }, function () {});\n        }\n    }, {\n        key: 'edit',\n        value: function edit(group) {\n            var _this2 = this;\n\n            this.$mdDialog.show({\n                template: \"<md-dialog flex='60' aria-label='grupos'><group-form groupid='\" + group.id + \"'></group-form></md-dialog>\",\n                clickOutsideToClose: true\n            }).then(function () {\n                return _this2.fetchGroups();\n            }, function () {});\n        }\n    }, {\n        key: 'fetchGroups',\n        value: function fetchGroups() {\n            var _this3 = this;\n\n            this.isLoading = true;\n            this.API.all('groups').getList(this.pagination).then(function (results) {\n                _this3.groups = results;\n                _this3.isLoading = false;\n            }, function () {});\n        }\n    }]);\n\n    return GroupListController;\n}();\n\nvar GroupListComponent = exports.GroupListComponent = {\n    templateUrl: './views/app/components/group-list/group-list.component.html',\n    controller: GroupListController,\n    controllerAs: 'vm',\n    bindings: {}\n};//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiMTQuanMiLCJzb3VyY2VzIjpbIndlYnBhY2s6Ly8vYW5ndWxhci9hcHAvY29tcG9uZW50cy9ncm91cC1saXN0L2dyb3VwLWxpc3QuY29tcG9uZW50LmpzPzI1MjgiXSwic291cmNlc0NvbnRlbnQiOlsiJ3VzZSBzdHJpY3QnO1xuXG5PYmplY3QuZGVmaW5lUHJvcGVydHkoZXhwb3J0cywgXCJfX2VzTW9kdWxlXCIsIHtcbiAgICB2YWx1ZTogdHJ1ZVxufSk7XG5cbnZhciBfY3JlYXRlQ2xhc3MgPSBmdW5jdGlvbiAoKSB7IGZ1bmN0aW9uIGRlZmluZVByb3BlcnRpZXModGFyZ2V0LCBwcm9wcykgeyBmb3IgKHZhciBpID0gMDsgaSA8IHByb3BzLmxlbmd0aDsgaSsrKSB7IHZhciBkZXNjcmlwdG9yID0gcHJvcHNbaV07IGRlc2NyaXB0b3IuZW51bWVyYWJsZSA9IGRlc2NyaXB0b3IuZW51bWVyYWJsZSB8fCBmYWxzZTsgZGVzY3JpcHRvci5jb25maWd1cmFibGUgPSB0cnVlOyBpZiAoXCJ2YWx1ZVwiIGluIGRlc2NyaXB0b3IpIGRlc2NyaXB0b3Iud3JpdGFibGUgPSB0cnVlOyBPYmplY3QuZGVmaW5lUHJvcGVydHkodGFyZ2V0LCBkZXNjcmlwdG9yLmtleSwgZGVzY3JpcHRvcik7IH0gfSByZXR1cm4gZnVuY3Rpb24gKENvbnN0cnVjdG9yLCBwcm90b1Byb3BzLCBzdGF0aWNQcm9wcykgeyBpZiAocHJvdG9Qcm9wcykgZGVmaW5lUHJvcGVydGllcyhDb25zdHJ1Y3Rvci5wcm90b3R5cGUsIHByb3RvUHJvcHMpOyBpZiAoc3RhdGljUHJvcHMpIGRlZmluZVByb3BlcnRpZXMoQ29uc3RydWN0b3IsIHN0YXRpY1Byb3BzKTsgcmV0dXJuIENvbnN0cnVjdG9yOyB9OyB9KCk7XG5cbmZ1bmN0aW9uIF9jbGFzc0NhbGxDaGVjayhpbnN0YW5jZSwgQ29uc3RydWN0b3IpIHsgaWYgKCEoaW5zdGFuY2UgaW5zdGFuY2VvZiBDb25zdHJ1Y3RvcikpIHsgdGhyb3cgbmV3IFR5cGVFcnJvcihcIkNhbm5vdCBjYWxsIGEgY2xhc3MgYXMgYSBmdW5jdGlvblwiKTsgfSB9XG5cbnZhciBHcm91cExpc3RDb250cm9sbGVyID0gZnVuY3Rpb24gKCkge1xuICAgIEdyb3VwTGlzdENvbnRyb2xsZXIuJGluamVjdCA9IFtcIkFQSVwiLCBcIiRtZERpYWxvZ1wiLCBcIiRzdGF0ZVwiXTtcbiAgICBmdW5jdGlvbiBHcm91cExpc3RDb250cm9sbGVyKEFQSSwgJG1kRGlhbG9nLCAkc3RhdGUpIHtcbiAgICAgICAgJ25nSW5qZWN0JztcblxuICAgICAgICBfY2xhc3NDYWxsQ2hlY2sodGhpcywgR3JvdXBMaXN0Q29udHJvbGxlcik7XG5cbiAgICAgICAgdGhpcy5BUEkgPSBBUEk7XG4gICAgICAgIHRoaXMuJG1kRGlhbG9nID0gJG1kRGlhbG9nO1xuICAgICAgICB0aGlzLiRzdGF0ZSA9ICRzdGF0ZTtcbiAgICB9XG5cbiAgICBfY3JlYXRlQ2xhc3MoR3JvdXBMaXN0Q29udHJvbGxlciwgW3tcbiAgICAgICAga2V5OiAnJG9uSW5pdCcsXG4gICAgICAgIHZhbHVlOiBmdW5jdGlvbiAkb25Jbml0KCkge1xuICAgICAgICAgICAgdGhpcy5ncm91cHMgPSBbXTtcbiAgICAgICAgICAgIHRoaXMucGFnaW5hdGlvbiA9IHtcbiAgICAgICAgICAgICAgICBwZXJfcGFnZTogNSxcbiAgICAgICAgICAgICAgICBwYWdlOiAxXG4gICAgICAgICAgICB9O1xuICAgICAgICAgICAgdGhpcy5mZXRjaEdyb3VwcygpO1xuICAgICAgICB9XG4gICAgfSwge1xuICAgICAgICBrZXk6ICdjb25maXJtRGVsZXRpb24nLFxuICAgICAgICB2YWx1ZTogZnVuY3Rpb24gY29uZmlybURlbGV0aW9uKGdyb3VwKSB7XG4gICAgICAgICAgICB2YXIgY29uZmlybSA9IHRoaXMuJG1kRGlhbG9nLmNvbmZpcm0oKS50aXRsZSgnwr9EZXNlYXMgZWxpbWluYXIgZWwgZ3J1cG8gXCInICsgZ3JvdXAubmFtZSArICdcIicpLnRleHRDb250ZW50KCdUb2RvcyBsb3MgYWx1bW5vcyBwZXJ0ZW5lY2llbnRlcyBhbCBncnVwbyBzZSBlbGltaW5hcmFuJykuYXJpYUxhYmVsKCdDb25maXJtYXIgb3BlcmFjacOzbicpLm9rKCdTSScpLmNhbmNlbCgnTk8nKTtcblxuICAgICAgICAgICAgdGhpcy4kbWREaWFsb2cuc2hvdyhjb25maXJtKS50aGVuKGZ1bmN0aW9uICgpIHtcbiAgICAgICAgICAgICAgICByZXR1cm4gcmVtb3ZlKGdyb3VwKTtcbiAgICAgICAgICAgIH0sIGZ1bmN0aW9uICgpIHt9KTtcblxuICAgICAgICAgICAgdmFyIGNvbXBvbmVudCA9IHRoaXM7XG4gICAgICAgICAgICB2YXIgcmVtb3ZlID0gZnVuY3Rpb24gcmVtb3ZlKGdyb3VwKSB7XG4gICAgICAgICAgICAgICAgZ3JvdXAucmVtb3ZlKCkudGhlbihmdW5jdGlvbiAoKSB7XG4gICAgICAgICAgICAgICAgICAgIGNvbXBvbmVudC5mZXRjaEdyb3VwcygpO1xuICAgICAgICAgICAgICAgIH0sIGZ1bmN0aW9uICgpIHt9KTtcbiAgICAgICAgICAgIH07XG4gICAgICAgIH1cbiAgICB9LCB7XG4gICAgICAgIGtleTogJ2NyZWF0ZScsXG4gICAgICAgIHZhbHVlOiBmdW5jdGlvbiBjcmVhdGUoKSB7XG4gICAgICAgICAgICB2YXIgX3RoaXMgPSB0aGlzO1xuXG4gICAgICAgICAgICB0aGlzLiRtZERpYWxvZy5zaG93KHtcbiAgICAgICAgICAgICAgICB0ZW1wbGF0ZTogJzxtZC1kaWFsb2cgZmxleD1cIjYwXCIgYXJpYS1sYWJlbD1cImdydXBvc1wiPjxncm91cC1mb3JtPjwvZ3JvdXAtZm9ybT48L21kLWRpYWxvZz4nLFxuICAgICAgICAgICAgICAgIGNsaWNrT3V0c2lkZVRvQ2xvc2U6IHRydWVcbiAgICAgICAgICAgIH0pLnRoZW4oZnVuY3Rpb24gKCkge1xuICAgICAgICAgICAgICAgIHJldHVybiBfdGhpcy5mZXRjaEdyb3VwcygpO1xuICAgICAgICAgICAgfSwgZnVuY3Rpb24gKCkge30pO1xuICAgICAgICB9XG4gICAgfSwge1xuICAgICAgICBrZXk6ICdlZGl0JyxcbiAgICAgICAgdmFsdWU6IGZ1bmN0aW9uIGVkaXQoZ3JvdXApIHtcbiAgICAgICAgICAgIHZhciBfdGhpczIgPSB0aGlzO1xuXG4gICAgICAgICAgICB0aGlzLiRtZERpYWxvZy5zaG93KHtcbiAgICAgICAgICAgICAgICB0ZW1wbGF0ZTogXCI8bWQtZGlhbG9nIGZsZXg9JzYwJyBhcmlhLWxhYmVsPSdncnVwb3MnPjxncm91cC1mb3JtIGdyb3VwaWQ9J1wiICsgZ3JvdXAuaWQgKyBcIic+PC9ncm91cC1mb3JtPjwvbWQtZGlhbG9nPlwiLFxuICAgICAgICAgICAgICAgIGNsaWNrT3V0c2lkZVRvQ2xvc2U6IHRydWVcbiAgICAgICAgICAgIH0pLnRoZW4oZnVuY3Rpb24gKCkge1xuICAgICAgICAgICAgICAgIHJldHVybiBfdGhpczIuZmV0Y2hHcm91cHMoKTtcbiAgICAgICAgICAgIH0sIGZ1bmN0aW9uICgpIHt9KTtcbiAgICAgICAgfVxuICAgIH0sIHtcbiAgICAgICAga2V5OiAnZmV0Y2hHcm91cHMnLFxuICAgICAgICB2YWx1ZTogZnVuY3Rpb24gZmV0Y2hHcm91cHMoKSB7XG4gICAgICAgICAgICB2YXIgX3RoaXMzID0gdGhpcztcblxuICAgICAgICAgICAgdGhpcy5pc0xvYWRpbmcgPSB0cnVlO1xuICAgICAgICAgICAgdGhpcy5BUEkuYWxsKCdncm91cHMnKS5nZXRMaXN0KHRoaXMucGFnaW5hdGlvbikudGhlbihmdW5jdGlvbiAocmVzdWx0cykge1xuICAgICAgICAgICAgICAgIF90aGlzMy5ncm91cHMgPSByZXN1bHRzO1xuICAgICAgICAgICAgICAgIF90aGlzMy5pc0xvYWRpbmcgPSBmYWxzZTtcbiAgICAgICAgICAgIH0sIGZ1bmN0aW9uICgpIHt9KTtcbiAgICAgICAgfVxuICAgIH1dKTtcblxuICAgIHJldHVybiBHcm91cExpc3RDb250cm9sbGVyO1xufSgpO1xuXG52YXIgR3JvdXBMaXN0Q29tcG9uZW50ID0gZXhwb3J0cy5Hcm91cExpc3RDb21wb25lbnQgPSB7XG4gICAgdGVtcGxhdGVVcmw6ICcuL3ZpZXdzL2FwcC9jb21wb25lbnRzL2dyb3VwLWxpc3QvZ3JvdXAtbGlzdC5jb21wb25lbnQuaHRtbCcsXG4gICAgY29udHJvbGxlcjogR3JvdXBMaXN0Q29udHJvbGxlcixcbiAgICBjb250cm9sbGVyQXM6ICd2bScsXG4gICAgYmluZGluZ3M6IHt9XG59O1xuXG5cbi8vIFdFQlBBQ0sgRk9PVEVSIC8vXG4vLyBhbmd1bGFyL2FwcC9jb21wb25lbnRzL2dyb3VwLWxpc3QvZ3JvdXAtbGlzdC5jb21wb25lbnQuanMiXSwibWFwcGluZ3MiOiJBQUFBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBIiwic291cmNlUm9vdCI6IiJ9");
 
 /***/ },
 /* 15 */
@@ -107608,7 +109095,7 @@ eval("'use strict';\n\nObject.defineProperty(exports, \"__esModule\", {\n    val
 /***/ function(module, exports) {
 
 "use strict";
-eval("\"use strict\";\n\nObject.defineProperty(exports, \"__esModule\", {\n    value: true\n});\n\nvar _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if (\"value\" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();\n\nfunction _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError(\"Cannot call a class as a function\"); } }\n\nvar StudentDetailsController = function () {\n    StudentDetailsController.$inject = [\"$stateParams\", \"API\", \"$mdDialog\"];\n    function StudentDetailsController($stateParams, API, $mdDialog) {\n        'ngInject';\n\n        _classCallCheck(this, StudentDetailsController);\n\n        this.$stateParams = $stateParams;\n        this.API = API;\n        this.$mdDialog = $mdDialog;\n    }\n\n    _createClass(StudentDetailsController, [{\n        key: \"$onInit\",\n        value: function $onInit() {\n            var _this = this;\n\n            this.API.one(\"students\", this.$stateParams.id).get().then(function (result) {\n                _this.student = result;\n                console.log(result);\n                var operationData = _this.student.stadistics.operation;\n                _this.operationsGraph = {\n                    data: [operationData.additionCount, operationData.multiplicationCount, operationData.divisionCount, operationData.substractionCount],\n                    labels: [\"Suma\", \"Multiplicacion\", \"División\", \"Resta\"],\n                    options: {\n                        legend: {\n                            display: true\n                        }\n                    }\n                };\n                var gameData = _this.student.stadistics.game;\n                _this.gamesGraph = {\n                    data: [gameData.winnedCount, gameData.lostCount],\n                    labels: [\"Ganadas\", \"Perdidas\"],\n                    options: {\n                        legend: {\n                            display: true\n                        }\n                    }\n                };\n            });\n        }\n    }, {\n        key: \"show\",\n        value: function show(game) {\n            this.$mdDialog.show({\n                template: \"<md-dialog flex='80' aria-label='juegos'><game-details gameid='\" + game.id + \"'></game-details></md-dialog>\",\n                clickOutsideToClose: true\n            }).then(function () {}, function () {});\n        }\n    }]);\n\n    return StudentDetailsController;\n}();\n\nvar StudentDetailsComponent = exports.StudentDetailsComponent = {\n    templateUrl: './views/app/components/student-details/student-details.component.html',\n    controller: StudentDetailsController,\n    controllerAs: 'vm',\n    bindings: {}\n};//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiMTguanMiLCJzb3VyY2VzIjpbIndlYnBhY2s6Ly8vYW5ndWxhci9hcHAvY29tcG9uZW50cy9zdHVkZW50LWRldGFpbHMvc3R1ZGVudC1kZXRhaWxzLmNvbXBvbmVudC5qcz8wYzhkIl0sInNvdXJjZXNDb250ZW50IjpbIlwidXNlIHN0cmljdFwiO1xuXG5PYmplY3QuZGVmaW5lUHJvcGVydHkoZXhwb3J0cywgXCJfX2VzTW9kdWxlXCIsIHtcbiAgICB2YWx1ZTogdHJ1ZVxufSk7XG5cbnZhciBfY3JlYXRlQ2xhc3MgPSBmdW5jdGlvbiAoKSB7IGZ1bmN0aW9uIGRlZmluZVByb3BlcnRpZXModGFyZ2V0LCBwcm9wcykgeyBmb3IgKHZhciBpID0gMDsgaSA8IHByb3BzLmxlbmd0aDsgaSsrKSB7IHZhciBkZXNjcmlwdG9yID0gcHJvcHNbaV07IGRlc2NyaXB0b3IuZW51bWVyYWJsZSA9IGRlc2NyaXB0b3IuZW51bWVyYWJsZSB8fCBmYWxzZTsgZGVzY3JpcHRvci5jb25maWd1cmFibGUgPSB0cnVlOyBpZiAoXCJ2YWx1ZVwiIGluIGRlc2NyaXB0b3IpIGRlc2NyaXB0b3Iud3JpdGFibGUgPSB0cnVlOyBPYmplY3QuZGVmaW5lUHJvcGVydHkodGFyZ2V0LCBkZXNjcmlwdG9yLmtleSwgZGVzY3JpcHRvcik7IH0gfSByZXR1cm4gZnVuY3Rpb24gKENvbnN0cnVjdG9yLCBwcm90b1Byb3BzLCBzdGF0aWNQcm9wcykgeyBpZiAocHJvdG9Qcm9wcykgZGVmaW5lUHJvcGVydGllcyhDb25zdHJ1Y3Rvci5wcm90b3R5cGUsIHByb3RvUHJvcHMpOyBpZiAoc3RhdGljUHJvcHMpIGRlZmluZVByb3BlcnRpZXMoQ29uc3RydWN0b3IsIHN0YXRpY1Byb3BzKTsgcmV0dXJuIENvbnN0cnVjdG9yOyB9OyB9KCk7XG5cbmZ1bmN0aW9uIF9jbGFzc0NhbGxDaGVjayhpbnN0YW5jZSwgQ29uc3RydWN0b3IpIHsgaWYgKCEoaW5zdGFuY2UgaW5zdGFuY2VvZiBDb25zdHJ1Y3RvcikpIHsgdGhyb3cgbmV3IFR5cGVFcnJvcihcIkNhbm5vdCBjYWxsIGEgY2xhc3MgYXMgYSBmdW5jdGlvblwiKTsgfSB9XG5cbnZhciBTdHVkZW50RGV0YWlsc0NvbnRyb2xsZXIgPSBmdW5jdGlvbiAoKSB7XG4gICAgU3R1ZGVudERldGFpbHNDb250cm9sbGVyLiRpbmplY3QgPSBbXCIkc3RhdGVQYXJhbXNcIiwgXCJBUElcIiwgXCIkbWREaWFsb2dcIl07XG4gICAgZnVuY3Rpb24gU3R1ZGVudERldGFpbHNDb250cm9sbGVyKCRzdGF0ZVBhcmFtcywgQVBJLCAkbWREaWFsb2cpIHtcbiAgICAgICAgJ25nSW5qZWN0JztcblxuICAgICAgICBfY2xhc3NDYWxsQ2hlY2sodGhpcywgU3R1ZGVudERldGFpbHNDb250cm9sbGVyKTtcblxuICAgICAgICB0aGlzLiRzdGF0ZVBhcmFtcyA9ICRzdGF0ZVBhcmFtcztcbiAgICAgICAgdGhpcy5BUEkgPSBBUEk7XG4gICAgICAgIHRoaXMuJG1kRGlhbG9nID0gJG1kRGlhbG9nO1xuICAgIH1cblxuICAgIF9jcmVhdGVDbGFzcyhTdHVkZW50RGV0YWlsc0NvbnRyb2xsZXIsIFt7XG4gICAgICAgIGtleTogXCIkb25Jbml0XCIsXG4gICAgICAgIHZhbHVlOiBmdW5jdGlvbiAkb25Jbml0KCkge1xuICAgICAgICAgICAgdmFyIF90aGlzID0gdGhpcztcblxuICAgICAgICAgICAgdGhpcy5BUEkub25lKFwic3R1ZGVudHNcIiwgdGhpcy4kc3RhdGVQYXJhbXMuaWQpLmdldCgpLnRoZW4oZnVuY3Rpb24gKHJlc3VsdCkge1xuICAgICAgICAgICAgICAgIF90aGlzLnN0dWRlbnQgPSByZXN1bHQ7XG4gICAgICAgICAgICAgICAgY29uc29sZS5sb2cocmVzdWx0KTtcbiAgICAgICAgICAgICAgICB2YXIgb3BlcmF0aW9uRGF0YSA9IF90aGlzLnN0dWRlbnQuc3RhZGlzdGljcy5vcGVyYXRpb247XG4gICAgICAgICAgICAgICAgX3RoaXMub3BlcmF0aW9uc0dyYXBoID0ge1xuICAgICAgICAgICAgICAgICAgICBkYXRhOiBbb3BlcmF0aW9uRGF0YS5hZGRpdGlvbkNvdW50LCBvcGVyYXRpb25EYXRhLm11bHRpcGxpY2F0aW9uQ291bnQsIG9wZXJhdGlvbkRhdGEuZGl2aXNpb25Db3VudCwgb3BlcmF0aW9uRGF0YS5zdWJzdHJhY3Rpb25Db3VudF0sXG4gICAgICAgICAgICAgICAgICAgIGxhYmVsczogW1wiU3VtYVwiLCBcIk11bHRpcGxpY2FjaW9uXCIsIFwiRGl2aXNpw7NuXCIsIFwiUmVzdGFcIl0sXG4gICAgICAgICAgICAgICAgICAgIG9wdGlvbnM6IHtcbiAgICAgICAgICAgICAgICAgICAgICAgIGxlZ2VuZDoge1xuICAgICAgICAgICAgICAgICAgICAgICAgICAgIGRpc3BsYXk6IHRydWVcbiAgICAgICAgICAgICAgICAgICAgICAgIH1cbiAgICAgICAgICAgICAgICAgICAgfVxuICAgICAgICAgICAgICAgIH07XG4gICAgICAgICAgICAgICAgdmFyIGdhbWVEYXRhID0gX3RoaXMuc3R1ZGVudC5zdGFkaXN0aWNzLmdhbWU7XG4gICAgICAgICAgICAgICAgX3RoaXMuZ2FtZXNHcmFwaCA9IHtcbiAgICAgICAgICAgICAgICAgICAgZGF0YTogW2dhbWVEYXRhLndpbm5lZENvdW50LCBnYW1lRGF0YS5sb3N0Q291bnRdLFxuICAgICAgICAgICAgICAgICAgICBsYWJlbHM6IFtcIkdhbmFkYXNcIiwgXCJQZXJkaWRhc1wiXSxcbiAgICAgICAgICAgICAgICAgICAgb3B0aW9uczoge1xuICAgICAgICAgICAgICAgICAgICAgICAgbGVnZW5kOiB7XG4gICAgICAgICAgICAgICAgICAgICAgICAgICAgZGlzcGxheTogdHJ1ZVxuICAgICAgICAgICAgICAgICAgICAgICAgfVxuICAgICAgICAgICAgICAgICAgICB9XG4gICAgICAgICAgICAgICAgfTtcbiAgICAgICAgICAgIH0pO1xuICAgICAgICB9XG4gICAgfSwge1xuICAgICAgICBrZXk6IFwic2hvd1wiLFxuICAgICAgICB2YWx1ZTogZnVuY3Rpb24gc2hvdyhnYW1lKSB7XG4gICAgICAgICAgICB0aGlzLiRtZERpYWxvZy5zaG93KHtcbiAgICAgICAgICAgICAgICB0ZW1wbGF0ZTogXCI8bWQtZGlhbG9nIGZsZXg9JzgwJyBhcmlhLWxhYmVsPSdqdWVnb3MnPjxnYW1lLWRldGFpbHMgZ2FtZWlkPSdcIiArIGdhbWUuaWQgKyBcIic+PC9nYW1lLWRldGFpbHM+PC9tZC1kaWFsb2c+XCIsXG4gICAgICAgICAgICAgICAgY2xpY2tPdXRzaWRlVG9DbG9zZTogdHJ1ZVxuICAgICAgICAgICAgfSkudGhlbihmdW5jdGlvbiAoKSB7fSwgZnVuY3Rpb24gKCkge30pO1xuICAgICAgICB9XG4gICAgfV0pO1xuXG4gICAgcmV0dXJuIFN0dWRlbnREZXRhaWxzQ29udHJvbGxlcjtcbn0oKTtcblxudmFyIFN0dWRlbnREZXRhaWxzQ29tcG9uZW50ID0gZXhwb3J0cy5TdHVkZW50RGV0YWlsc0NvbXBvbmVudCA9IHtcbiAgICB0ZW1wbGF0ZVVybDogJy4vdmlld3MvYXBwL2NvbXBvbmVudHMvc3R1ZGVudC1kZXRhaWxzL3N0dWRlbnQtZGV0YWlscy5jb21wb25lbnQuaHRtbCcsXG4gICAgY29udHJvbGxlcjogU3R1ZGVudERldGFpbHNDb250cm9sbGVyLFxuICAgIGNvbnRyb2xsZXJBczogJ3ZtJyxcbiAgICBiaW5kaW5nczoge31cbn07XG5cblxuLy8gV0VCUEFDSyBGT09URVIgLy9cbi8vIGFuZ3VsYXIvYXBwL2NvbXBvbmVudHMvc3R1ZGVudC1kZXRhaWxzL3N0dWRlbnQtZGV0YWlscy5jb21wb25lbnQuanMiXSwibWFwcGluZ3MiOiJBQUFBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0EiLCJzb3VyY2VSb290IjoiIn0=");
+eval("\"use strict\";\n\nObject.defineProperty(exports, \"__esModule\", {\n    value: true\n});\n\nvar _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if (\"value\" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();\n\nfunction _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError(\"Cannot call a class as a function\"); } }\n\nvar StudentDetailsController = function () {\n    StudentDetailsController.$inject = [\"$stateParams\", \"API\", \"$mdDialog\"];\n    function StudentDetailsController($stateParams, API, $mdDialog) {\n        'ngInject';\n\n        _classCallCheck(this, StudentDetailsController);\n\n        this.$stateParams = $stateParams;\n        this.API = API;\n        this.$mdDialog = $mdDialog;\n    }\n\n    _createClass(StudentDetailsController, [{\n        key: \"$onInit\",\n        value: function $onInit() {\n            var _this = this;\n\n            this.API.one(\"students\", this.$stateParams.id).get().then(function (result) {\n                _this.student = result;\n                var operationData = _this.student.stadistics.operation;\n                _this.operationsGraph = {\n                    data: [operationData.additionCount, operationData.multiplicationCount, operationData.divisionCount, operationData.substractionCount],\n                    labels: [\"Suma\", \"Multiplicacion\", \"División\", \"Resta\"],\n                    options: {\n                        legend: {\n                            display: true\n                        }\n                    }\n                };\n                var gameData = _this.student.stadistics.game;\n                _this.gamesGraph = {\n                    data: [gameData.winnedCount, gameData.lostCount],\n                    labels: [\"Ganadas\", \"Perdidas\"],\n                    options: {\n                        legend: {\n                            display: true\n                        }\n                    }\n                };\n            });\n        }\n    }, {\n        key: \"show\",\n        value: function show(game) {\n            this.$mdDialog.show({\n                template: \"<md-dialog flex='80' aria-label='juegos'><game-details gameid='\" + game.id + \"'></game-details></md-dialog>\",\n                clickOutsideToClose: true\n            }).then(function () {}, function () {});\n        }\n    }]);\n\n    return StudentDetailsController;\n}();\n\nvar StudentDetailsComponent = exports.StudentDetailsComponent = {\n    templateUrl: './views/app/components/student-details/student-details.component.html',\n    controller: StudentDetailsController,\n    controllerAs: 'vm',\n    bindings: {}\n};//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiMTguanMiLCJzb3VyY2VzIjpbIndlYnBhY2s6Ly8vYW5ndWxhci9hcHAvY29tcG9uZW50cy9zdHVkZW50LWRldGFpbHMvc3R1ZGVudC1kZXRhaWxzLmNvbXBvbmVudC5qcz8wYzhkIl0sInNvdXJjZXNDb250ZW50IjpbIlwidXNlIHN0cmljdFwiO1xuXG5PYmplY3QuZGVmaW5lUHJvcGVydHkoZXhwb3J0cywgXCJfX2VzTW9kdWxlXCIsIHtcbiAgICB2YWx1ZTogdHJ1ZVxufSk7XG5cbnZhciBfY3JlYXRlQ2xhc3MgPSBmdW5jdGlvbiAoKSB7IGZ1bmN0aW9uIGRlZmluZVByb3BlcnRpZXModGFyZ2V0LCBwcm9wcykgeyBmb3IgKHZhciBpID0gMDsgaSA8IHByb3BzLmxlbmd0aDsgaSsrKSB7IHZhciBkZXNjcmlwdG9yID0gcHJvcHNbaV07IGRlc2NyaXB0b3IuZW51bWVyYWJsZSA9IGRlc2NyaXB0b3IuZW51bWVyYWJsZSB8fCBmYWxzZTsgZGVzY3JpcHRvci5jb25maWd1cmFibGUgPSB0cnVlOyBpZiAoXCJ2YWx1ZVwiIGluIGRlc2NyaXB0b3IpIGRlc2NyaXB0b3Iud3JpdGFibGUgPSB0cnVlOyBPYmplY3QuZGVmaW5lUHJvcGVydHkodGFyZ2V0LCBkZXNjcmlwdG9yLmtleSwgZGVzY3JpcHRvcik7IH0gfSByZXR1cm4gZnVuY3Rpb24gKENvbnN0cnVjdG9yLCBwcm90b1Byb3BzLCBzdGF0aWNQcm9wcykgeyBpZiAocHJvdG9Qcm9wcykgZGVmaW5lUHJvcGVydGllcyhDb25zdHJ1Y3Rvci5wcm90b3R5cGUsIHByb3RvUHJvcHMpOyBpZiAoc3RhdGljUHJvcHMpIGRlZmluZVByb3BlcnRpZXMoQ29uc3RydWN0b3IsIHN0YXRpY1Byb3BzKTsgcmV0dXJuIENvbnN0cnVjdG9yOyB9OyB9KCk7XG5cbmZ1bmN0aW9uIF9jbGFzc0NhbGxDaGVjayhpbnN0YW5jZSwgQ29uc3RydWN0b3IpIHsgaWYgKCEoaW5zdGFuY2UgaW5zdGFuY2VvZiBDb25zdHJ1Y3RvcikpIHsgdGhyb3cgbmV3IFR5cGVFcnJvcihcIkNhbm5vdCBjYWxsIGEgY2xhc3MgYXMgYSBmdW5jdGlvblwiKTsgfSB9XG5cbnZhciBTdHVkZW50RGV0YWlsc0NvbnRyb2xsZXIgPSBmdW5jdGlvbiAoKSB7XG4gICAgU3R1ZGVudERldGFpbHNDb250cm9sbGVyLiRpbmplY3QgPSBbXCIkc3RhdGVQYXJhbXNcIiwgXCJBUElcIiwgXCIkbWREaWFsb2dcIl07XG4gICAgZnVuY3Rpb24gU3R1ZGVudERldGFpbHNDb250cm9sbGVyKCRzdGF0ZVBhcmFtcywgQVBJLCAkbWREaWFsb2cpIHtcbiAgICAgICAgJ25nSW5qZWN0JztcblxuICAgICAgICBfY2xhc3NDYWxsQ2hlY2sodGhpcywgU3R1ZGVudERldGFpbHNDb250cm9sbGVyKTtcblxuICAgICAgICB0aGlzLiRzdGF0ZVBhcmFtcyA9ICRzdGF0ZVBhcmFtcztcbiAgICAgICAgdGhpcy5BUEkgPSBBUEk7XG4gICAgICAgIHRoaXMuJG1kRGlhbG9nID0gJG1kRGlhbG9nO1xuICAgIH1cblxuICAgIF9jcmVhdGVDbGFzcyhTdHVkZW50RGV0YWlsc0NvbnRyb2xsZXIsIFt7XG4gICAgICAgIGtleTogXCIkb25Jbml0XCIsXG4gICAgICAgIHZhbHVlOiBmdW5jdGlvbiAkb25Jbml0KCkge1xuICAgICAgICAgICAgdmFyIF90aGlzID0gdGhpcztcblxuICAgICAgICAgICAgdGhpcy5BUEkub25lKFwic3R1ZGVudHNcIiwgdGhpcy4kc3RhdGVQYXJhbXMuaWQpLmdldCgpLnRoZW4oZnVuY3Rpb24gKHJlc3VsdCkge1xuICAgICAgICAgICAgICAgIF90aGlzLnN0dWRlbnQgPSByZXN1bHQ7XG4gICAgICAgICAgICAgICAgdmFyIG9wZXJhdGlvbkRhdGEgPSBfdGhpcy5zdHVkZW50LnN0YWRpc3RpY3Mub3BlcmF0aW9uO1xuICAgICAgICAgICAgICAgIF90aGlzLm9wZXJhdGlvbnNHcmFwaCA9IHtcbiAgICAgICAgICAgICAgICAgICAgZGF0YTogW29wZXJhdGlvbkRhdGEuYWRkaXRpb25Db3VudCwgb3BlcmF0aW9uRGF0YS5tdWx0aXBsaWNhdGlvbkNvdW50LCBvcGVyYXRpb25EYXRhLmRpdmlzaW9uQ291bnQsIG9wZXJhdGlvbkRhdGEuc3Vic3RyYWN0aW9uQ291bnRdLFxuICAgICAgICAgICAgICAgICAgICBsYWJlbHM6IFtcIlN1bWFcIiwgXCJNdWx0aXBsaWNhY2lvblwiLCBcIkRpdmlzacOzblwiLCBcIlJlc3RhXCJdLFxuICAgICAgICAgICAgICAgICAgICBvcHRpb25zOiB7XG4gICAgICAgICAgICAgICAgICAgICAgICBsZWdlbmQ6IHtcbiAgICAgICAgICAgICAgICAgICAgICAgICAgICBkaXNwbGF5OiB0cnVlXG4gICAgICAgICAgICAgICAgICAgICAgICB9XG4gICAgICAgICAgICAgICAgICAgIH1cbiAgICAgICAgICAgICAgICB9O1xuICAgICAgICAgICAgICAgIHZhciBnYW1lRGF0YSA9IF90aGlzLnN0dWRlbnQuc3RhZGlzdGljcy5nYW1lO1xuICAgICAgICAgICAgICAgIF90aGlzLmdhbWVzR3JhcGggPSB7XG4gICAgICAgICAgICAgICAgICAgIGRhdGE6IFtnYW1lRGF0YS53aW5uZWRDb3VudCwgZ2FtZURhdGEubG9zdENvdW50XSxcbiAgICAgICAgICAgICAgICAgICAgbGFiZWxzOiBbXCJHYW5hZGFzXCIsIFwiUGVyZGlkYXNcIl0sXG4gICAgICAgICAgICAgICAgICAgIG9wdGlvbnM6IHtcbiAgICAgICAgICAgICAgICAgICAgICAgIGxlZ2VuZDoge1xuICAgICAgICAgICAgICAgICAgICAgICAgICAgIGRpc3BsYXk6IHRydWVcbiAgICAgICAgICAgICAgICAgICAgICAgIH1cbiAgICAgICAgICAgICAgICAgICAgfVxuICAgICAgICAgICAgICAgIH07XG4gICAgICAgICAgICB9KTtcbiAgICAgICAgfVxuICAgIH0sIHtcbiAgICAgICAga2V5OiBcInNob3dcIixcbiAgICAgICAgdmFsdWU6IGZ1bmN0aW9uIHNob3coZ2FtZSkge1xuICAgICAgICAgICAgdGhpcy4kbWREaWFsb2cuc2hvdyh7XG4gICAgICAgICAgICAgICAgdGVtcGxhdGU6IFwiPG1kLWRpYWxvZyBmbGV4PSc4MCcgYXJpYS1sYWJlbD0nanVlZ29zJz48Z2FtZS1kZXRhaWxzIGdhbWVpZD0nXCIgKyBnYW1lLmlkICsgXCInPjwvZ2FtZS1kZXRhaWxzPjwvbWQtZGlhbG9nPlwiLFxuICAgICAgICAgICAgICAgIGNsaWNrT3V0c2lkZVRvQ2xvc2U6IHRydWVcbiAgICAgICAgICAgIH0pLnRoZW4oZnVuY3Rpb24gKCkge30sIGZ1bmN0aW9uICgpIHt9KTtcbiAgICAgICAgfVxuICAgIH1dKTtcblxuICAgIHJldHVybiBTdHVkZW50RGV0YWlsc0NvbnRyb2xsZXI7XG59KCk7XG5cbnZhciBTdHVkZW50RGV0YWlsc0NvbXBvbmVudCA9IGV4cG9ydHMuU3R1ZGVudERldGFpbHNDb21wb25lbnQgPSB7XG4gICAgdGVtcGxhdGVVcmw6ICcuL3ZpZXdzL2FwcC9jb21wb25lbnRzL3N0dWRlbnQtZGV0YWlscy9zdHVkZW50LWRldGFpbHMuY29tcG9uZW50Lmh0bWwnLFxuICAgIGNvbnRyb2xsZXI6IFN0dWRlbnREZXRhaWxzQ29udHJvbGxlcixcbiAgICBjb250cm9sbGVyQXM6ICd2bScsXG4gICAgYmluZGluZ3M6IHt9XG59O1xuXG5cbi8vIFdFQlBBQ0sgRk9PVEVSIC8vXG4vLyBhbmd1bGFyL2FwcC9jb21wb25lbnRzL3N0dWRlbnQtZGV0YWlscy9zdHVkZW50LWRldGFpbHMuY29tcG9uZW50LmpzIl0sIm1hcHBpbmdzIjoiQUFBQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQSIsInNvdXJjZVJvb3QiOiIifQ==");
 
 /***/ },
 /* 19 */

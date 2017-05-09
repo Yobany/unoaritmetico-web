@@ -8,6 +8,10 @@ class GroupListController{
 
     $onInit(){
         this.groups = [];
+        this.pagination = {
+            per_page : 5,
+            page : 1
+        };
         this.fetchGroups();
     }
 
@@ -45,7 +49,7 @@ class GroupListController{
 
     fetchGroups(){
         this.isLoading = true;
-        this.API.all('groups').getList().then((results)=>{
+        this.API.all('groups').getList(this.pagination).then((results)=>{
             this.groups = results;
             this.isLoading = false;
         }, () => {});

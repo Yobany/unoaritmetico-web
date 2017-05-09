@@ -9,6 +9,8 @@ use App\Repositories\UserRepository;
 use App\Transformers\UserTransformer;
 use App\Http\Controllers\Controller;
 use Dingo\Api\Exception\InternalHttpException;
+use Illuminate\Http\Response;
+use Symfony\Component\CssSelector\Exception\InternalErrorException;
 use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
 use Tymon\JWTAuth\Exceptions\JWTException;
 use Tymon\JWTAuth\Facades\JWTAuth;
@@ -64,10 +66,11 @@ class AuthController extends Controller
     {
         $user = $this->userRepository->findBy('email', $request->input('email'));
         if($user->active != 1){
-            $this->response->errorUnauthorized("Tu cuenta no esta activada");
+            throw new UnauthorizedHttpException('', "Tu cuenta no esta activada");
         }
         $token = $this->issueJWT($request->only(['email','password']));
-        return $this->responseTransformed($user, new UserTransformer(), ['token' => $token]);
+        return fractal($user, new UserTransformer())
+            ->respond(Response::HTTP_OK, ['token', $token]);
     }
 
     /**
@@ -110,7 +113,7 @@ class AuthController extends Controller
     public function register(RegisterUserRequest $request)
     {
         $this->userRepository->registerAccount($request->only(['first_name', 'last_name', 'email', 'password']));
-        return $this->response->noContent();
+        return response('', Response::HTTP_NO_CONTENT);
     }
 
     /**
@@ -155,7 +158,7 @@ class AuthController extends Controller
     {
         $user = $this->userRepository->findBy('activation_token', $request->input('token'));
         $this->userRepository->activateAccount($request->input('token'));
-        return $this->responseTransformed($user, new UserTransformer());
+        return fractal($user, new UserTransformer())->respond();
     }
 
     private function issueJWT($credentials)
@@ -164,10 +167,10 @@ class AuthController extends Controller
 
         try {
             if (! $token = JWTAuth::attempt($credentials)) {
-                $this->response->errorUnauthorized("Correo o contraseña inválidos");
+                throw new UnauthorizedHttpException('', "Correo o contraseña inválidos");
             }
         } catch (JWTException $e) {
-            $this->response->errorInternal("Hubo un error inesperado");
+            throw new InternalErrorException("Hubo un error inesperado");
         }
 
         return $token;

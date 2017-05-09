@@ -7,18 +7,20 @@ use App\Http\Requests\ConsultRequest;
 use App\Http\Requests\CreateGroupRequest;
 use App\Http\Requests\UpdateGroupRequest;
 use App\Repositories\Criterias\FromUser;
-use App\Repositories\Criterias\GroupFromUser;
+use App\Repositories\Criterias\UserOwnershipCriteria;
 use App\Repositories\GroupRepository;
+use App\Services\GroupService;
 use App\Transformers\GroupDetailsTransformer;
 use App\Transformers\GroupTransformer;
+use Illuminate\Http\Response;
 
 class GroupsController extends Controller
 {
-    private $groupRepository;
+    private $service;
 
-    function __construct(GroupRepository $groupRepository)
+    function __construct(GroupService $groupService)
     {
-        $this->groupRepository = $groupRepository;
+        $this->service = $groupService;
     }
 
     /**
@@ -70,13 +72,12 @@ class GroupsController extends Controller
      *          @SWG\Schema(ref="#/definitions/Error"),
      *     ),
      * )
+     * @param ConsultRequest $request
+     * @return \Illuminate\Http\JsonResponse
      */
     public function index(ConsultRequest $request)
     {
-        $perPage = $request->has('per_page') ? $request->input('per_page') : 10;
-        $this->groupRepository->pushCriteria(new GroupFromUser($request->user()->id));
-        $groups = $this->groupRepository->paginate($perPage);
-        return $this->responseTransformed($groups, new GroupTransformer());
+        return fractal($this->service->get($request), new GroupTransformer())->respond();
     }
 
     /**
@@ -119,9 +120,7 @@ class GroupsController extends Controller
      */
     public function store(CreateGroupRequest $request)
     {
-        $group = new Group($request->only(['name']));
-        $request->user()->groups()->save($group);
-        return $this->responseTransformed($group, new GroupTransformer());
+        return fractal($this->service->save($request), new GroupTransformer())->respond();
     }
 
     /**
@@ -166,10 +165,12 @@ class GroupsController extends Controller
      *          @SWG\Schema(ref="#/definitions/Error"),
      *     ),
      * )
+     * @param Group $group
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function show($groupId)
+    public function show(Group $group)
     {
-        return $this->responseTransformed($this->groupRepository->find($groupId), new GroupDetailsTransformer());
+        return fractal($group, new GroupTransformer())->respond();
     }
 
     /**
@@ -217,12 +218,9 @@ class GroupsController extends Controller
      *     ),
      * )
      */
-    public function update(UpdateGroupRequest $request, $groupId)
+    public function update(UpdateGroupRequest $request, Group $group)
     {
-        $group = $this->groupRepository->find($groupId);
-        $group->fill($request->only(['name']));
-        $group->save();
-        return $this->responseTransformed($group, new GroupTransformer());
+        return fractal($this->service->update($request, $group))->respond();
     }
 
     /**
@@ -262,9 +260,9 @@ class GroupsController extends Controller
      *     ),
      * )
      */
-    public function destroy($groupId)
+    public function destroy(Group $group)
     {
-        $this->groupRepository->delete($groupId);
-        return $this->response->noContent();
+        $this->service->delete($group);
+        return response('' , Response::HTTP_NO_CONTENT);
     }
 }

@@ -8,22 +8,23 @@
 
 namespace App\Transformers;
 use App\Game;
+use League\Fractal\TransformerAbstract;
 
-class GameTransformer extends MainTransformer
+class GameTransformer extends TransformerAbstract
 {
     /**
      * @param Game $entity
      * @return array
      */
-    protected function transform($entity)
+    public function transform(Game $entity)
     {
         return [
             'id' => $entity->id,
             'name' => $entity->name,
             'duration' => $entity->duration,
-            'played_at' => $entity->played_at,
-            'movementsNumber' => count($entity->moves),
-            'studentsNumber' => count($entity->students),
+            'playedAt' => $entity->played_at,
+            'movesCount' => count($entity->moves),
+            'studentsCount' => count($entity->students),
         ];
     }
 }

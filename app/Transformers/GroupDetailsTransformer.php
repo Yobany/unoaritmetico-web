@@ -11,23 +11,32 @@ namespace App\Transformers;
 
 use App\Group;
 use Illuminate\Database\Eloquent\Model;
+use League\Fractal\TransformerAbstract;
 
-class GroupDetailsTransformer extends MainTransformer
+class GroupDetailsTransformer extends TransformerAbstract
 {
+
+    protected $defaultIncludes = ['students', 'games'];
 
     /**
      * @param Group $entity
      * @return array
      */
-    protected function transform($entity)
+    public function transform(Group $entity)
     {
-        $studentTransformer = new StudentTransformer();
-        $gameTransformer = new GameTransformer();
         return [
             'id' => $entity->id,
-            'name' => $entity->name,
-            'students' => $studentTransformer->transformCollection($entity->students),
-            'games' => $gameTransformer->transformCollection($entity->getGames())
+            'name' => $entity->name
         ];
+    }
+
+    public function includeStudents(Group $group)
+    {
+        return $this->collection($group->students, new StudentTransformer());
+    }
+
+    public function includeGames(Group $group)
+    {
+        return $this->collection($group->getGames(), new GameTransformer());
     }
 }
