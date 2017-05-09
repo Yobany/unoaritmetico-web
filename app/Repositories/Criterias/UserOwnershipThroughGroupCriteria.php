@@ -9,8 +9,10 @@
 namespace App\Repositories\Criterias;
 
 
+use App\Student;
 use Bosnadev\Repositories\Contracts\RepositoryInterface as Repository;
 use Bosnadev\Repositories\Criteria\Criteria;
+use Illuminate\Database\Query\Builder;
 
 class UserOwnershipThroughGroupCriteria extends Criteria
 {
@@ -22,14 +24,14 @@ class UserOwnershipThroughGroupCriteria extends Criteria
     }
 
     /**
-     * @param $model
+     * @param $model Builder
      * @param Repository $repository
      * @return mixed
      */
     public function apply($model, Repository $repository)
     {
-        return $model->join('groups', function($join)  {
-            $join->on('students.group_id','=','groups.id')->where('groups.user_id', $this->userId);
+        return $model->whereHas('group', function($query) {
+            $query->where('user_id', $this->userId);
         });
     }
 }
