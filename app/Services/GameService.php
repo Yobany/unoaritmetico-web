@@ -55,8 +55,9 @@ class GameService
     {
         DB::beginTransaction();
         $game = new Game([
-            'played_at' => Carbon::parse($request->get('played_at')),
+            'played_at' => Carbon::parse($request->get('playedAt')),
             'name' => $request->get('name'),
+            'group_id' => $request->get('group'),
             'student_winner_id' => $request->has('winner') ? $request->get('winner') : null,
             'duration' => 0
         ]);

@@ -23,13 +23,13 @@ class UserItem
      * @var string
      * @SWG\Property(example = "John")
      */
-    private $first_name;
+    private $firstName;
 
     /**
      * @var string
      * @SWG\Property(example = "Papa")
      */
-    private $last_name;
+    private $lastName;
 
     /**
      * @var string

@@ -26,6 +26,12 @@ class GameItem
     private $name;
 
     /**
+     * @var object
+     * @SWG\Property(ref="#/definitions/WrappedGroupItem")
+     */
+    private $group;
+
+    /**
      * @var integer
      * @SWG\Property( example = 1201)
      */
@@ -35,17 +41,17 @@ class GameItem
      * @var integer
      * @SWG\Property( example = "2017-02-18 21:30:19")
      */
-    private $played_at;
+    private $playedAt;
 
     /**
      * @var integer
      * @SWG\Property( example = 23)
      */
-    private $movementsNumber;
+    private $movesCount;
 
     /**
      * @var integer
      * @SWG\Property( example = 1)
      */
-    private $studentsNumber;
+    private $studentsCount;
 }

@@ -21,7 +21,7 @@ class PowerCardItem
 
     /**
      * @var object
-     * @SWG\Property(ref="#/definitions/OperatorItem")
+     * @SWG\Property(ref="#/definitions/WrappedOperatorItem")
      */
     private $operator;
 

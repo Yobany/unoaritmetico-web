@@ -5,12 +5,6 @@ namespace App\Http\Controllers;
 use App\Http\Requests\ConsultRequest;
 use App\Http\Requests\CreateStudentRequest;
 use App\Http\Requests\UpdateStudentRequest;
-use App\Repositories\Criterias\FromGroup;
-use App\Repositories\Criterias\FromUser;
-use App\Repositories\Criterias\GroupOwnershipCriteria;
-use App\Repositories\GroupRepository;
-use App\Repositories\StudentRepository;
-use App\Repositories\UserRepository;
 use App\Services\StudentService;
 use App\Student;
 use App\Transformers\StudentTransformer;
@@ -43,10 +37,24 @@ class StudentsController extends Controller
      *         required=false
      *     ),
      *     @SWG\Parameter(
-     *         name="per_page",
+     *         name="size",
      *         in="query",
      *         type="integer",
      *         description="Items per page, default is 10",
+     *         required=false
+     *     ),
+     *     @SWG\Parameter(
+     *         name="name",
+     *         in="query",
+     *         type="string",
+     *         description="Search by name",
+     *         required=false
+     *     ),
+     *     @SWG\Parameter(
+     *         name="group",
+     *         in="query",
+     *         type="integer",
+     *         description="Search by group id",
      *         required=false
      *     ),
      *     @SWG\Response(
@@ -109,9 +117,9 @@ class StudentsController extends Controller
      *          @SWG\Schema(ref="#/definitions/Error"),
      *     ),
      *     @SWG\Response(
-     *         response=422,
-     *         description="Invalid Fields",
-     *          @SWG\Schema(ref="#/definitions/Validation"),
+     *         response=400,
+     *         description="Request format isn't valid",
+     *         @SWG\Schema(ref="#/definitions/Error"),
      *     ),
      *     @SWG\Response(
      *         response=500,
@@ -210,9 +218,9 @@ class StudentsController extends Controller
      *          @SWG\Schema(ref="#/definitions/Error"),
      *     ),
      *     @SWG\Response(
-     *         response=422,
-     *         description="Invalid Fields",
-     *          @SWG\Schema(ref="#/definitions/Validation"),
+     *         response=400,
+     *         description="Request format isn't valid",
+     *         @SWG\Schema(ref="#/definitions/Error"),
      *     ),
      *     @SWG\Response(
      *         response=500,
@@ -252,9 +260,9 @@ class StudentsController extends Controller
      *          @SWG\Schema(ref="#/definitions/Error"),
      *     ),
      *     @SWG\Response(
-     *         response=422,
-     *         description="Invalid Fields",
-     *          @SWG\Schema(ref="#/definitions/Validation"),
+     *         response=400,
+     *         description="Request format isn't valid",
+     *         @SWG\Schema(ref="#/definitions/Error"),
      *     ),
      *     @SWG\Response(
      *         response=500,

@@ -30,6 +30,6 @@ class NameCriteria extends Criteria
      */
     public function apply($model, Repository $repository)
     {
-        return $model->where('name','like', $this->name);
+        return $model->where('name','LIKE', '%' . $this->name . '%');
     }
 }

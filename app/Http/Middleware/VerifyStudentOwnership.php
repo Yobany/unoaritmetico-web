@@ -25,7 +25,7 @@ class VerifyStudentOwnership
      */
     public function handle($request, Closure $next)
     {
-        $student = $this->studentRepository->find($request->route()->parameter('studentId'));
+        $student = $request->route()->parameter('student');
         if(is_null($student)){
             throw new NotFoundHttpException("Student not found");
         }

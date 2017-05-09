@@ -17,13 +17,13 @@ class UpdateUserRequest
      * @var string
      * @SWG\Property( example = "Mariana")
      */
-    private $first_name;
+    private $firstName;
 
     /**
      * @var string
      * @SWG\Property( example = "López")
      */
-    private $last_name;
+    private $lastName;
 
     /**
      * @var string

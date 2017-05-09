@@ -8,7 +8,6 @@ use App\Http\Requests\RegisterUserRequest;
 use App\Repositories\UserRepository;
 use App\Transformers\UserTransformer;
 use App\Http\Controllers\Controller;
-use Dingo\Api\Exception\InternalHttpException;
 use Illuminate\Http\Response;
 use Symfony\Component\CssSelector\Exception\InternalErrorException;
 use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
@@ -51,9 +50,9 @@ class AuthController extends Controller
      *          @SWG\Schema(ref="#/definitions/Error"),
      *     ),
      *     @SWG\Response(
-     *         response=422,
-     *         description="Invalid Fields",
-     *          @SWG\Schema(ref="#/definitions/Validation"),
+     *         response=400,
+     *         description="Request format isn't valid",
+     *         @SWG\Schema(ref="#/definitions/Error"),
      *     ),
      *     @SWG\Response(
      *         response=500,
@@ -99,9 +98,9 @@ class AuthController extends Controller
      *          @SWG\Schema(ref="#/definitions/Error"),
      *     ),
      *     @SWG\Response(
-     *         response=422,
-     *         description="Invalid Fields",
-     *          @SWG\Schema(ref="#/definitions/Validation"),
+     *         response=400,
+     *         description="Request format isn't valid",
+     *         @SWG\Schema(ref="#/definitions/Error"),
      *     ),
      *     @SWG\Response(
      *         response=500,
@@ -112,7 +111,12 @@ class AuthController extends Controller
      */
     public function register(RegisterUserRequest $request)
     {
-        $this->userRepository->registerAccount($request->only(['first_name', 'last_name', 'email', 'password']));
+
+        $this->userRepository->registerAccount([
+            'first_name' => $request->get('firstName'),
+            'last_name' => $request->get('lastName'),
+            'email' => $request->get('email'),
+            'password' => $request->get('password')]);
         return response('', Response::HTTP_NO_CONTENT);
     }
 
@@ -158,7 +162,7 @@ class AuthController extends Controller
     {
         $user = $this->userRepository->findBy('activation_token', $request->input('token'));
         $this->userRepository->activateAccount($request->input('token'));
-        return fractal($user, new UserTransformer())->respond();
+        return fractal($this->userRepository->find($user->id), new UserTransformer())->respond();
     }
 
     private function issueJWT($credentials)

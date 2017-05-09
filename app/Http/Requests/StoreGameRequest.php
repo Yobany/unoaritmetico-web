@@ -23,16 +23,16 @@ class StoreGameRequest extends ApiRequest
             'moves.*.duration' => 'required|integer',
             'moves.*.student' => 'sometimes|integer|exists:students,id',
             'moves.*.by_color' => 'required|boolean',
-            'moves.*.card_on_deck' => 'required',
-            'moves.*.card_on_deck.operation' => 'required_with:result|string',
-            'moves.*.card_on_deck.result' => 'required_with:operation|numeric',
-            'moves.*.card_on_deck.power' => 'sometimes|integer|exists:card_powers,id',
-            'moves.*.card_on_deck.color' => 'sometimes|integer|exists:colors,id',
-            'moves.*.card_played' => 'required',
-            'moves.*.card_played.operation' => 'required_with:result|string',
-            'moves.*.card_played.result' => 'required_with:operation|numeric',
-            'moves.*.card_played.power' => 'sometimes|integer|exists:card_powers,id',
-            'moves.*.card_played.color' => 'sometimes|integer|exists:colors,id'
+            'moves.*.cardOnDeck' => 'required',
+            'moves.*.cardOnDeck.operation' => 'required_with:result|string',
+            'moves.*.cardOnDeck.result' => 'required_with:operation|numeric',
+            'moves.*.cardOnDeck.power' => 'sometimes|integer|exists:card_powers,id',
+            'moves.*.cardOnDeck.color' => 'sometimes|integer|exists:colors,id',
+            'moves.*.cardPlayed' => 'required',
+            'moves.*.cardPlayed.operation' => 'required_with:result|string',
+            'moves.*.cardPlayed.result' => 'required_with:operation|numeric',
+            'moves.*.cardPlayed.power' => 'sometimes|integer|exists:card_powers,id',
+            'moves.*.cardPlayed.color' => 'sometimes|integer|exists:colors,id'
         ];
     }
 }

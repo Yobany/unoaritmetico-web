@@ -15,7 +15,7 @@ class UpdateStudentRequest extends ApiSimpleRequest
         return [
             'name' => 'required|max:255',
             'age' => 'required|integer|min:6|max:100',
-            'group_id' => 'required|exists:groups,id'
+            'group' => 'required|exists:groups,id'
         ];
     }
 }

@@ -23,5 +23,5 @@ class ResetPasswordRequest
      * @var string
      * @SWG\Property(example = "kittens", format="password")
      */
-    private $password_confirmation;
+    private $passwordConfirmation;
 }

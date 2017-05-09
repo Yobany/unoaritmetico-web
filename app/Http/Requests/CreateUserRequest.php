@@ -15,8 +15,8 @@ class CreateUserRequest extends ApiSimpleRequest
     public function rules()
     {
         return [
-            'first_name' => 'required|max:255',
-            'last_name' => 'required|max:255',
+            'firstName' => 'required|max:255',
+            'lastName' => 'required|max:255',
             'email' => 'required|max:255|email|unique:users',
             'role' => 'required|max:255|in:TEACHER,ADMIN'
         ];

@@ -25,7 +25,7 @@ class VerifyGroupOwnership
      */
     public function handle($request, Closure $next)
     {
-        $group = $this->groupRepository->find($request->route()->parameter('groupId'));
+        $group = $request->route()->parameter('group');
         if(is_null($group)){
             throw new NotFoundHttpException("Group not found");
         }

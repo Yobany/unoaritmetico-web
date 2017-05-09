@@ -32,6 +32,12 @@ class StoreGameRequest
     private $winner;
 
     /**
+     * @var integer
+     * @SWG\Property( example = 1)
+     */
+    private $group;
+
+    /**
      * @var array
      * @SWG\Property(
      *     @SWG\Items(ref="#/definitions/MoveRequestItem")

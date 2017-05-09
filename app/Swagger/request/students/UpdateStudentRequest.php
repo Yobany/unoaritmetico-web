@@ -23,5 +23,5 @@ class UpdateStudentRequest
      * @var integer
      * @SWG\Property( example = 1)
      */
-    private $group_id;
+    private $group;
 }

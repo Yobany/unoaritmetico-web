@@ -58,7 +58,7 @@ class StudentService
      */
     public function save(Request $request)
     {
-        $group = $this->groups->find($request->get('group_id'));
+        $group = $this->groups->find($request->get('group'));
         $student = new Student();
         $student->fill($request->only(['name', 'age']));
         $student->group()->associate($group);
@@ -68,7 +68,7 @@ class StudentService
 
     public function update(Request $request, Student $student)
     {
-        $group = $this->groups->find($request->get('group_id'));
+        $group = $this->groups->find($request->get('group'));
         $student->fill($request->only(['name', 'age']));
         $student->group()->associate($group);
         $student->save();

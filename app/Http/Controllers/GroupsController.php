@@ -6,9 +6,6 @@ use App\Group;
 use App\Http\Requests\ConsultRequest;
 use App\Http\Requests\CreateGroupRequest;
 use App\Http\Requests\UpdateGroupRequest;
-use App\Repositories\Criterias\FromUser;
-use App\Repositories\Criterias\UserOwnershipCriteria;
-use App\Repositories\GroupRepository;
 use App\Services\GroupService;
 use App\Transformers\GroupDetailsTransformer;
 use App\Transformers\GroupTransformer;
@@ -40,10 +37,17 @@ class GroupsController extends Controller
      *         required=false
      *     ),
      *     @SWG\Parameter(
-     *         name="per_page",
+     *         name="size",
      *         in="query",
      *         type="integer",
      *         description="Items per page, default is 10",
+     *         required=false
+     *     ),
+     *     @SWG\Parameter(
+     *         name="name",
+     *         in="query",
+     *         type="string",
+     *         description="Search by name",
      *         required=false
      *     ),
      *     @SWG\Response(
@@ -107,9 +111,9 @@ class GroupsController extends Controller
      *          @SWG\Schema(ref="#/definitions/Error"),
      *     ),
      *     @SWG\Response(
-     *         response=422,
-     *         description="Invalid Fields",
-     *          @SWG\Schema(ref="#/definitions/Validation"),
+     *         response=400,
+     *         description="Request format isn't valid",
+     *         @SWG\Schema(ref="#/definitions/Error"),
      *     ),
      *     @SWG\Response(
      *         response=500,
@@ -170,7 +174,7 @@ class GroupsController extends Controller
      */
     public function show(Group $group)
     {
-        return fractal($group, new GroupTransformer())->respond();
+        return fractal($group, new GroupDetailsTransformer())->respond();
     }
 
     /**
@@ -207,9 +211,9 @@ class GroupsController extends Controller
      *          @SWG\Schema(ref="#/definitions/Error"),
      *     ),
      *     @SWG\Response(
-     *         response=422,
-     *         description="Invalid Fields",
-     *          @SWG\Schema(ref="#/definitions/Validation"),
+     *         response=400,
+     *         description="Request format isn't valid",
+     *         @SWG\Schema(ref="#/definitions/Error"),
      *     ),
      *     @SWG\Response(
      *         response=500,
@@ -249,9 +253,9 @@ class GroupsController extends Controller
      *          @SWG\Schema(ref="#/definitions/Error"),
      *     ),
      *     @SWG\Response(
-     *         response=422,
-     *         description="Invalid Fields",
-     *          @SWG\Schema(ref="#/definitions/Validation"),
+     *         response=400,
+     *         description="Request format isn't valid",
+     *         @SWG\Schema(ref="#/definitions/Error"),
      *     ),
      *     @SWG\Response(
      *         response=500,

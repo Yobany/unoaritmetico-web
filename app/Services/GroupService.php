@@ -24,6 +24,7 @@ class GroupService
     public function get(Request $request)
     {
         $this->groups->pushCriteria(new UserOwnershipCriteria($request->user()->id));
+
         if($request->has('name')){
             $this->groups->pushCriteria(new NameCriteria($request->get('name')));
         }
@@ -43,7 +44,7 @@ class GroupService
     public function save(Request $request)
     {
         $group = new Group($request->only('name'));
-        $request->user()->groups()->save();
+        $request->user()->groups()->save($group);
         return $group;
     }
 

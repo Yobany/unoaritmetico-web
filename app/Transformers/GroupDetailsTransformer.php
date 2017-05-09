@@ -11,6 +11,7 @@ namespace App\Transformers;
 
 use App\Group;
 use Illuminate\Database\Eloquent\Model;
+use League\Fractal\Serializer\DataArraySerializer;
 use League\Fractal\TransformerAbstract;
 
 class GroupDetailsTransformer extends TransformerAbstract

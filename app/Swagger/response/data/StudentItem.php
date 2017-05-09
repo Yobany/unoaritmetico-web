@@ -27,23 +27,19 @@ class StudentItem
 
     /**
      * @var object
-     * @SWG\Property(ref="#/definitions/GroupItem")
+     * @SWG\Property(ref="#/definitions/WrappedGroupItem")
      */
     private $group;
 
     /**
      * @var array
-     * @SWG\Property(
-     *     @SWG\Items(ref="#/definitions/GameItem")
-     * )
+     * @SWG\Property(ref="#/definitions/WrappedGameList")
      */
     private $winned;
 
     /**
      * @var array
-     * @SWG\Property(
-     *     @SWG\Items(ref="#/definitions/GameItem")
-     * )
+     * @SWG\Property(ref="#/definitions/WrappedGameList")
      */
     private $played;
 }

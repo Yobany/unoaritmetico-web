@@ -22,6 +22,72 @@ class GamesController extends Controller
     }
 
 
+    /**
+     * @SWG\Get(
+     *     path="/games",
+     *     summary="Obtains games",
+     *     tags={"Games"},
+     *     description="Obtains games",
+     *     operationId="getGames",
+     *     consumes={"application/json"},
+     *     produces={"application/json"},
+     *     @SWG\Parameter(
+     *         name="page",
+     *         in="query",
+     *         type="integer",
+     *         description="Page requested, default is 1",
+     *         required=false
+     *     ),
+     *     @SWG\Parameter(
+     *         name="size",
+     *         in="query",
+     *         type="integer",
+     *         description="Items per page, default is 10",
+     *         required=false
+     *     ),
+     *     @SWG\Parameter(
+     *         name="name",
+     *         in="query",
+     *         type="string",
+     *         description="search by game name",
+     *         required=false
+     *     ),
+     *     @SWG\Parameter(
+     *         name="group",
+     *         in="query",
+     *         type="integer",
+     *         description="search by group id",
+     *         required=false
+     *     ),
+     *     @SWG\Response(
+     *         response=200,
+     *         description="Groups created by user",
+     *          @SWG\Schema(ref="#/definitions/GetGroupsResponse")
+     *     ),
+     *     @SWG\Response(
+     *         response=400,
+     *         description="Request format isn't valid",
+     *         @SWG\Schema(ref="#/definitions/Error"),
+     *     ),
+     *    @SWG\Response(
+     *         response=401,
+     *         description="Token is invalid",
+     *         @SWG\Schema(ref="#/definitions/Error"),
+     *     ),
+     *     @SWG\Response(
+     *         response=405,
+     *         description="Invalid Method",
+     *          @SWG\Schema(ref="#/definitions/Error"),
+     *     ),
+     *     @SWG\Response(
+     *         response=500,
+     *         description="Internal Error",
+     *          @SWG\Schema(ref="#/definitions/Error"),
+     *     ),
+     * )
+     * @param ConsultRequest $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function index(ConsultRequest $request)
     {
         return fractal($this->service->get($request), new GameTransformer())->respond();
@@ -53,9 +119,9 @@ class GamesController extends Controller
      *          @SWG\Schema(ref="#/definitions/Error"),
      *     ),
      *     @SWG\Response(
-     *         response=422,
-     *         description="Invalid Fields",
-     *          @SWG\Schema(ref="#/definitions/Validation"),
+     *         response=400,
+     *         description="Request format isn't valid",
+     *         @SWG\Schema(ref="#/definitions/Error"),
      *     ),
      *     @SWG\Response(
      *         response=500,

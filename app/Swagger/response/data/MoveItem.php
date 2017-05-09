@@ -27,7 +27,7 @@ class MoveItem
 
     /**
      * @var object
-     * @SWG\Property(ref="#/definitions/StudentMovementItem")
+     * @SWG\Property(ref="#/definitions/WrappedStudentItem")
      */
     private $student;
 
@@ -35,17 +35,17 @@ class MoveItem
      * @var boolean
      * @SWG\Property( example = false)
      */
-    private $by_color;
+    private $matchByColor;
 
     /**
      * @var object
-     * @SWG\Property(ref="#/definitions/OperationCardItem")
+     * @SWG\Property(ref="#/definitions/WrappedOperationCardItem")
      */
-    private $card_on_deck;
+    private $cardOnDeck;
 
     /**
      * @var object
-     * @SWG\Property(ref="#/definitions/PowerCardItem")
+     * @SWG\Property(ref="#/definitions/WrappedPowerCardItem")
      */
-    private $card_played;
+    private $cardPlayed;
 }

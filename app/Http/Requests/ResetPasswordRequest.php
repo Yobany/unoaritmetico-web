@@ -15,7 +15,7 @@ class ResetPasswordRequest extends ApiSimpleRequest
         return [
             'token' => 'required|max:255|exists:users,password_reset_token',
             'password' => 'required|max:255',
-            'password_confirmation' => 'required|max:255|same:password'
+            'passwordConfirmation' => 'required|max:255|same:password'
         ];
     }
 }

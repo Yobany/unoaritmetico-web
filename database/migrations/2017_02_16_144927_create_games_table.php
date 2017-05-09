@@ -22,6 +22,11 @@ class CreateGamesTable extends Migration
                 ->references('id')
                 ->on('students')
                 ->onDelete('cascade');
+            $table->integer('group_id')->unsigned()->nullable();
+            $table->foreign('group_id')
+                ->references('id')
+                ->on('groups')
+                ->onDelete('cascade');
             $table->dateTime('played_at');
         });
     }

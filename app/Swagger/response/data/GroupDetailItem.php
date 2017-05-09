@@ -26,18 +26,14 @@ class GroupDetailItem
     private $name;
 
     /**
-     * @var array
-     * @SWG\Property(
-     *     @SWG\Items(ref="#/definitions/StudentItem")
-     * )
+     * @var object
+     * @SWG\Property(ref="#/definitions/WrappedStudentList"))
      */
     private $students;
 
     /**
-     * @var array
-     * @SWG\Property(
-     *     @SWG\Items(ref="#/definitions/GameItem")
-     * )
+     * @var object
+     * @SWG\Property(ref="#/definitions/WrappedGameList")
      */
     private $games;
 }

@@ -36,27 +36,29 @@ class GameDetailItem
      * @var integer
      * @SWG\Property( example = "2017-02-18 21:30:19")
      */
-    private $played_at;
+    private $playedAt;
 
     /**
      * @var object
-     * @SWG\Property(ref="#/definitions/StudentItem")
+     * @SWG\Property(ref="#/definitions/WrappedGroupItem")
+     */
+    private $group;
+
+    /**
+     * @var object
+     * @SWG\Property(ref="#/definitions/WrappedStudentItem")
      */
     private $winner;
 
     /**
      * @var array
-     * @SWG\Property(
-     *     @SWG\Items(ref="#/definitions/MoveItem")
-     * )
+     * @SWG\Property(ref="#/definitions/WrappedMoveList")
      */
-    private $movements;
+    private $moves;
 
     /**
      * @var array
-     * @SWG\Property(
-     *     @SWG\Items(ref="#/definitions/StudentItem")
-     * )
+     * @SWG\Property(ref="#/definitions/WrappedStudentList")
      */
     private $students;
 }

@@ -15,7 +15,7 @@ class CreateStudentRequest extends ApiSimpleRequest
         return [
             'name' => 'required|string|max:255',
             'age' => 'required|integer|min:5|max:100',
-            'group_id' => 'required|exists:groups,id'
+            'group' => 'required|exists:groups,id'
         ];
     }
 }

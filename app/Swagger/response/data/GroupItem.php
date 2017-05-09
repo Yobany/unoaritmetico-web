@@ -23,5 +23,5 @@ class GroupItem
      * @var integer
      * @SWG\Property( example = 1)
      */
-    private $studentsNumber;
+    private $studentsCount;
 }

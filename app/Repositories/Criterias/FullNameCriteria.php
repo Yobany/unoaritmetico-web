@@ -28,6 +28,6 @@ class FullNameCriteria extends Criteria
      */
     public function apply($model, Repository $repository)
     {
-        return $model->where(DB::raw('CONCAT(first_name,\' \', last_name)'), 'like', $this->name);
+        return $model->where(DB::raw('CONCAT(first_name,\' \', last_name)'), 'like', '%' . $this->name . '%');
     }
 }

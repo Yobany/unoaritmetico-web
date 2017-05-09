@@ -21,7 +21,7 @@ class OperationCardItem
 
     /**
      * @var object
-     * @SWG\Property(ref="#/definitions/OperatorItem")
+     * @SWG\Property(ref="#/definitions/WrappedOperatorItem")
      */
     private $operator;
 
@@ -33,13 +33,13 @@ class OperationCardItem
 
     /**
      * @var integer
-     * @SWG\Property(ref="#/definitions/PowerItem")
+     * @SWG\Property(ref="#/definitions/WrappedPowerItem")
      */
     private $power;
 
     /**
      * @var object
-     * @SWG\Property(ref="#/definitions/ColorItem")
+     * @SWG\Property(ref="#/definitions/WrappedColorItem")
      */
     private $color;
 }

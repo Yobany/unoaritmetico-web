@@ -14,7 +14,7 @@ class ConsultRequest extends ApiSimpleRequest
     {
         return [
             'page' => 'sometimes|required|integer|min:0',
-            'per_page' => 'sometimes|required|integer|min:0'
+            'size' => 'sometimes|required|integer|min:0'
         ];
     }
 }

@@ -35,17 +35,17 @@ class MoveRequestItem
      * @var boolean
      * @SWG\Property( example = false)
      */
-    private $by_color;
+    private $matchByColor;
 
     /**
      * @var object
      * @SWG\Property(ref="#/definitions/OperationCardRequestItem")
      */
-    private $card_on_deck;
+    private $cardOnDeck;
 
     /**
      * @var object
      * @SWG\Property(ref="#/definitions/PowerCardRequestItem")
      */
-    private $card_played;
+    private $cardPlayed;
 }

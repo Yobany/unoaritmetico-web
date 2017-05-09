@@ -12,11 +12,11 @@ class RegisterUserRequest extends ApiSimpleRequest
     public function rules()
     {
         return [
-            'first_name' => 'required|max:255',
-            'last_name' => 'required|max:255',
+            'firstName' => 'required|max:255',
+            'lastName' => 'required|max:255',
             'email' => 'required|max:255|email',
             'password' => 'required|max:255',
-            'password_confirmation' => 'required|max:255|same:password'
+            'passwordConfirmation' => 'required|max:255|same:password'
         ];
     }
 }

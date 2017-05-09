@@ -38,14 +38,26 @@ class UserService
 
     public function save(Request $request)
     {
-        $user = new User($request->only(['first_name', 'last_name', 'email', 'role', 'password']));
+        $user = new User([
+            'first_name' => $request->get('first_name'),
+            'last_name' => $request->get('last_name'),
+            'email' => $request->get('email'),
+            'role' => $request->get('role'),
+            'password' => $request->get('password')
+        ]);
         $user->save();
         return $user;
     }
 
     public function update(Request $request, User $user)
     {
-        $user->fill($request->only(['first_name', 'last_name','email', 'role', 'password']));
+        $user->fill([
+            'first_name' => $request->get('first_name'),
+            'last_name' => $request->get('last_name'),
+            'email' => $request->get('email'),
+            'role' => $request->get('role'),
+            'password' => $request->get('password')
+        ]);
         $user->save();
         return $user;
     }

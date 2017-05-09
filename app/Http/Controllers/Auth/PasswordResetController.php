@@ -6,6 +6,7 @@ use App\Http\Requests\RecoverPasswordRequest;
 use App\Http\Requests\ResetPasswordRequest;
 use App\Http\Controllers\Controller;
 use App\Repositories\UserRepository;
+use Illuminate\Http\Response;
 
 class PasswordResetController extends Controller
 {
@@ -42,9 +43,9 @@ class PasswordResetController extends Controller
      *          @SWG\Schema(ref="#/definitions/Error"),
      *     ),
      *     @SWG\Response(
-     *         response=422,
-     *         description="Invalid Fields",
-     *          @SWG\Schema(ref="#/definitions/Validation"),
+     *         response=400,
+     *         description="Request format isn't valid",
+     *         @SWG\Schema(ref="#/definitions/Error"),
      *     ),
      *     @SWG\Response(
      *         response=500,
@@ -56,7 +57,7 @@ class PasswordResetController extends Controller
     public function recover(RecoverPasswordRequest $request)
     {
         $this->userRepository->sendResetPasswordLink($request->input('email'));
-        return $this->response->noContent();
+        return response('', Response::HTTP_NO_CONTENT);
     }
 
     /**
@@ -92,9 +93,9 @@ class PasswordResetController extends Controller
      *          @SWG\Schema(ref="#/definitions/Error"),
      *     ),
      *     @SWG\Response(
-     *         response=422,
-     *         description="Invalid Fields",
-     *          @SWG\Schema(ref="#/definitions/Validation"),
+     *         response=400,
+     *         description="Request format isn't valid",
+     *         @SWG\Schema(ref="#/definitions/Error"),
      *     ),
      *     @SWG\Response(
      *         response=500,
@@ -106,6 +107,6 @@ class PasswordResetController extends Controller
     public function reset(ResetPasswordRequest $request)
     {
         $this->userRepository->resetPassword($request->input('token'), $request->input('password'));
-        return $this->response->noContent();
+        return response('', Response::HTTP_NO_CONTENT);
     }
 }
