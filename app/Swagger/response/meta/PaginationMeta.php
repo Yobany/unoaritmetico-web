@@ -8,20 +8,8 @@ namespace Swagger\Response\Meta;
 class PaginationMeta
 {
     /**
-     * @var integer
-     * @SWG\Property( example = 100)
+     * @var object
+     * @SWG\Property(ref="#/definitions/ItemPaginationMeta")
      */
-    private $total;
-
-    /**
-     * @var integer
-     * @SWG\Property( example = 10)
-     */
-    private $per_page;
-
-    /**
-     * @var integer
-     * @SWG\Property( example = 1)
-     */
-    private $current_page;
+    private $pagination;
 }

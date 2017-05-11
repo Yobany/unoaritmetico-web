@@ -62,7 +62,7 @@ class GamesController extends Controller
      *     @SWG\Response(
      *         response=200,
      *         description="Groups created by user",
-     *          @SWG\Schema(ref="#/definitions/GetGroupsResponse")
+     *          @SWG\Schema(ref="#/definitions/GetGamesResponse")
      *     ),
      *     @SWG\Response(
      *         response=400,

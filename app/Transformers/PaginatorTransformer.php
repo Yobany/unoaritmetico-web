@@ -11,20 +11,21 @@ namespace App\Transformers;
 
 use Illuminate\Pagination\AbstractPaginator;
 use Illuminate\Pagination\Paginator;
+use League\Fractal\Pagination\PaginatorInterface;
 use League\Fractal\TransformerAbstract;
 
 class PaginatorTransformer extends TransformerAbstract
 {
     /**
-     * @param Paginator $entity
+     * @param PaginatorInterface $entity
      * @return array
      */
-    protected function transform($entity)
+    public function transform(PaginatorInterface $entity)
     {
         return [
-            'total' => intval($entity->count()),
-            'per_page' => intval($entity->perPage()),
-            'current_page' => intval($entity->currentPage())
+            'count' => intval($entity->getTotal()),
+            'size' => intval($entity->getPerPage()),
+            'page' => intval($entity->getCurrentPage())
         ];
     }
 }
