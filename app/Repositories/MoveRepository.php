@@ -33,8 +33,8 @@ class MoveRepository extends Repository
         $move = new Move();
         $move->turn = $moveData['turn'];
         $move->duration = $moveData['duration'];
-        $move->student_id = isset($current['student']) ? $current['student'] : null;
-        $move->by_color = $current['matchByColor'];
+        $move->student_id = isset($moveData['student']) ? $moveData['student'] : null;
+        $move->by_color = $moveData['matchByColor'];
         $move->cardPlayed()->associate($cardPlayed);
         $move->cardOnDeck()->associate($cardOnDeck);
         $move->game()->associate($game);
