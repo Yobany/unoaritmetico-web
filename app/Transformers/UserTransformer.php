@@ -21,8 +21,8 @@ class UserTransformer extends TransformerAbstract
     {
         return [
             'id' => $entity->id,
-            'first_name' => $entity->first_name,
-            'last_name' => $entity->last_name,
+            'firstName' => $entity->first_name,
+            'lastName' => $entity->last_name,
             'role' => $entity->role,
             'email' => $entity->email,
             'active' => $entity->active
