@@ -8,11 +8,11 @@ class RegisterFormController {
 	}
 
     $onInit(){
-        this.first_name = '';
-        this.last_name = '';
+        this.firstName = '';
+        this.lastName = '';
         this.email = '';
         this.password = '';
-        this.password_confirmation = '';
+        this.passwordConfirmation = '';
         this.isRegistering = false;
         if(this.$auth.isAuthenticated()){
             this.$state.go('app.landing');
@@ -21,11 +21,11 @@ class RegisterFormController {
 
 	register() {
 		let user = {
-			first_name: this.first_name,
-			last_name: this.last_name,
+			firstName : this.firstName,
+			lastName: this.lastName,
 			email: this.email,
 			password: this.password,
-			password_confirmation: this.password_confirmation
+			passwordConfirmation: this.passwordConfirmation
 		};
         this.isRegistering = true;
 		this.$auth.signup(user)

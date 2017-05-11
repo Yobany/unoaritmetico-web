@@ -2,25 +2,25 @@
 <div ng-if="!vm.isLoading && !vm.students.length">
     <h1>A&uacute;n no has registrado ning&uacute;n estudiante</h1>
 </div>
-<table class="striped">
-    <thead>
-    <tr>
-        <th>C&oacute;digo</th>
-        <th>Nombre</th>
-        <th>Edad</th>
-        <th>Grupo</th>
-        <th>Partidas</th>
+<table md-table>
+    <thead md-head>
+    <tr md-row>
+        <th md-column>C&oacute;digo</th>
+        <th md-column>Nombre</th>
+        <th md-column>Edad</th>
+        <th md-column>Grupo</th>
+        <th md-column>Partidas</th>
     </tr>
     </thead>
-    <tbody>
+    <tbody md-body>
     <!-- we can let ng-repeat sort the columns for us -->
-    <tr ng-repeat="student in vm.students">
-        <td>{{student.id}}</td>
-        <td>{{student.name}}</td>
-        <td>{{student.age}}</td>
-        <td>{{student.group.name}}</td>
-        <td>{{student.played.length}}</td>
-        <td>
+    <tr md-row ng-repeat="student in vm.students">
+        <td md-cell>{{student.id}}</td>
+        <td md-cell>{{student.name}}</td>
+        <td md-cell>{{student.age}}</td>
+        <td md-cell>{{student.group.name}}</td>
+        <td md-cell>{{student.played.length}}</td>
+        <td md-cell>
             <md-button ui-sref="app.student-details({id:student.id})" class="md-icon-button md-primary"><i class="material-icons">details</i></md-button>
             <md-button ng-click="vm.edit(student)" class="md-icon-button md-primary"><i class="material-icons">mode_edit</i></md-button>
             <md-button ng-click="vm.confirmDeletion(student)" class="md-icon-button md-primary"><i class="material-icons">delete</i></md-button>

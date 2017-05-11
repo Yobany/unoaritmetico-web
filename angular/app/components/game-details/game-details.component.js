@@ -13,19 +13,23 @@ class GameDetailsController{
 
     getDescription(card){
         let description = "";
-        if(card.operation){
+        if(card.operation.data){
             description += "Operacion :" + card.operation + " = " + card.result;
-        }else if(card.power){
-            description += "Poder :" + card.power.name;
+        }else if(card.power.data){
+            description += "Poder :" + card.power.data.name;
         }
-        if(card.color){
-            description += (description.length ? " -" : "") + " Color :" + card.color.name;
+        if(card.color.data){
+            description += (description.length ? " -" : "") + " Color :" + card.color.data.name;
         }
         return description;
     }
 
     cancel(){
         this.$mdDialog.cancel();
+    }
+
+    exportGame(){
+        this.API.one('games', this.gameid).one('export').get();
     }
 }
 

@@ -10,18 +10,17 @@ class ResetPasswordController {
 
     $onInit(){
         this.password = '';
-        this.password_confirmation = '';
-        if(typeof this.$stateParams.token == 'undefined'){
+        this.passwordConfirmation = '';
+        if(typeof this.$stateParams.token === 'undefined'){
             this.$state.go('app.landing');
         }
-        this.verifyToken();
     }
 
     submit() {
         let data = {
             token: this.$stateParams.token,
             password: this.password,
-            password_confirmation: this.password_confirmation
+            passwordConfirmation: this.passwordConfirmation
         };
 
         this.API.all('auth/password/reset').post(data).then(() => {

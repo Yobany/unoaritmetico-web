@@ -23,7 +23,7 @@ class StudentFormController{
 
     save() {
         let component = this;
-        this.student.group_id = this.student.group.id;
+        this.student.group = this.student.group.id;
         this.API.all('students').post(this.student).then(() => {
             component.$mdDialog.hide();
         }, () => {});
@@ -34,7 +34,7 @@ class StudentFormController{
         let updatedStudent = this.API.one("students", this.student.id);
         updatedStudent.name = this.student.name;
         updatedStudent.age = this.student.age;
-        updatedStudent.group_id = this.student.group.id;
+        updatedStudent.group = this.student.group.id;
         updatedStudent.put().then(() => {
             component.$mdDialog.hide();
         }, () => {});

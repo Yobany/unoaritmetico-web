@@ -2,6 +2,7 @@
     <div layout="row">
         <div flex="90" flex-offset="5" class="DemoHeader-container">
             <div layout="row" layout-align="space-between">
+                <md-button ng-click="vm.historyBack()">Regresar</md-button>
                 <img src="img/icons/logo-grey.svg" ui-sref="app.landing" class="DemoHeader-logo"/>
                 <div layout="row" layout-align="center stretch">
                     <a aria-label="iniciar sesion" hide-xs ng-if="!vm.isAuthenticated" class="DemoHeader-link md-subhead" ui-sref="app.login">Iniciar sesión</a>

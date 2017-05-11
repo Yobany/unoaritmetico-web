@@ -1,14 +1,19 @@
 class AppHeaderController{
-    constructor($sce, $auth, $state){
+    constructor($sce, $auth, $state, $window){
         'ngInject';
 
         this.$sce = $sce;
         this.$auth = $auth;
         this.$state = $state;
+        this.$window = $window;
     }
 
     $onInit(){
         this.isAuthenticated = this.$auth.isAuthenticated();
+    }
+
+    historyBack(){
+        this.$window.history.back();
     }
 
     logout(){
