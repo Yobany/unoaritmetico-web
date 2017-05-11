@@ -15,7 +15,7 @@ class StoreGameRequest extends ApiRequest
     public function rules()
     {
         return [
-            'played_at' => 'required|date',
+            'playedAt' => 'required|date',
             'name' => 'required|string',
             'winner' => 'sometimes|integer|exists:students,id',
             'group' => 'required|integer|exists:groups,id',
