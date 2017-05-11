@@ -32,7 +32,7 @@
             <h5 class="title">Ganador:</h5>
         </div>
         <div class="col-xs-6 text-left">
-            <h5>{{is_null($game->winner) ? "CPU" : $game->winner->name}}</h5>
+            <h5>{{is_null($game->winner) ? "Invitado" : $game->winner->name}}</h5>
         </div>
     </div>
     <div class="row">
@@ -91,8 +91,8 @@
                 <th>{{$move->turn}}</th>
                 <th>{{$move->cardOnDeck->getReadableDescription()}}</th>
                 <th>{{$move->cardPlayed->getReadableDescription()}}</th>
-                <th>{{is_null($move->student) ? "CPU" : $move->student->name}}</th>
-                <th>{{$move->student->group->name}}</th>
+                <th>{{is_null($move->student) ? "Invitado" : $move->student->name}}</th>
+                <th>{{is_null($move->student) ? "Sin grupo" : $move->student->group->name}}</th>
                 <th>{{$move->duration}} segundos</th>
             </tr>
         @endforeach
