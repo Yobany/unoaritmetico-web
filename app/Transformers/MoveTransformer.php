@@ -51,9 +51,8 @@ class MoveTransformer extends TransformerAbstract
      */
     public function includeStudent(Move $move)
     {
-        if(is_null($move->student)){
-            return [];
+        if(!is_null($move->student)){
+            return $this->item($move->student, new StudentTransformer());
         }
-        return $this->item($move->student, new StudentTransformer());
     }
 }

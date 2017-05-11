@@ -34,7 +34,8 @@ class CardTransformer extends TransformerAbstract
      */
     public function includeOperator(Card $card)
     {
-        return $this->item($card->operator, new OperationTransformer());
+        if(!is_null($card->operator))
+            return $this->item($card->operator, new OperationTransformer());
     }
 
     /**
@@ -43,7 +44,8 @@ class CardTransformer extends TransformerAbstract
      */
     public function includePower(Card $card)
     {
-        return $this->item($card->power, new CardPowerTransformer());
+        if(!is_null($card->power))
+            return $this->item($card->power, new CardPowerTransformer());
     }
 
     /**
@@ -52,7 +54,8 @@ class CardTransformer extends TransformerAbstract
      */
     public function includeColor(Card $card)
     {
-        return $this->item($card->color, new ColorTransformer());
+        if(!is_null($card->color))
+            return $this->item($card->color, new ColorTransformer());
     }
 
 
