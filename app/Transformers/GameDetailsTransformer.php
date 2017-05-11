@@ -35,11 +35,9 @@ class GameDetailsTransformer extends TransformerAbstract
      */
     public function includeWinner(Game $game)
     {
-        if(is_null($game->winner)){
-            return [];
+        if(!is_null($game->winner)){
+            return $this->item($game->winner, new StudentTransformer());
         }
-
-        return $this->item($game->winner, new StudentTransformer());
     }
 
     /**
