@@ -1,17 +1,11 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: pixco
- * Date: 22/05/2017
- * Time: 01:29 PM
- */
 
 namespace Swagger\Response\Data;
 
 /**
- * @SWG\Definition(definition="StudentItem")
+ * @SWG\Definition(definition="StudentDetailItem")
  */
-class StudentItem
+class StudentDetailItem
 {
     /**
      * @var integer
@@ -38,20 +32,20 @@ class StudentItem
     private $group;
 
     /**
-     * @var integer
-     * @SWG\Property( example = 16)
+     * @var array
+     * @SWG\Property(ref="#/definitions/WrappedGameList")
      */
-    private $playedCount;
+    private $winned;
 
     /**
-     * @var integer
-     * @SWG\Property( example = 16)
+     * @var array
+     * @SWG\Property(ref="#/definitions/WrappedGameList")
      */
-    private $winnedCount;
-
+    private $played;
+    
     /**
-     * @var integer
-     * @SWG\Property( example = 16)
+     * @var object
+     * @SWG\Property(ref="#/definitions/StadisticItem")
      */
-    private $lostCount;
+    private $stadistics;
 }

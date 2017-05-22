@@ -7,6 +7,7 @@ use App\Http\Requests\CreateStudentRequest;
 use App\Http\Requests\UpdateStudentRequest;
 use App\Services\StudentService;
 use App\Student;
+use App\Transformers\StudentDetailsTransformer;
 use App\Transformers\StudentTransformer;
 use Illuminate\Http\Response;
 
@@ -180,7 +181,7 @@ class StudentsController extends Controller
      */
     public function show(Student $student)
     {
-        return fractal($student, new StudentTransformer())->respond();
+        return fractal($student, new StudentDetailsTransformer())->respond();
     }
 
 
