@@ -21,7 +21,7 @@ class DetailStudentResponse
 
     /**
      * @var object
-     * @SWG\Property(ref="#/definitions/StudentItem")
+     * @SWG\Property(ref="#/definitions/StudentDetailItem")
      */
     private $data;
 }
