@@ -9,7 +9,7 @@
 
     function RoutesConfig($stateProvider, $urlRouterProvider) {
         let getView = (viewName) => {
-            return `./views/app/pages/${viewName}/${viewName}.page.html`;
+            return `app/module/${viewName}/${viewName}.page.html`;
         };
 
         $urlRouterProvider.otherwise('/');
@@ -26,6 +26,8 @@
                 data: {},
                 views: {
                     header: {
+                        controller: 'AppHeaderController',
+                        controllerAs: 'vm',
                         templateUrl: 'app/module/core/header.page.html'
                     },
                     footer: {
@@ -38,7 +40,7 @@
                 url: '/',
                 views: {
                     'main@': {
-                        templateUrl: 'app/module/core/landing.page.html'
+                        templateUrl: getView('core')
                     }
                 }
             })
@@ -46,7 +48,9 @@
                 url: '/login',
                 views: {
                     'main@': {
-                        templateUrl: getView('login')
+                        templateUrl: getView('login'),
+                        controller: 'LoginController',
+                        controllerAs: 'vm'
                     }
                 }
             })

@@ -59,6 +59,7 @@
 <script src="{{asset_conditional('app/filter/trust_html.filter.js')}}" type='text/javascript'></script>
 <script src="{{asset_conditional('app/filter/ucfirst.filter.js')}}" type='text/javascript'></script>
 <script src="{{asset_conditional('app/run/routes.run.js')}}" type='text/javascript'></script>
+<script src="{{asset_conditional('app/module/core/header.controller.js')}}" type='text/javascript'></script>
 <script src="{{asset_conditional('app/module/login/login.controller.js')}}" type='text/javascript'></script>
 <script src="{{asset_conditional('app/service/API.service.js')}}" type='text/javascript'></script>
 <script src="{{asset_conditional('app/service/toast.service.js')}}" type='text/javascript'></script>

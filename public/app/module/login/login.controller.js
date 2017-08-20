@@ -3,20 +3,20 @@
 
     angular
         .module('app')
-        .controller('LoginFormController', LoginFormController);
+        .controller('LoginController', LoginController);
 
-    LoginFormController.$inject =
+    LoginController.$inject =
         [
             '$auth',
             'ToastService',
             '$state'
         ];
 
-    function LoginFormController($auth,
-                                 ToastService,
-                                 $state) {
+    function LoginController($auth,
+                             ToastService,
+                             $state) {
 
-        let vm = vm;
+        let vm = this;
 
         vm.$auth = $auth;
         vm.ToastService = ToastService;
@@ -40,7 +40,8 @@
             vm.isLoginIn = true;
 
             vm.$auth.login(user)
-                .then(function(response) {
+                .then(function (response) {
+                    console.log(response);
                     vm.$auth.setToken(response.data.meta.token);
                     vm.isLoginIn = false;
                     vm.$state.go('app.landing', {}, {reload: true});
