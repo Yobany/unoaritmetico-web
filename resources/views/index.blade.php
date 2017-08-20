@@ -59,8 +59,18 @@
 <script src="{{asset_conditional('app/filter/trust_html.filter.js')}}" type='text/javascript'></script>
 <script src="{{asset_conditional('app/filter/ucfirst.filter.js')}}" type='text/javascript'></script>
 <script src="{{asset_conditional('app/run/routes.run.js')}}" type='text/javascript'></script>
+<script src="{{asset_conditional('app/module/account/activate-account.controller.js')}}" type='text/javascript'></script>
 <script src="{{asset_conditional('app/module/core/header.controller.js')}}" type='text/javascript'></script>
+<script src="{{asset_conditional('app/module/games/game-details.controller.js')}}" type='text/javascript'></script>
+<script src="{{asset_conditional('app/module/groups/group-form.controller.js')}}" type='text/javascript'></script>
+<script src="{{asset_conditional('app/module/groups/group-list.controller.js')}}" type='text/javascript'></script>
 <script src="{{asset_conditional('app/module/login/login.controller.js')}}" type='text/javascript'></script>
+<script src="{{asset_conditional('app/module/password/forgot-password.controller.js')}}" type='text/javascript'></script>
+<script src="{{asset_conditional('app/module/password/reset-password.controller.js')}}" type='text/javascript'></script>
+<script src="{{asset_conditional('app/module/register/register.controller.js')}}" type='text/javascript'></script>
+<script src="{{asset_conditional('app/module/students/student-list.controller.js')}}" type='text/javascript'></script>
+<script src="{{asset_conditional('app/module/students/student-form.controller.js')}}" type='text/javascript'></script>
+<script src="{{asset_conditional('app/module/students/student-details.controller.js')}}" type='text/javascript'></script>
 <script src="{{asset_conditional('app/service/API.service.js')}}" type='text/javascript'></script>
 <script src="{{asset_conditional('app/service/toast.service.js')}}" type='text/javascript'></script>
 </body>

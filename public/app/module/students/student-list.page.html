@@ -1,0 +1,43 @@
+<md-content class="Page-container">
+    <md-toolbar>
+        <div class="md-toolbar-tools">
+            <h1 class="center" layout="center">
+                <span flex></span>
+                <span>Estudiantes</span>
+                <span flex></span>
+            </h1>
+        </div>
+    </md-toolbar>
+    <div flex="80" flex-offset="10">
+        <md-button ng-click="vm.create()" class="md-raised md-primary">Agregar</md-button>
+        <div ng-if="!vm.isLoading && !vm.students.length">
+            <h1>A&uacute;n no has registrado ning&uacute;n estudiante</h1>
+        </div>
+        <table md-table>
+            <thead md-head>
+            <tr md-row>
+                <th md-column>C&oacute;digo</th>
+                <th md-column>Nombre</th>
+                <th md-column>Edad</th>
+                <th md-column>Grupo</th>
+                <th md-column>Partidas</th>
+            </tr>
+            </thead>
+            <tbody md-body>
+            <!-- we can let ng-repeat sort the columns for us -->
+            <tr md-row ng-repeat="student in vm.students">
+                <td md-cell>{{student.id}}</td>
+                <td md-cell>{{student.name}}</td>
+                <td md-cell>{{student.age}}</td>
+                <td md-cell>{{student.group.data.name}}</td>
+                <td md-cell>{{student.playedCount}}</td>
+                <td md-cell>
+                    <md-button ui-sref="app.student-details({id:student.id})" class="md-icon-button md-primary"><i class="material-icons">details</i></md-button>
+                    <md-button ng-click="vm.edit(student)" class="md-icon-button md-primary"><i class="material-icons">mode_edit</i></md-button>
+                    <md-button ng-click="vm.confirmDeletion(student)" class="md-icon-button md-primary"><i class="material-icons">delete</i></md-button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</md-content>

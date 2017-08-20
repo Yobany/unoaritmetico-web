@@ -8,9 +8,6 @@
     RoutesConfig.$inject = ['$stateProvider','$urlRouterProvider'];
 
     function RoutesConfig($stateProvider, $urlRouterProvider) {
-        let getView = (viewName) => {
-            return `app/module/${viewName}/${viewName}.page.html`;
-        };
 
         $urlRouterProvider.otherwise('/');
 
@@ -26,9 +23,9 @@
                 data: {},
                 views: {
                     header: {
+                        templateUrl: 'app/module/core/header.page.html',
                         controller: 'AppHeaderController',
-                        controllerAs: 'vm',
-                        templateUrl: 'app/module/core/header.page.html'
+                        controllerAs: 'vm'
                     },
                     footer: {
                         templateUrl: 'app/module/core/footer.page.html'
@@ -40,7 +37,7 @@
                 url: '/',
                 views: {
                     'main@': {
-                        templateUrl: getView('core')
+                        templateUrl: 'app/module/core/core.page.html'
                     }
                 }
             })
@@ -48,7 +45,7 @@
                 url: '/login',
                 views: {
                     'main@': {
-                        templateUrl: getView('login'),
+                        templateUrl: 'app/module/login/login.page.html',
                         controller: 'LoginController',
                         controllerAs: 'vm'
                     }
@@ -58,7 +55,9 @@
                 url: '/register',
                 views: {
                     'main@': {
-                        templateUrl: getView('register')
+                        templateUrl: 'app/module/register/register.page.html',
+                        controller: 'RegisterController',
+                        controllerAs: 'vm'
                     }
                 }
             })
@@ -66,7 +65,9 @@
                 url: '/auth/activate?token',
                 views: {
                     'main@': {
-                        templateUrl: getView('activate-account')
+                        templateUrl: 'app/module/account/activate-account.page.html',
+                        controller: 'ActivateAccount',
+                        controllerAs: 'vm'
                     }
                 }
             })
@@ -74,7 +75,9 @@
                 url: '/auth/recover',
                 views: {
                     'main@': {
-                        templateUrl: getView('forgot-password')
+                        templateUrl: 'app/module/password/forgot-password.page.html',
+                        controller: 'ForgotPasswordController',
+                        controllerAs: 'vm'
                     }
                 }
             })
@@ -82,7 +85,9 @@
                 url: '/auth/reset?token',
                 views: {
                     'main@': {
-                        templateUrl: getView('reset-password')
+                        templateUrl: 'app/module/password/reset-password.page.html',
+                        controller: 'ResetPasswordController',
+                        controllerAs: 'vm'
                     }
                 }
             })
@@ -90,7 +95,9 @@
                 url: '/groups?page&per_page',
                 views: {
                     'main@': {
-                        templateUrl: getView('group-list')
+                        templateUrl: 'app/module/groups/group-list.page.html',
+                        controller: 'GroupListController',
+                        controllerAs: 'vm'
                     }
                 }
             })
@@ -98,7 +105,9 @@
                 url: '/students?page&per_page',
                 views: {
                     'main@': {
-                        templateUrl: getView('student-list')
+                        templateUrl: 'app/module/students/student-list.page.html',
+                        controller: 'StudentListController',
+                        controllerAs: 'vm'
                     }
                 }
             })
@@ -106,7 +115,9 @@
                 url: '/students/:id',
                 views: {
                     'main@': {
-                        templateUrl: getView('student-details')
+                        templateUrl: 'app/module/students/student-details.page.html',
+                        controller: 'StudentDetailsController',
+                        controllerAs: 'vm'
                     }
                 }
             });

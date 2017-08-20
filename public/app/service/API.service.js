@@ -3,7 +3,7 @@
 
     angular
         .module('app')
-        .factory('APIService', APIService);
+        .factory('API', APIService);
 
     APIService.$inject = [
         'Restangular',
