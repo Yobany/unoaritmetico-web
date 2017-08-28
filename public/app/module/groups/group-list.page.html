@@ -9,7 +9,7 @@
         </div>
     </md-toolbar>
     <div flex="80" flex-offset="10">
-        <md-button ng-click="vm.create()" class="md-raised md-primary">Agregar</md-button>
+        <md-button ui-sref="app.groups.new" class="md-raised md-primary">Agregar</md-button>
         <div ng-if="!vm.isLoading && !vm.groups.length">
             <h1>A&uacute;n no has registrado ning&uacute;n grupo</h1>
         </div>

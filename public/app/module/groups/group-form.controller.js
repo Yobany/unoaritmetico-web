@@ -7,56 +7,30 @@
 
     GroupFormController.$inject =
         [
-            '$mdDialog', 
-            'API'
+            'Group',
+            'entity',
+            '$uibModalInstance'
         ];
 
-    function GroupFormController($mdDialog,
-                                 API) {
+    function GroupFormController(Group,
+                                 entity,
+                                 $uibModalInstance) {
 
         let vm = this;
 
-        vm.$mdDialog = $mdDialog;
-        vm.API = API;
+        vm.group = entity;
+        vm.action = (entity.id) ? "Editar" : "Agregar";
+        vm.clear = clear;
 
-
-        if (vm.groupid) {
-            vm.API.one("groups", vm.groupid).get().then((result) => {
-                vm.group = result;
-            });
-        } else {
-            vm.group = {
-                name: null
-            };
+        function clear () {
+            $uibModalInstance.dismiss('cancel');
         }
-        vm.action = (vm.groupid) ? "Editar" : "Agregar";
-
-
-        vm.save = function () {
-            vm.API.all('groups').post(vm.group).then(() => {
-                vm.$mdDialog.hide();
-            }, () => {
-            });
-        };
-
-        vm.update = function () {
-            let updatedGroup = vm.API.one("groups", vm.group.id);
-            updatedGroup.name = vm.group.name;
-            updatedGroup.put().then(() => {
-                vm.$mdDialog.hide();
-            }, () => {
-            });
-        };
-
-        vm.cancel = function () {
-            vm.$mdDialog.cancel();
-        };
 
         vm.submit = function () {
             if (vm.group.id) {
-                vm.update();
+                Group.update(vm.group, onSuccess, onError);
             } else {
-                vm.save();
+                Group.save(vm.group, onSuccess, onError);
             }
         };
 

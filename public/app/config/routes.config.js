@@ -91,16 +91,6 @@
                     }
                 }
             })
-            .state('app.groups', {
-                url: '/groups?page&per_page',
-                views: {
-                    'main@': {
-                        templateUrl: 'app/module/groups/group-list.page.html',
-                        controller: 'GroupListController',
-                        controllerAs: 'vm'
-                    }
-                }
-            })
             .state('app.students', {
                 url: '/students?page&per_page',
                 views: {
