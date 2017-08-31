@@ -28,11 +28,15 @@
 
         vm.submit = function () {
             if (vm.group.id) {
-                Group.update(vm.group, onSuccess, onError);
+                Group.update({ id: vm.group.id }, vm.group, onSuccess);
             } else {
-                Group.save(vm.group, onSuccess, onError);
+                Group.save(vm.group, onSuccess);
             }
         };
+
+        function onSuccess(){
+            $uibModalInstance.close(true);
+        }
 
     }
 })();

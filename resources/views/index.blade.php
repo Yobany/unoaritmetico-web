@@ -50,11 +50,14 @@
 <script src="{{asset_conditional('vendor/angular-bootstrap/ui-bootstrap-tpls.min.js')}}" type='text/javascript'></script>
 
 <script src="{{asset_conditional('app/module.js')}}" type='text/javascript'></script>
+<script src="{{asset_conditional('app/config/interceptor/auth.interceptor.js')}}" type='text/javascript'></script>
+<script src="{{asset_conditional('app/config/http.config.js')}}" type='text/javascript'></script>
 <script src="{{asset_conditional('app/config/chart.config.js')}}" type='text/javascript'></script>
 <script src="{{asset_conditional('app/config/loading_bar.config.js')}}" type='text/javascript'></script>
 <script src="{{asset_conditional('app/config/routes.config.js')}}" type='text/javascript'></script>
 <script src="{{asset_conditional('app/config/satellizer.config.js')}}" type='text/javascript'></script>
 <script src="{{asset_conditional('app/config/theme.config.js')}}" type='text/javascript'></script>
+<script src="{{asset_conditional('app/factory/entity-search-helper.factory.js')}}" type='text/javascript'></script>
 <script src="{{asset_conditional('app/filter/capitalize.filter.js')}}" type='text/javascript'></script>
 <script src="{{asset_conditional('app/filter/human_readable.filter.js')}}" type='text/javascript'></script>
 <script src="{{asset_conditional('app/filter/truncate_characters.filter.js')}}" type='text/javascript'></script>

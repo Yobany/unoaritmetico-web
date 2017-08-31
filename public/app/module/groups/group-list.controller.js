@@ -7,21 +7,25 @@
 
     GroupListController.$inject =
         [
-            'API',
+            'Group',
             '$mdDialog',
-            '$state'
+            '$state',
+            'EntitySearchHelper'
         ];
 
-    function GroupListController(API,
+    function GroupListController(Group,
                                  $mdDialog,
-                                 $state) {
+                                 $state,
+                                 EntitySearchHelper) {
 
         let vm = this;
-        vm.API = API;
-        vm.$mdDialog = $mdDialog;
         vm.$state = $state;
         vm.groups = [];
+        vm.$mdDialog = $mdDialog;
         vm.fetchGroups = fetchGroups;
+        vm.groupSearch = EntitySearchHelper.getDefaultSearch(Group);
+        vm.groupSearch.config.emptyResultMessages = true;
+        vm.groupSearch.search();
 
         vm.confirmDeletion = function (group) {
             let confirm = vm.$mdDialog.confirm()
@@ -34,21 +38,16 @@
             vm.$mdDialog.show(confirm).then(() => remove(group), () => {
             });
 
-            let component = vm;
-            let remove = (group) => {
-                group.remove().then(() => {
-                    component.fetchGroups();
-                }, () => {
-                });
+            function remove(group){
+                Group.delete(group);
             }
         };
 
         function fetchGroups() {
             vm.isLoading = true;
-            vm.API.all('groups').getList().then((results) => {
-                vm.groups = results;
+            Group.query(function (groupsCollection) {
+                vm.groups = groupsCollection.data;
                 vm.isLoading = false;
-            }, () => {
             });
         }
 

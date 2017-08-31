@@ -10,16 +10,18 @@
         let resourceUrl = 'api/groups/:id';
 
         return $resource(resourceUrl, {}, {
-            'query': { method: 'GET', isArray: true},
+            'query': { method: 'GET'},
             'get': {
                 method: 'GET',
-                transformResponse: function (data) {
-                    if (data) {
-                        data = angular.fromJson(data);
+                transformResponse: function (response) {
+                    if (response) {
+                        response = angular.fromJson(response);
                     }
-                    return data;
-                }
-            },
+                    if(response.data){
+                        response = response.data;
+                    }
+                    return response;
+                }},
             'update': { method:'PUT' }
         });
     }

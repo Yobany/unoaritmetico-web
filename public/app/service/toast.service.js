@@ -22,7 +22,6 @@
             if (!content) {
                 return false;
             }
-
             return vm.$mdToast.show(
                 vm.$mdToast.simple()
                     .content(content)
