@@ -16,13 +16,13 @@
                     <input ng-model="vm.groupSearch.params.name" type="text" md-maxlength="100" maxlength="100" min="1">
                 </md-input-container>
                 <md-input-container flex="10" class="md-block">
-                    <md-button type="submit" class="md-raised md-primary" ng-disabled="searchForm.$invalid">
+                    <md-button type="submit" class="md-raised md-accent" ng-disabled="searchForm.$invalid">
                         <span>Buscar</span>
                     </md-button>
                 </md-input-container>
             </div>
         </form>
-        <md-button ui-sref="app.groups.new" class="md-raised md-primary">Agregar</md-button>
+        <md-button ui-sref="app.groups.new" class="md-raised md-accent">Agregar</md-button>
         <md-content>
             <table md-table>
                 <thead md-head>
@@ -41,7 +41,7 @@
                     <td md-cell>{{group.studentsCount}}</td>
                     <td md-cell>
                         <md-button ui-sref="app.groups.edit({ groupid: group.id })" class="md-icon-button md-primary"><i class="material-icons">mode_edit</i></md-button>
-                        <md-button ng-click="vm.confirmDeletion(group)" class="md-icon-button md-primary"><i class="material-icons">delete</i></md-button>
+                        <md-button ui-sref="app.groups.remove({ groupid: group.id })" class="md-icon-button md-primary"><i class="material-icons">delete</i></md-button>
                     </td>
                 </tr>
                 </tbody>

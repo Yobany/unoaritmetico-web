@@ -72,6 +72,7 @@
 <script src="{{asset_conditional('app/module/groups/group.state.js')}}" type='text/javascript'></script>
 <script src="{{asset_conditional('app/module/groups/group-form.controller.js')}}" type='text/javascript'></script>
 <script src="{{asset_conditional('app/module/groups/group-list.controller.js')}}" type='text/javascript'></script>
+<script src="{{asset_conditional('app/module/groups/group-delete.controller.js')}}" type='text/javascript'></script>
 <script src="{{asset_conditional('app/module/login/login.controller.js')}}" type='text/javascript'></script>
 <script src="{{asset_conditional('app/module/password/forgot-password.controller.js')}}" type='text/javascript'></script>
 <script src="{{asset_conditional('app/module/password/reset-password.controller.js')}}" type='text/javascript'></script>

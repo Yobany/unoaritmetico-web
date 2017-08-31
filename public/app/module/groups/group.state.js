@@ -26,8 +26,7 @@
                         templateUrl: 'app/module/groups/group-form.page.html',
                         controller: 'GroupFormController',
                         controllerAs: 'vm',
-                        backdrop: 'static',
-                        size: 'lg',
+                        size: 'md',
                         resolve: {
                             entity: function () {
                                 return {
@@ -36,9 +35,9 @@
                             }
                         }
                     }).result.then(function() {
-                        $state.go('app.groups', null, { reload: true });
+                        $state.go('^', null, { reload: true });
                     }, function() {
-                        $state.go('app.groups');
+                        $state.go('^');
                     });
                 }]
             })
@@ -49,17 +48,36 @@
                         templateUrl: 'app/module/groups/group-form.page.html',
                         controller: 'GroupFormController',
                         controllerAs: 'vm',
-                        backdrop: 'static',
-                        size: 'lg',
+                        size: 'md',
                         resolve: {
                             entity: ['Group', function(Group){
                                 return Group.get({ id: $stateParams.groupid }).$promise;
                             }]
                         }
                     }).result.then(function() {
-                        $state.go('app.groups', null, { reload: true });
+                        $state.go('^', null, { reload: true });
                     }, function() {
-                        $state.go('app.groups');
+                        $state.go('^');
+                    });
+                }]
+            })
+            .state('app.groups.remove', {
+                url: '/{groupid}/delete',
+                onEnter: ['$stateParams', '$state', '$uibModal', function($stateParams, $state, $uibModal) {
+                    $uibModal.open({
+                        templateUrl: 'app/module/groups/group-delete.page.html',
+                        controller: 'GroupDeleteController',
+                        controllerAs: 'vm',
+                        size: 'md',
+                        resolve: {
+                            entity: ['Group', function(Group) {
+                                return Group.get({id : $stateParams.groupid}).$promise;
+                            }]
+                        }
+                    }).result.then(function() {
+                        $state.go('^', null, { reload: true });
+                    }, function() {
+                        $state.go('^');
                     });
                 }]
             });

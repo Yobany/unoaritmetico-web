@@ -13,7 +13,7 @@
             .primaryPalette('light-blue', {
                 default: '600'
             })
-            .accentPalette('grey')
+            .accentPalette('deep-purple')
             .warnPalette('red');
 
         $mdThemingProvider.theme('warn');
