@@ -134,7 +134,7 @@
                     <td md-cell>{{game.movesCount}}</td>
                     <td md-cell>{{game.playedAt}}</td>
                     <td md-cell>
-                        <md-button ng-click="vm.show(game)" class="md-icon-button md-primary"><i class="material-icons">details</i></md-button>
+                        <md-button ui-sref="app.games.detail({ gameid: game.id })" class="md-icon-button md-primary"><i class="material-icons">details</i></md-button>
                     </td>
                 </tr>
                 </tbody>
