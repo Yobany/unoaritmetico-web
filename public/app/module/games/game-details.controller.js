@@ -7,20 +7,16 @@
 
     GameDetailsController.$inject =
         [
-            'API',
-            '$mdDialog'
+            'entity',
+            'Game'
         ];
 
-    function GameDetailsController(API,
-                                   $mdDialog) {
+    function GameDetailsController(entity,
+                                   Game) {
 
         let vm = this;
 
-        vm.API = API;
-        vm.$mdDialog = $mdDialog;
-        vm.API.one("games", vm.gameid).get().then((result) => {
-            vm.game = result;
-        });
+        vm.game = entity;
 
         vm.getDescription = function (card) {
             let description = "";
@@ -33,10 +29,6 @@
                 description += (description.length ? " -" : "") + " Color :" + card.color.data.name;
             }
             return description;
-        };
-
-        vm.cancel = function () {
-            vm.$mdDialog.cancel();
         };
 
         vm.exportGame = function () {

@@ -68,6 +68,9 @@
 <script src="{{asset_conditional('app/run/routes.run.js')}}" type='text/javascript'></script>
 <script src="{{asset_conditional('app/module/account/activate-account.controller.js')}}" type='text/javascript'></script>
 <script src="{{asset_conditional('app/module/core/header.controller.js')}}" type='text/javascript'></script>
+<script src="{{asset_conditional('app/module/games/game.service.js')}}" type='text/javascript'></script>
+<script src="{{asset_conditional('app/module/games/game.state.js')}}" type='text/javascript'></script>
+<script src="{{asset_conditional('app/module/games/game-list.controller.js')}}" type='text/javascript'></script>
 <script src="{{asset_conditional('app/module/games/game-details.controller.js')}}" type='text/javascript'></script>
 <script src="{{asset_conditional('app/module/groups/group.service.js')}}" type='text/javascript'></script>
 <script src="{{asset_conditional('app/module/groups/group.state.js')}}" type='text/javascript'></script>
