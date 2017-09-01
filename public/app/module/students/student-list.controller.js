@@ -7,49 +7,30 @@
 
     StudentListController.$inject =
         [
-            'API',
-            '$mdDialog',
-            '$state'
+            'Student',
+            'Group',
+            'EntitySearchHelper'
         ];
 
-    function StudentListController(API,
-                                   $mdDialog,
-                                   $state) {
-
+    function StudentListController(Student,
+                                   Group,
+                                   EntitySearchHelper) {
         let vm = this;
 
-        vm.API = API;
-        vm.$mdDialog = $mdDialog;
-        vm.$state = $state;
-        vm.students = [];
-        vm.fetchStudents();
+        Group.query(function(groupCollection){
+            vm.groups = groupCollection.data;
+        });
 
-        vm.confirmDeletion = function (student) {
-            let confirm = vm.$mdDialog.confirm()
-                .title('¿Deseas eliminar el estudiante "' + student.name + '"')
-                .textContent('Todas las partidas relacionadas a este estudiante se eliminaran')
-                .ariaLabel('Confirmar operación')
-                .ok('SI')
-                .cancel('NO');
-
-            let component = vm;
-
-            vm.$mdDialog.show(confirm).then(function () {
-                student.remove().then(() => {
-                    component.fetchStudents();
-                }, () => {
-                });
-            });
+        vm.studentSearch = EntitySearchHelper.getDefaultSearch(Student);
+        vm.studentSearch.params.group = "T";
+        vm.studentSearch.config.emptyResultMessages = true;
+        vm.studentSearch.filterParams = function(params) {
+            let allGroupsSelected = params.group && params.group === "T";
+            if(allGroupsSelected){
+                delete params.group;
+            }
+            return params;
         };
-
-        vm.fetchStudents = function () {
-            vm.isLoading = true;
-            vm.API.all('students').getList().then((results) => {
-                vm.students = results;
-                vm.isLoading = false;
-            }, () => {
-            });
-        };
-
+        vm.studentSearch.search();
     }
 })();

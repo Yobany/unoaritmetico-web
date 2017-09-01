@@ -30,13 +30,14 @@
                 },
                 onSearchSuccess: function (results, headers) {},
                 onSearchError: function (error) {},
+                filterParams: function(params) { return params },
                 results: [],
                 isSearching: false,
                 total: 0,
                 search: function () {
                     let self = this;
                     self.isSearching = true;
-                    service[method](self.params, success, error);
+                    service[method](self.filterParams(self.params), success, error);
                     function success(results) {
                         self.onSearchSuccess(results.data, results.meta);
                         self.total = parseInt(results.meta.pagination.count, 10);

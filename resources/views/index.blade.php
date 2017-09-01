@@ -54,6 +54,7 @@
 <script src="{{asset_conditional('app/config/http.config.js')}}" type='text/javascript'></script>
 <script src="{{asset_conditional('app/config/chart.config.js')}}" type='text/javascript'></script>
 <script src="{{asset_conditional('app/config/loading_bar.config.js')}}" type='text/javascript'></script>
+<script src="{{asset_conditional('app/config/pagination.config.js')}}" type='text/javascript'></script>
 <script src="{{asset_conditional('app/config/routes.config.js')}}" type='text/javascript'></script>
 <script src="{{asset_conditional('app/config/satellizer.config.js')}}" type='text/javascript'></script>
 <script src="{{asset_conditional('app/config/theme.config.js')}}" type='text/javascript'></script>
@@ -80,6 +81,9 @@
 <script src="{{asset_conditional('app/module/students/student-list.controller.js')}}" type='text/javascript'></script>
 <script src="{{asset_conditional('app/module/students/student-form.controller.js')}}" type='text/javascript'></script>
 <script src="{{asset_conditional('app/module/students/student-details.controller.js')}}" type='text/javascript'></script>
+<script src="{{asset_conditional('app/module/students/student-delete.controller.js')}}" type='text/javascript'></script>
+<script src="{{asset_conditional('app/module/students/student.state.js')}}" type='text/javascript'></script>
+<script src="{{asset_conditional('app/module/students/student.service.js')}}" type='text/javascript'></script>
 <script src="{{asset_conditional('app/service/API.service.js')}}" type='text/javascript'></script>
 <script src="{{asset_conditional('app/service/toast.service.js')}}" type='text/javascript'></script>
 </body>

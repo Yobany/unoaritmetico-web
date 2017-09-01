@@ -7,70 +7,48 @@
 
     StudentFormController.$inject =
         [
-            '$mdDialog',
-            'API'
+            'Student',
+            'Group',
+            'entity',
+            '$uibModalInstance'
         ];
 
-    function StudentFormController($mdDialog,
-                                   API) {
+    function StudentFormController(Student,
+                                   Group,
+                                   entity,
+                                   $uibModalInstance) {
 
         let vm = this;
 
-        vm.$mdDialog = $mdDialog;
-        vm.API = API;
-        if (vm.studentid) {
-            vm.API.one("students", vm.studentid).get().then((result) => {
-                vm.student = result;
-            });
-        } else {
-            vm.student = {
-                name: null,
-                age: null,
-                group: null
-            };
+        Group.query(function(groupCollection){
+            vm.groups = groupCollection.data;
+        });
+
+        vm.student = entity;
+        vm.student.group = vm.student.group.data;
+        vm.action = (entity.id) ? "Editar" : "Agregar";
+        vm.clear = clear;
+
+        function clear () {
+            $uibModalInstance.dismiss('cancel');
         }
-        vm.action = (vm.studentid) ? "Editar" : "Agregar";
-
-
-        vm.save = function () {
-            let component = vm;
-            vm.student.group = vm.student.group.id;
-            vm.API.all('students').post(vm.student).then(() => {
-                component.$mdDialog.hide();
-            }, () => {
-            });
-        };
-
-        vm.update = function () {
-            let component = vm;
-            let updatedStudent = vm.API.one("students", vm.student.id);
-            updatedStudent.name = vm.student.name;
-            updatedStudent.age = vm.student.age;
-            updatedStudent.group = vm.student.group.id;
-            updatedStudent.put().then(() => {
-                component.$mdDialog.hide();
-            }, () => {
-            });
-        };
-
-        vm.cancel = function () {
-            vm.$mdDialog.cancel();
-        };
 
         vm.submit = function () {
+            let request = {
+                name: vm.student.name,
+                age: vm.student.age,
+                group: vm.student.group.id
+            };
             if (vm.student.id) {
-                vm.update();
+                Student.update({ id: vm.student.id }, request, onSuccess);
             } else {
-                vm.save();
+                Student.save(request, onSuccess);
             }
         };
 
-        vm.fetchGroups = function () {
-            vm.groups = [];
-            vm.API.all('groups').getList().then((results) => {
-                vm.groups = results;
-            });
-        };
+        function onSuccess(){
+            $uibModalInstance.close(true);
+        }
 
     }
 })();

@@ -1,0 +1,20 @@
+<form name="deleteForm" ng-submit="vm.remove()">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                ng-click="vm.clear()">&times;</button>
+        <h4 class="modal-title">Confirmar operación</h4>
+    </div>
+    <div class="modal-body">
+        <p>¿Eliminar el estudiante {{vm.student.name}}?</p>
+    </div>
+    <div class="modal-footer">
+        <div class="text-center">
+            <md-button type="button" data-dismiss="modal" ng-click="vm.clear()">
+                <span>Cancelar</span>
+            </md-button>
+            <md-button type="submit" class="md-raised md-warn" ng-disabled="deleteForm.$invalid">
+                <span>Eliminar</span>
+            </md-button>
+        </div>
+    </div>
+</form>

@@ -357,3 +357,9 @@ md-toast[md-theme=warn] > .md-toast-content {
     display: none;
 }
 
+/**
+Show select above modal
+ */
+.md-select-menu-container{
+    z-index: 1504;
+}

@@ -90,26 +90,6 @@
                         controllerAs: 'vm'
                     }
                 }
-            })
-            .state('app.students', {
-                url: '/students?page&per_page',
-                views: {
-                    'main@': {
-                        templateUrl: 'app/module/students/student-list.page.html',
-                        controller: 'StudentListController',
-                        controllerAs: 'vm'
-                    }
-                }
-            })
-            .state('app.student-details', {
-                url: '/students/:id',
-                views: {
-                    'main@': {
-                        templateUrl: 'app/module/students/student-details.page.html',
-                        controller: 'StudentDetailsController',
-                        controllerAs: 'vm'
-                    }
-                }
             });
     }
 })();
