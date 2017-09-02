@@ -14,6 +14,7 @@
         $stateProvider
             .state('app.games', {
                 url: '/games',
+                data: {auth: true},
                 views: {
                     'main@': {
                         templateUrl: 'app/module/games/game-list.page.html',

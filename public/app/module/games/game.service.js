@@ -11,10 +11,6 @@
 
         return $resource(resourceUrl, {}, {
             'query': { method: 'GET'},
-            'export': {
-                method: 'GET',
-                url: 'api/games/:id/export'
-            },
             'get': {
                 method: 'GET',
                 transformResponse: function (response) {

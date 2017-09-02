@@ -8,17 +8,19 @@
     GameDetailsController.$inject =
         [
             'entity',
-            'Game'
+            '$window'
         ];
 
     function GameDetailsController(entity,
-                                   Game) {
+                                   $window) {
 
         let vm = this;
 
         vm.game = entity;
+        vm.getDescription = getDescription;
+        vm.exportGame = exportGame;
 
-        vm.getDescription = function (card) {
+        function getDescription(card) {
             let description = "";
             if (card.operation) {
                 description += "Operacion :" + card.operation + " = " + card.result;
@@ -29,11 +31,11 @@
                 description += (description.length ? " -" : "") + " Color :" + card.color.data.name;
             }
             return description;
-        };
+        }
 
-        vm.exportGame = function () {
-            vm.API.one('games', vm.gameid).one('export').get();
-        };
+        function exportGame(game){
+            $window.location = '/api/games/' + game.id + '/export';
+        }
 
     }
 })();

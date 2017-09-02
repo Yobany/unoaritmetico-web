@@ -14,6 +14,7 @@
         $stateProvider
             .state('app.students', {
                 url: '/students',
+                data: {auth: true},
                 views: {
                     'main@': {
                         templateUrl: 'app/module/students/student-list.page.html',

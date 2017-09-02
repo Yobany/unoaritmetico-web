@@ -55,7 +55,6 @@
 <script src="{{asset_conditional('app/config/chart.config.js')}}" type='text/javascript'></script>
 <script src="{{asset_conditional('app/config/loading_bar.config.js')}}" type='text/javascript'></script>
 <script src="{{asset_conditional('app/config/pagination.config.js')}}" type='text/javascript'></script>
-<script src="{{asset_conditional('app/config/routes.config.js')}}" type='text/javascript'></script>
 <script src="{{asset_conditional('app/config/satellizer.config.js')}}" type='text/javascript'></script>
 <script src="{{asset_conditional('app/config/theme.config.js')}}" type='text/javascript'></script>
 <script src="{{asset_conditional('app/factory/entity-search-helper.factory.js')}}" type='text/javascript'></script>
@@ -66,8 +65,8 @@
 <script src="{{asset_conditional('app/filter/trust_html.filter.js')}}" type='text/javascript'></script>
 <script src="{{asset_conditional('app/filter/ucfirst.filter.js')}}" type='text/javascript'></script>
 <script src="{{asset_conditional('app/run/routes.run.js')}}" type='text/javascript'></script>
-<script src="{{asset_conditional('app/module/account/activate-account.controller.js')}}" type='text/javascript'></script>
 <script src="{{asset_conditional('app/module/core/header.controller.js')}}" type='text/javascript'></script>
+<script src="{{asset_conditional('app/module/core/core.state.js')}}" type='text/javascript'></script>
 <script src="{{asset_conditional('app/module/games/game.service.js')}}" type='text/javascript'></script>
 <script src="{{asset_conditional('app/module/games/game.state.js')}}" type='text/javascript'></script>
 <script src="{{asset_conditional('app/module/games/game-list.controller.js')}}" type='text/javascript'></script>
@@ -77,10 +76,13 @@
 <script src="{{asset_conditional('app/module/groups/group-form.controller.js')}}" type='text/javascript'></script>
 <script src="{{asset_conditional('app/module/groups/group-list.controller.js')}}" type='text/javascript'></script>
 <script src="{{asset_conditional('app/module/groups/group-delete.controller.js')}}" type='text/javascript'></script>
-<script src="{{asset_conditional('app/module/login/login.controller.js')}}" type='text/javascript'></script>
-<script src="{{asset_conditional('app/module/password/forgot-password.controller.js')}}" type='text/javascript'></script>
-<script src="{{asset_conditional('app/module/password/reset-password.controller.js')}}" type='text/javascript'></script>
-<script src="{{asset_conditional('app/module/register/register.controller.js')}}" type='text/javascript'></script>
+<script src="{{asset_conditional('app/module/account/account.service.js')}}" type='text/javascript'></script>
+<script src="{{asset_conditional('app/module/account/account.state.js')}}" type='text/javascript'></script>
+<script src="{{asset_conditional('app/module/account/activation/activate-account.controller.js')}}" type='text/javascript'></script>
+<script src="{{asset_conditional('app/module/account/login/login.controller.js')}}" type='text/javascript'></script>
+<script src="{{asset_conditional('app/module/account/password/forgot-password.controller.js')}}" type='text/javascript'></script>
+<script src="{{asset_conditional('app/module/account/password/reset-password.controller.js')}}" type='text/javascript'></script>
+<script src="{{asset_conditional('app/module/account/register/register.controller.js')}}" type='text/javascript'></script>
 <script src="{{asset_conditional('app/module/students/student-list.controller.js')}}" type='text/javascript'></script>
 <script src="{{asset_conditional('app/module/students/student-form.controller.js')}}" type='text/javascript'></script>
 <script src="{{asset_conditional('app/module/students/student-details.controller.js')}}" type='text/javascript'></script>

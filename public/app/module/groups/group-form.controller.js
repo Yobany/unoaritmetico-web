@@ -21,18 +21,19 @@
         vm.group = entity;
         vm.action = (entity.id) ? "Editar" : "Agregar";
         vm.clear = clear;
+        vm.submit = submit;
 
         function clear () {
             $uibModalInstance.dismiss('cancel');
         }
 
-        vm.submit = function () {
+        function submit() {
             if (vm.group.id) {
                 Group.update({ id: vm.group.id }, vm.group, onSuccess);
             } else {
                 Group.save(vm.group, onSuccess);
             }
-        };
+        }
 
         function onSuccess(){
             $uibModalInstance.close(true);

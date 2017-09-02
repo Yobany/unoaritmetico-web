@@ -28,12 +28,13 @@
         vm.student.group = vm.student.group.data;
         vm.action = (entity.id) ? "Editar" : "Agregar";
         vm.clear = clear;
+        vm.submit = submit;
 
         function clear () {
             $uibModalInstance.dismiss('cancel');
         }
 
-        vm.submit = function () {
+        function submit() {
             let request = {
                 name: vm.student.name,
                 age: vm.student.age,
@@ -44,7 +45,7 @@
             } else {
                 Student.save(request, onSuccess);
             }
-        };
+        }
 
         function onSuccess(){
             $uibModalInstance.close(true);

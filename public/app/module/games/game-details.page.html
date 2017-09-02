@@ -59,7 +59,7 @@
         </div>
         <div layout-gt-xs="row" class="text-center">
             <div flex="40"></div>
-            <md-button flex="20" class="md-raised md-primary" href="/api/games/{{vm.game.id}}/export">Exportar partida</md-button>
+            <md-button flex="20" class="md-raised md-primary" ng-click="vm.exportGame(game)">Exportar partida</md-button>
             <div flex="40"></div>
         </div>
         <md-toolbar>

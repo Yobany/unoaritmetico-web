@@ -7,41 +7,35 @@
 
     AppHeaderController.$inject =
         [
-            '$sce',
             '$auth',
             '$state',
             '$window',
             '$location'
         ];
 
-    function AppHeaderController($sce,
-                                 $auth,
+    function AppHeaderController($auth,
                                  $state,
                                  $window,
                                  $location) {
 
         let vm = this;
+        
+        vm.isAuthenticated = $auth.isAuthenticated();
+        vm.urlContains = urlContains;
+        vm.logout = logout;
+        vm.goBack = goBack;
 
-        vm.$sce = $sce;
-        vm.$auth = $auth;
-        vm.$state = $state;
-        vm.$window = $window;
-        vm.isAuthenticated = vm.$auth.isAuthenticated();
-        vm.isCurrentState = isCurrentState;
-
-        function isCurrentState(stateName){
+        function urlContains(stateName){
             return $location.url().includes(stateName);
         }
 
-        vm.historyBack = function () {
-            vm.$window.history.back();
-        };
+        function goBack() {
+            $window.history.back();
+        }
 
-        vm.logout = function () {
-            vm.$auth.logout();
-            vm.$state.go('app.landing', {}, {reload: true});
-        };
-
-
+        function logout() {
+            $auth.logout();
+            $state.go('app.landing', {}, {reload: true});
+        }
     }
 })();

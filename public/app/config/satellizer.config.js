@@ -14,6 +14,6 @@
 
         $authProvider.loginUrl = '/api/auth/login';
         $authProvider.signupUrl = '/api/auth/register';
-        $authProvider.tokenRoot = 'meta';//compensates success response macro
+        $authProvider.tokenRoot = 'meta';
     }
 })();

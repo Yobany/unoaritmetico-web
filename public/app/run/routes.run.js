@@ -8,18 +8,14 @@
     RoutesRun.$inject = ['$state', '$transitions', '$auth'];
 
     function RoutesRun($state, $transitions, $auth) {
-
-        let requiresAuthCriteria = {
-            to: ($state) => $state.data && $state.data.auth
-        };
-
-        let redirectToLogin = function ($auth) {
-            if (!$auth.isAuthenticated()) {
-                return $state.target('app.login', undefined, {location: false});
+        $transitions.onBefore({
+            to: function($state){
+                return $state.data && $state.data.auth;
             }
-        };
-
-        $transitions.onBefore(requiresAuthCriteria, redirectToLogin, {priority:10});
-
+        }, function () {
+            if (!$auth.isAuthenticated()) {
+                return $state.target('app.login', undefined, {location: true});
+            }
+        }, {priority:10});
     }
 })();

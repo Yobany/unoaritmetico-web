@@ -11,6 +11,7 @@
         $stateProvider
             .state('app.groups', {
                 url: '/groups',
+                data: {auth: true},
                 views: {
                     'main@': {
                         templateUrl: 'app/module/groups/group-list.page.html',

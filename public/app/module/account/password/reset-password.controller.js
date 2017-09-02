@@ -7,38 +7,34 @@
 
     ResetPasswordController.$inject =
         [
-            'API',
+            'Account',
             'ToastService',
             '$state',
             '$stateParams'
         ];
 
-    function ResetPasswordController(API,
+    function ResetPasswordController(Account,
                                      ToastService,
                                      $state,
                                      $stateParams) {
 
         let vm = this;
-        vm.API = API;
-        vm.$state = $state;
-        vm.ToastService = ToastService;
-        vm.$stateParams = $stateParams;
         vm.password = '';
         vm.passwordConfirmation = '';
-        if (typeof vm.$stateParams.token === 'undefined') {
-            vm.$state.go('app.landing');
+        vm.submit = submit;
+
+        if (typeof $stateParams.token === 'undefined') {
+            $state.go('app.landing');
         }
 
-        vm.submit = function () {
-            let data = {
-                token: vm.$stateParams.token,
+        function submit() {
+            Account.passwordReset({
+                token: $stateParams.token,
                 password: vm.password,
                 passwordConfirmation: vm.passwordConfirmation
-            };
-
-            vm.API.all('auth/password/reset').post(data).then(() => {
-                vm.ToastService.show('Tu contraseña ha sido actualizada, inicia sesión');
-                vm.$state.go('app.login');
+            }, function(){
+                ToastService.show('Tu contraseña ha sido actualizada, inicia sesión');
+                $state.go('app.login');
             });
         }
 

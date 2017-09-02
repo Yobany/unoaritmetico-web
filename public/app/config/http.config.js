@@ -1,6 +1,3 @@
-/**
- * Created by pixco on 30/08/2017.
- */
 (function() {
     'use strict';
 

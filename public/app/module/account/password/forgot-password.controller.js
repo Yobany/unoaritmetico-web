@@ -7,30 +7,27 @@
 
     ForgotPasswordController.$inject =
         [
-            'API',
+            'Account',
             'ToastService',
             '$state'
         ];
 
-    function ForgotPasswordController(API,
+    function ForgotPasswordController(Account,
                                       ToastService,
                                       $state) {
         let vm = this;
-        vm.API = API;
-        vm.$state = $state;
-        vm.ToastService = ToastService;
         vm.email = '';
         vm.isSending = false;
+        vm.submit = submit;
 
-
-        vm.submit = function () {
+        function submit () {
             vm.isSending = true;
-            vm.API.all('auth/password/recover').post({
+            Account.passwordRecover({
                 email: vm.email
-            }).then(() => {
+            }, function(){
                 vm.isSending = false;
-                vm.ToastService.show(`Te hemos enviado un enlace para recuperar tu cuenta, revisa tu correo`);
-                vm.$state.go('app.landing');
+                ToastService.show(`Te hemos enviado un enlace para recuperar tu cuenta, revisa tu correo`);
+                $state.go('app.landing');
             });
         }
 

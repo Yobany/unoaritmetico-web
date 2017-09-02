@@ -8,9 +8,14 @@
         .module('app')
         .factory('authInterceptor', authInterceptor);
 
-    authInterceptor.$inject = ['$rootScope', '$q', '$location', '$localStorage', '$sessionStorage'];
+    authInterceptor.$inject =
+        [
+            '$localStorage',
+            '$sessionStorage'
+        ];
 
-    function authInterceptor ($rootScope, $q, $location, $localStorage, $sessionStorage) {
+    function authInterceptor ($localStorage,
+                              $sessionStorage) {
         var service = {
             request: request
         };
