@@ -10,13 +10,15 @@
             '$sce',
             '$auth',
             '$state',
-            '$window'
+            '$window',
+            '$location'
         ];
 
     function AppHeaderController($sce,
                                  $auth,
                                  $state,
-                                 $window) {
+                                 $window,
+                                 $location) {
 
         let vm = this;
 
@@ -24,10 +26,12 @@
         vm.$auth = $auth;
         vm.$state = $state;
         vm.$window = $window;
-
-
         vm.isAuthenticated = vm.$auth.isAuthenticated();
+        vm.isCurrentState = isCurrentState;
 
+        function isCurrentState(stateName){
+            return $location.url().includes(stateName);
+        }
 
         vm.historyBack = function () {
             vm.$window.history.back();
