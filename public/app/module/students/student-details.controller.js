@@ -14,6 +14,7 @@
 
         let vm = this;
         vm.student = entity;
+        vm.exportGame = exportGame;
 
         let operationData = vm.student.stadistics.operation;
         vm.operationsGraph = {
@@ -39,5 +40,9 @@
                 }
             }
         };
+
+        function exportGame(game){
+            $window.location = '/api/games/' + game.id + '/export';
+        }
     }
 })();
