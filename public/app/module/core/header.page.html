@@ -1,8 +1,8 @@
 <md-content class="Page-Container DemoHeader NavColor">
     <div layout="row">
-        <div flex="96" flex-offset="2" class="DemoHeader-container">
+        <div class="DemoHeader-container">
             <div layout="row">
-                <div align="left">
+                <div layout-align="left">
                     <a aria-label="atrás"
                        hide-xs
                        class="DemoHeader-link md-subhead"
@@ -39,6 +39,9 @@
                        ui-sref="app.games">
                         Partidas
                     </a>
+                </div>
+                <div flex></div>
+                <div layout-align="right">
                     <a aria-label="iniciar sesion"
                        hide-xs
                        ng-if="!vm.isAuthenticated"

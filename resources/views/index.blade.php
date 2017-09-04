@@ -15,7 +15,7 @@
     <script type="text/javascript">document.location.href = '/unsupported-browser'</script>
     <![endif]-->
     <!-- Latest compiled and minified CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" href="{{asset_conditional('vendor/bootstrap/dist/css/bootstrap.min.css')}}">
     <link rel="stylesheet" href="{{asset_conditional('vendor/angular-loading-bar/build/loading-bar.min.css')}}">
     <link rel="stylesheet" href="{{asset_conditional('vendor/angular-material/angular-material.min.css')}}">
     <link rel="stylesheet" href="{{asset_conditional('vendor/angular-material-data-table/dist/md-data-table.min.css')}}">
