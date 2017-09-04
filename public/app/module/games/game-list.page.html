@@ -1,10 +1,9 @@
 <md-content class="Page-container">
     <md-toolbar>
         <div class="md-toolbar-tools">
-            <h1 class="center" layout="center">
-                <span flex></span>
+            <h1>
+                <span class="glyphicon glyphicon-tower"></span>
                 <span>Partidas</span>
-                <span flex></span>
             </h1>
         </div>
     </md-toolbar>
@@ -28,7 +27,7 @@
                 </md-input-container>
                 <md-input-container flex="10" class="md-block">
                     <md-button type="submit" class="md-raised md-accent" ng-disabled="searchForm.$invalid">
-                        <span>Buscar</span>
+                        <span class="glyphicon glyphicon-search"></span>
                     </md-button>
                 </md-input-container>
             </div>
@@ -41,6 +40,7 @@
                 <th md-column>Grupo</th>
                 <th md-column>Duracion</th>
                 <th md-column>Movimientos</th>
+                <th md-column></th>
             </tr>
             </thead>
             <tbody md-body>
@@ -52,9 +52,11 @@
                 <td md-cell>{{game.duration}} segundos</td>
                 <td md-cell>{{game.movesCount}}</td>
                 <td md-cell>
-                    <md-button ui-sref="app.games.detail({ gameid: game.id })" class="md-icon-button md-primary"><i class="material-icons">details</i></md-button>
+                    <md-button ui-sref="app.games.detail({ gameid: game.id })" class="md-icon-button md-primary">
+                        <span class="glyphicon glyphicon-info-sign medium"></span>
+                    </md-button>
                     <md-button ng-click="vm.exportGame(game)" class="md-icon-button md-primary">
-                        <span class="glyphicon glyphicon-download"></span>
+                        <span class="glyphicon glyphicon-download medium"></span>
                     </md-button>
                 </td>
             </tr>

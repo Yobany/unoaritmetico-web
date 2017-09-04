@@ -5,7 +5,6 @@ angular.module('app', [
     'ngResource',
     'ngAria',
     'angular-loading-bar',
-    'restangular',
     'ngStorage',
     'satellizer',
     'chart.js',
