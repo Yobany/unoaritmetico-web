@@ -4,7 +4,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>UNOARITMETICO</title>
+    <title>UNO aritmético</title>
 
     <meta name="theme-color" content="#0690B7">
 
