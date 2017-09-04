@@ -1,0 +1,25 @@
+<md-content class="Page-container">
+    <div class="Login-formContainer" layout="column" layout-align="center center">
+
+        <h1 class="md-headline">Inicia sesi&oacute;n</h1>
+        <form ng-submit="vm.login()">
+            <div>
+                <md-input-container class="LoginForm-inputContainer">
+                    <label>Correo</label>
+                    <input type="email" ng-model="vm.email">
+                </md-input-container>
+            </div>
+
+            <div>
+                <md-input-container class="LoginForm-inputContainer">
+                    <label>Contrase&ntilde;a</label>
+                    <input type="password" ng-model="vm.password">
+                </md-input-container>
+            </div>
+
+            <md-button ng-disabled="vm.isLoginIn" type="submit" class="LoginForm-submit md-primary md-raised">Ingresar</md-button>
+        </form>
+        <div flex></div>
+        <md-button class="md-primary" ui-sref="app.forgot_password">Olvid&eacute; mi contrase&ntilde;a</md-button>
+    </div>
+</md-content>

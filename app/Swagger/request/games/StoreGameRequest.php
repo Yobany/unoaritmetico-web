@@ -17,7 +17,7 @@ class StoreGameRequest
      * @var string
      * @SWG\Property( example = "2017-02-18 21:30:19")
      */
-    private $played_at;
+    private $playedAt;
 
     /**
      * @var string
