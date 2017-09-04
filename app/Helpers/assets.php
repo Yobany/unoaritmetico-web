@@ -10,3 +10,10 @@ if(!function_exists("app_is_https")){
         return (env("APP_HTTPS", "false") == "true");
     }
 }
+
+
+if(!function_exists("url_conditional")){
+    function url_conditional($url){
+        return app_is_https() ? secure_url($url) : url($url);
+    }
+}
