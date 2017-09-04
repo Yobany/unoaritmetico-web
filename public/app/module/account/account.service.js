@@ -16,11 +16,11 @@
             },
             'passwordRecover': {
                 method: 'POST',
-                url: 'api/games/password/recover'
+                url: 'api/auth/password/recover'
             },
             'passwordReset': {
                 method: 'POST',
-                url: 'api/games/password/reset'
+                url: 'api/auth/password/reset'
             },
         });
     }
