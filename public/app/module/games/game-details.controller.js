@@ -23,9 +23,9 @@
         function getDescription(card) {
             let description = "";
             if (card.operation) {
-                description += "Operacion :" + card.operation + " = " + card.result;
+                description += "Operacion: " + card.operation + " = " + card.result;
             } else if (card.power) {
-                description += "Poder :" + card.power.data.name;
+                description += "Poder: " + card.power.data.name;
             }
             if (card.color) {
                 description += (description.length ? " -" : "") + " Color :" + card.color.data.name;
