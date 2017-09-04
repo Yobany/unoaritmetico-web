@@ -2,7 +2,7 @@
     <div class="Login-formContainer" layout="column" layout-align="center center">
 
         <h1 class="md-headline">Inicia sesi&oacute;n</h1>
-        <form ng-submit="vm.login()">
+        <form name="loginForm" role="form" novalidate ng-submit="vm.login()">
             <div>
                 <md-input-container class="LoginForm-inputContainer">
                     <label>Correo</label>
@@ -17,7 +17,7 @@
                 </md-input-container>
             </div>
 
-            <md-button ng-disabled="vm.isLoginIn" type="submit" class="LoginForm-submit md-primary md-raised">Ingresar</md-button>
+            <md-button ng-disabled="vm.isLoginIn || loginForm.$invalid" type="submit" class="LoginForm-submit md-primary md-raised">Ingresar</md-button>
         </form>
         <div flex></div>
         <md-button class="md-primary" ui-sref="app.forgot_password">Olvid&eacute; mi contrase&ntilde;a</md-button>
