@@ -1,71 +1,70 @@
 <md-content class="Page-Container DemoHeader NavColor">
-    <div layout="row">
-        <div class="DemoHeader-container">
+    <div class="DemoHeader-container">
+        <div layout="row" layout-align="space-between">
             <div layout="row">
-                <div layout-align="left">
-                    <a aria-label="atrás"
-                       hide-xs
-                       class="DemoHeader-link md-subhead"
-                       ng-click="vm.goBack()">
-                        <
-                    </a>
-                    <a aria-label="principal"
-                       hide-xs
-                       class="DemoHeader-link md-subhead"
-                       ui-sref="app.landing">
-                        H
-                    </a>
-                    <a aria-label="mis grupos"
-                       hide-xs
-                       ng-if="vm.isAuthenticated"
-                       class="DemoHeader-link md-subhead"
-                       ng-class="{'active' : vm.urlContains('groups')}"
-                       ui-sref="app.groups">
-                        Grupos
-                    </a>
-                    <a aria-label="mis estudiantes"
-                       hide-xs
-                       ng-if="vm.isAuthenticated"
-                       class="DemoHeader-link md-subhead"
-                       ng-class="{'active' : vm.urlContains('students')}"
-                       ui-sref="app.students">
-                        Estudiantes
-                    </a>
-                    <a aria-label="mis partidas"
-                       hide-xs
-                       ng-if="vm.isAuthenticated"
-                       class="DemoHeader-link md-subhead"
-                       ng-class="{'active' : vm.urlContains('games')}"
-                       ui-sref="app.games">
-                        Partidas
-                    </a>
-                </div>
-                <div flex></div>
-                <div layout-align="right">
-                    <a aria-label="iniciar sesion"
-                       hide-xs
-                       ng-if="!vm.isAuthenticated"
-                       ng-class="{'active' : vm.urlContains('login')}"
-                       class="DemoHeader-link md-subhead"
-                       ui-sref="app.login">
-                        Iniciar sesión
-                    </a>
-                    <a aria-label="registrarme"
-                       hide-xs
-                       ng-if="!vm.isAuthenticated"
-                       ng-class="{'active' : vm.urlContains('register')}"
-                       class="DemoHeader-link md-subhead"
-                       ui-sref="app.register">
-                        Registrarme
-                    </a>
-                    <a aria-label="cerrar sesion"
-                       hide-xs
-                       ng-if="vm.isAuthenticated"
-                       class="DemoHeader-link md-subhead"
-                       ng-click="vm.logout()">
-                        Cerrar sesión
-                    </a>
-                </div>
+                <a aria-label="atrás"
+                   hide-xs
+                   class="DemoHeader-link md-subhead"
+                   ng-click="vm.goBack()">
+                    <span class="glyphicon glyphicon-chevron-left"></span>
+                </a>
+                <a aria-label="principal"
+                   hide-xs
+                   class="DemoHeader-link md-subhead"
+                   ng-class="{'active' : vm.isHomeUrl()}"
+                   ui-sref="app.landing">
+                    <span class="glyphicon glyphicon-home"></span>
+                </a>
+                <a aria-label="mis grupos"
+                   hide-xs
+                   ng-if="vm.isAuthenticated"
+                   class="DemoHeader-link md-subhead"
+                   ng-class="{'active' : vm.urlContains('groups')}"
+                   ui-sref="app.groups">
+                    Grupos
+                </a>
+                <a aria-label="mis estudiantes"
+                   hide-xs
+                   ng-if="vm.isAuthenticated"
+                   class="DemoHeader-link md-subhead"
+                   ng-class="{'active' : vm.urlContains('students')}"
+                   ui-sref="app.students">
+                    Estudiantes
+                </a>
+                <a aria-label="mis partidas"
+                   hide-xs
+                   ng-if="vm.isAuthenticated"
+                   class="DemoHeader-link md-subhead"
+                   ng-class="{'active' : vm.urlContains('games')}"
+                   ui-sref="app.games">
+                    Partidas
+                </a>
+            </div>
+            <div layout="row">
+                <a aria-label="iniciar sesion"
+                   hide-xs
+                   ng-if="!vm.isAuthenticated"
+                   ng-class="{'active' : vm.urlContains('login')}"
+                   class="DemoHeader-link md-subhead"
+                   ui-sref="app.login">
+                    Iniciar sesión
+                </a>
+                <a aria-label="registrarme"
+                   hide-xs
+                   ng-if="!vm.isAuthenticated"
+                   ng-class="{'active' : vm.urlContains('register')}"
+                   class="DemoHeader-link md-subhead"
+                   ui-sref="app.register">
+                    Registrarme
+                </a>
+                <a aria-label="cerrar sesion"
+                   hide-xs
+                   ng-if="vm.isAuthenticated"
+                   class="DemoHeader-link md-subhead"
+                   style="background-color: lightcoral; color: white !important;"
+                   ng-click="vm.logout()">
+                    <span class="glyphicon glyphicon-off"></span> Salir
+                </a>
             </div>
         </div>
     </div>

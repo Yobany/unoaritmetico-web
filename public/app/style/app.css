@@ -2,6 +2,25 @@ body {
     margin: 0;
 }
 
+a.DemoHeader-link, a.DemoHeader-link:link, a.DemoHeader-link:visited{
+    text-decoration: none; !important;
+}
+
+ul.pagination>li>a {
+    color: #333333;
+    background-color: whitesmoke;
+    border: none;
+    outline: none;
+}
+
+.glyphicon.medium {
+    font-size: 125%;
+}
+
+.glyphicon.larger {
+    font-size: 150%;
+}
+
 #app-shell-header {
     background-color: white;
     height: 64px;
@@ -88,7 +107,7 @@ body {
 }
 
 .DemoHeader-link {
-    text-decoration: none;
+    text-decoration: none; !important;
     color: #535362 !important;
     padding: 0 20px;
     display: inline-block;

@@ -8,9 +8,8 @@
 
     <meta name="theme-color" content="#0690B7">
 
-    <link rel="manifest" href="manifest.json">
+    <link rel="manifest" href="{{asset_conditional('manifest.json')}}">
 
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <!--[if lte IE 10]>
     <script type="text/javascript">document.location.href = '/unsupported-browser'</script>
     <![endif]-->
@@ -29,7 +28,6 @@
 <div ui-view="main"></div>
 <div ui-view="footer"></div>
 
-<script src="{{asset_conditional('vendor/lodash/dist/lodash.min.js')}}" type='text/javascript'></script>
 <script src="{{asset_conditional('vendor/jquery/dist/jquery.min.js')}}" type='text/javascript'></script>
 <script src="{{asset_conditional('vendor/angular/angular.min.js')}}" type='text/javascript'></script>
 <script src="{{asset_conditional('vendor/angular-animate/angular-animate.min.js')}}" type='text/javascript'></script>
@@ -42,9 +40,7 @@
 <script src="{{asset_conditional('vendor/angular-material-data-table/dist/md-data-table.min.js')}}" type='text/javascript'></script>
 <script src="{{asset_conditional('vendor/angular-messages/angular-messages.min.js')}}" type='text/javascript'></script>
 <script src="{{asset_conditional('vendor/angular-ui-router/release/angular-ui-router.min.js')}}" type='text/javascript'></script>
-<script src="{{asset_conditional('vendor/ngstorage/ngStorage.js')}}" type='text/javascript'></script>
 <script src="{{asset_conditional('vendor/ngstorage/ngStorage.min.js')}}" type='text/javascript'></script>
-<script src="{{asset_conditional('vendor/restangular/dist/restangular.min.js')}}" type='text/javascript'></script>
 <script src="{{asset_conditional('vendor/satellizer/satellizer.min.js')}}" type='text/javascript'></script>
 <script src="{{asset_conditional('vendor/angular-bootstrap/ui-bootstrap.min.js')}}" type='text/javascript'></script>
 <script src="{{asset_conditional('vendor/angular-bootstrap/ui-bootstrap-tpls.min.js')}}" type='text/javascript'></script>

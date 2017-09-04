@@ -24,6 +24,11 @@
         vm.urlContains = urlContains;
         vm.logout = logout;
         vm.goBack = goBack;
+        vm.isHomeUrl = isHomeUrl;
+
+        function isHomeUrl(){
+            return $location.url() === '/';
+        }
 
         function urlContains(stateName){
             return $location.url().includes(stateName);
