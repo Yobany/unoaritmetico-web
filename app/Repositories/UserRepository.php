@@ -33,26 +33,26 @@ class UserRepository extends Repository
 
     public function registerAccount($userRequest, $activationToken = null)
     {
-        DB::beginTransaction();
-        $user = $this->findBy('email', $userRequest['email']);
-        if(is_null($activationToken)){
-            if(is_null($user) || is_null($user->activation_token)){
-                $activationToken = $this->issueActivationToken();
-            }else{
-                $activationToken = $user->activation_token;
+        DB::transaction(function() use ($userRequest, $activationToken) {
+            $user = $this->findBy('email', $userRequest['email']);
+            if(is_null($activationToken)){
+                if(is_null($user) || is_null($user->activation_token)){
+                    $activationToken = $this->issueActivationToken();
+                }else{
+                    $activationToken = $user->activation_token;
+                }
             }
-        }
-        if(!is_null($user) && $user->account_confirmed){
-            throw new BadRequestHttpException('Your account is activated');
-        }
-        if(is_null($user)){
-            $this->create(array_merge($userRequest, ['activation_token' => $activationToken]));
-        }else{
-            $user->activation_token = $activationToken;
-            $user->save();
-        }
-        Mail::to($userRequest['email'])->queue(new ActivationLink($activationToken, $userRequest['first_name']));
-        DB::endTransaction();
+            if(!is_null($user) && $user->account_confirmed){
+                throw new BadRequestHttpException('La cuenta ya existe');
+            }
+            if(is_null($user)){
+                $this->create(array_merge($userRequest, ['activation_token' => $activationToken]));
+            }else{
+                $user->activation_token = $activationToken;
+                $user->save();
+            }
+            Mail::to($userRequest['email'])->queue(new ActivationLink($activationToken, $userRequest['first_name']));
+        });
     }
 
 
