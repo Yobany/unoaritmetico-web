@@ -113,7 +113,6 @@ class AuthController extends Controller
      */
     public function register(RegisterUserRequest $request)
     {
-
         $this->userRepository->registerAccount([
             'first_name' => $request->get('firstName'),
             'last_name' => $request->get('lastName'),

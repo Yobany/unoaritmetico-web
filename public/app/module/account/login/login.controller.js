@@ -43,15 +43,6 @@
 
         function failedLogin(response) {
             vm.isLoginIn = false;
-            if (response.status === 422) {
-                for (let error in response.data.errors) {
-                    return ToastService.error(response.data.errors[error][0]);
-                }
-            }
-            if (response.status === 401) {
-                return ToastService.error(response.data.message);
-            }
-            ToastService.error(response.statusText);
         }
 
 

@@ -1,11 +1,13 @@
 <md-content class="Page-container">
     <md-toolbar>
         <div class="md-toolbar-tools">
-            <h1 class="center" layout="center">
-                <span flex></span>
+            <h1>
                 <span>Detalles de partida "{{vm.game.name}}"</span>
-                <span flex></span>
             </h1>
+            <div flex></div>
+            <md-button aria-label="descargar reporte partida" class="md-raised md-accent" ng-click="vm.exportGame()">
+                <span class="glyphicon glyphicon-download medium"></span>
+            </md-button>
         </div>
     </md-toolbar>
     <div flex="80" flex-offset="10">
@@ -57,11 +59,6 @@
                 </md-card-header>
             </md-card>
         </div>
-        <div layout-gt-xs="row" class="text-center">
-            <div flex="40"></div>
-            <md-button flex="20" class="md-raised md-primary" ng-click="vm.exportGame(game)">Exportar partida</md-button>
-            <div flex="40"></div>
-        </div>
         <md-toolbar>
             <div class="md-toolbar-tools">
                 <h2>Jugadores</h2>
@@ -74,6 +71,7 @@
                     <th md-column>C&oacute;digo</th>
                     <th md-column>Nombre</th>
                     <th md-column>Grupo</th>
+                    <th md-column>Acciones</th>
                 </tr>
                 </thead>
                 <tbody md-body>
@@ -82,6 +80,11 @@
                     <td md-cell>{{student.id}}</td>
                     <td md-cell>{{student.name}}</td>
                     <td md-cell>{{student.group.data.name}}</td>
+                    <td md-cell>
+                        <md-button aria-label="ver detalle estudiante" ui-sref="app.students.detail({ studentid: student.id })" class="md-icon-button md-primary">
+                            <span class="glyphicon glyphicon-info-sign medium"></span>
+                        </md-button>
+                    </td>
                 </tr>
                 </tbody>
             </table>

@@ -46,7 +46,9 @@
 <script src="{{asset_conditional('vendor/angular-bootstrap/ui-bootstrap-tpls.min.js')}}" type='text/javascript'></script>
 
 <script src="{{asset_conditional('app/module.js')}}" type='text/javascript'></script>
+<script src="{{asset_conditional('app/service/toast.service.js')}}" type='text/javascript'></script>
 <script src="{{asset_conditional('app/config/interceptor/auth.interceptor.js')}}" type='text/javascript'></script>
+<script src="{{asset_conditional('app/config/interceptor/error.interceptor.js')}}" type='text/javascript'></script>
 <script src="{{asset_conditional('app/config/http.config.js')}}" type='text/javascript'></script>
 <script src="{{asset_conditional('app/config/chart.config.js')}}" type='text/javascript'></script>
 <script src="{{asset_conditional('app/config/loading_bar.config.js')}}" type='text/javascript'></script>
@@ -85,7 +87,5 @@
 <script src="{{asset_conditional('app/module/students/student-delete.controller.js')}}" type='text/javascript'></script>
 <script src="{{asset_conditional('app/module/students/student.state.js')}}" type='text/javascript'></script>
 <script src="{{asset_conditional('app/module/students/student.service.js')}}" type='text/javascript'></script>
-<script src="{{asset_conditional('app/service/API.service.js')}}" type='text/javascript'></script>
-<script src="{{asset_conditional('app/service/toast.service.js')}}" type='text/javascript'></script>
 </body>
 </html>

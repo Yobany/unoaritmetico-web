@@ -19,7 +19,7 @@
             if (typeof method === 'undefined') {
                 method = 'query';
             }
-            return angular.copy({
+            return {
                 params: {
                     page: 1,
                     size: 5
@@ -32,12 +32,21 @@
                 onSearchError: function (error) {},
                 filterParams: function(params) { return params },
                 results: [],
+                lastPageVisited: 1,
                 isSearching: false,
                 total: 0,
                 search: function () {
                     let self = this;
                     self.isSearching = true;
+                    let isFieldSearch = self.lastPageVisited === self.params.page;
+
+                    if(isFieldSearch){
+                        self.params.page = 1;
+                    }
+                    self.lastPageVisited = self.params.page;
+
                     service[method](self.filterParams(self.params), success, error);
+
                     function success(results) {
                         self.onSearchSuccess(results.data, results.meta);
                         self.total = parseInt(results.meta.pagination.count, 10);
@@ -56,7 +65,7 @@
                         self.isSearching = false;
                     }
                 }
-            });
+            };
         };
 
         return factory;

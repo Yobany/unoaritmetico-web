@@ -9,6 +9,7 @@
 namespace App\Services;
 
 use App\Repositories\Criterias\FullNameCriteria;
+use App\Repositories\Criterias\SortCriteria;
 use App\Repositories\UserRepository;
 use App\User;
 use Illuminate\Http\Request;
@@ -24,6 +25,8 @@ class UserService
 
     public function get(Request $request)
     {
+        $this->users->pushCriteria(new SortCriteria('id'));
+
         if($request->has('name')){
             $this->users->pushCriteria(new FullNameCriteria($request->get('name')));
         }
