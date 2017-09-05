@@ -30,7 +30,10 @@
         vm.goBack = goBack;
         vm.isHomeUrl = isHomeUrl;
 
-        $rootScope.$on('app.httpError', handleError);
+        if(typeof $rootScope.errorHandlingDefined === 'undefined'){
+            $rootScope.$on('app.httpError', handleError);
+            $rootScope.errorHandlingDefined = true;
+        }
 
         function isHomeUrl() {
             return $location.url() === '/';
