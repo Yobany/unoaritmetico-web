@@ -8,10 +8,12 @@
     StudentDetailsController.$inject =
         [
             'entity',
+            'ToastService',
             '$window'
         ];
 
     function StudentDetailsController(entity,
+                                      ToastService,
                                       $window) {
 
         let vm = this;
@@ -44,6 +46,7 @@
         };
 
         function exportGame(game){
+            ToastService.show('Generando reporte, esta operación tomará unos segundos');
             $window.location = '/api/games/' + game.id + '/export';
         }
     }

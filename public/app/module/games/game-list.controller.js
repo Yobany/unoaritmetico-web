@@ -10,12 +10,14 @@
             'Game',
             'Group',
             'EntitySearchHelper',
+            'ToastService',
             '$window'
         ];
 
     function GameListController(Game,
                                 Group,
                                 EntitySearchHelper,
+                                ToastService,
                                 $window) {
         let vm = this;
         vm.exportGame = exportGame;
@@ -37,6 +39,7 @@
         vm.gameSearch.search();
 
         function exportGame(game){
+            ToastService.show('Generando reporte, esta operación tomará unos segundos');
             $window.location = '/api/games/' + game.id + '/export';
         }
     }

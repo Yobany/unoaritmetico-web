@@ -134,10 +134,10 @@
                     <td md-cell>{{game.movesCount}}</td>
                     <td md-cell>{{game.playedAt}}</td>
                     <td md-cell>
-                        <md-button ui-sref="app.games.detail({ gameid: game.id })" class="md-icon-button md-primary">
+                        <md-button aria-label="ver detalle partida" ui-sref="app.games.detail({ gameid: game.id })" class="md-icon-button md-primary">
                             <span class="glyphicon glyphicon-info-sign medium"></span>
                         </md-button>
-                        <md-button ng-click="vm.exportGame(game)" class="md-icon-button md-primary">
+                        <md-button aria-label="descargar reporte partida" ng-click="vm.exportGame(game)" class="md-icon-button md-primary">
                             <span class="glyphicon glyphicon-download medium"></span>
                         </md-button>
                     </td>

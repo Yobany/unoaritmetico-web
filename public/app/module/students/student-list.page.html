@@ -6,7 +6,7 @@
                 <span>Estudiantes</span>
             </h1>
             <div flex></div>
-            <md-button ui-sref="app.students.new" class="md-raised md-accent">
+            <md-button aria-label="agregar estudiantes" ui-sref="app.students.new" class="md-raised md-accent">
                 <span class="glyphicon glyphicon-plus"></span>
             </md-button>
         </div>
@@ -30,7 +30,7 @@
                     </md-select>
                 </md-input-container>
                 <md-input-container flex="10" class="md-block">
-                    <md-button type="submit" class="md-raised md-accent" ng-disabled="searchForm.$invalid">
+                    <md-button aria-label="buscar estudiantes" type="submit" class="md-raised md-accent" ng-disabled="searchForm.$invalid">
                         <span class="glyphicon glyphicon-search"></span>
                     </md-button>
                 </md-input-container>
@@ -56,13 +56,13 @@
                 <td md-cell>{{student.group.data.name}}</td>
                 <td md-cell>{{student.playedCount}}</td>
                 <td md-cell>
-                    <md-button ui-sref="app.students.detail({ studentid: student.id })" class="md-icon-button md-primary">
+                    <md-button aria-label="ver detalles estudiante" ui-sref="app.students.detail({ studentid: student.id })" class="md-icon-button md-primary">
                         <span class="glyphicon glyphicon-info-sign medium"></span>
                     </md-button>
-                    <md-button ui-sref="app.students.edit({ studentid: student.id })" class="md-icon-button md-primary">
+                    <md-button aria-label="editar estudiante" ui-sref="app.students.edit({ studentid: student.id })" class="md-icon-button md-primary">
                         <span class="glyphicon glyphicon-pencil medium"></span>
                     </md-button>
-                    <md-button ui-sref="app.students.remove({ studentid: student.id })" class="md-icon-button md-warn">
+                    <md-button aria-label="eliminar estudiante" ui-sref="app.students.remove({ studentid: student.id })" class="md-icon-button md-warn">
                         <span class="glyphicon glyphicon-trash medium"></span>
                     </md-button>
                 </td>

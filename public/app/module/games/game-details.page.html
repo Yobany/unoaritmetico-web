@@ -5,7 +5,7 @@
                 <span>Detalles de partida "{{vm.game.name}}"</span>
             </h1>
             <div flex></div>
-            <md-button class="md-raised md-accent" ng-click="vm.exportGame()">
+            <md-button aria-label="descargar reporte partida" class="md-raised md-accent" ng-click="vm.exportGame()">
                 <span class="glyphicon glyphicon-download medium"></span>
             </md-button>
         </div>
@@ -81,7 +81,7 @@
                     <td md-cell>{{student.name}}</td>
                     <td md-cell>{{student.group.data.name}}</td>
                     <td md-cell>
-                        <md-button ui-sref="app.students.detail({ studentid: student.id })" class="md-icon-button md-primary">
+                        <md-button aria-label="ver detalle estudiante" ui-sref="app.students.detail({ studentid: student.id })" class="md-icon-button md-primary">
                             <span class="glyphicon glyphicon-info-sign medium"></span>
                         </md-button>
                     </td>
