@@ -31,9 +31,11 @@ class GroupService
         if($request->has('name')){
             $this->groups->pushCriteria(new NameCriteria($request->get('name'), 'groups'));
         }
+
         if($request->has('size')){
             return $this->groups->paginate($request->get('size'));
         }
+
         if($request->has('page')){
             return $this->groups->paginate();
         }

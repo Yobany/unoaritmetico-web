@@ -8,6 +8,6 @@
     LoadingBarConfig.$inject = ['cfpLoadingBarProvider'];
 
     function LoadingBarConfig(cfpLoadingBarProvider) {
-        cfpLoadingBarProvider.includeSpinner = true;
+        cfpLoadingBarProvider.includeSpinner = false;
     }
 })();

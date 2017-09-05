@@ -44,15 +44,19 @@ class StudentService
         if($request->has('name')){
             $this->students->pushCriteria(new NameCriteria($request->get('name'), 'students'));
         }
+
         if($request->has('group')){
             $this->students->pushCriteria(new GroupOwnershipCriteria($request->get('group')));
         }
+
         if($request->has('size')){
             return $this->students->paginate($request->get('size'));
         }
+
         if($request->has('page')){
             return $this->students->paginate();
         }
+
         return $this->students->all();
     }
 
