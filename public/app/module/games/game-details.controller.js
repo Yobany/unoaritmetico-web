@@ -33,8 +33,8 @@
             return description;
         }
 
-        function exportGame(game){
-            $window.location = '/api/games/' + game.id + '/export';
+        function exportGame(){
+            $window.location = '/api/games/' + vm.game.id + '/export';
         }
 
     }

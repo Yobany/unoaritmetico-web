@@ -11,6 +11,7 @@ namespace App\Services;
 
 use App\Repositories\Criterias\GroupOwnershipCriteria;
 use App\Repositories\Criterias\NameCriteria;
+use App\Repositories\Criterias\SortCriteria;
 use App\Repositories\Criterias\UserOwnershipCriteria;
 use App\Repositories\Criterias\UserOwnershipThroughGroupCriteria;
 use App\Repositories\GroupRepository;
@@ -37,6 +38,9 @@ class StudentService
     public function get(Request $request)
     {
         $this->students->pushCriteria(new UserOwnershipThroughGroupCriteria($request->user()->id));
+
+        $this->students->pushCriteria(new SortCriteria('id'));
+
         if($request->has('name')){
             $this->students->pushCriteria(new NameCriteria($request->get('name'), 'students'));
         }

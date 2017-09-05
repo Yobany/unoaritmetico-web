@@ -115,8 +115,10 @@ return [
         'token' => 'activacion',
         'name' => 'nombre',
         'password' => 'contraseña',
-        'password_confirmation' => 'confirmación de contraseña',
-        'group_id' => 'grupo',
+        'passwordConfirmation' => 'confirmación de contraseña',
+        'group' => 'grupo',
+        'student' => 'estudiante',
+        'game' => 'partida',
     ],
 
 ];

@@ -19,7 +19,7 @@
             if (typeof method === 'undefined') {
                 method = 'query';
             }
-            return angular.copy({
+            return {
                 params: {
                     page: 1,
                     size: 5
@@ -56,7 +56,7 @@
                         self.isSearching = false;
                     }
                 }
-            });
+            };
         };
 
         return factory;

@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Group;
 use App\Repositories\Criterias\NameCriteria;
+use App\Repositories\Criterias\SortCriteria;
 use App\Repositories\Criterias\UserOwnershipCriteria;
 use App\Repositories\GroupRepository;
 use Illuminate\Http\Request;
@@ -25,6 +26,8 @@ class GroupService
     {
         $this->groups->pushCriteria(new UserOwnershipCriteria($request->user()->id));
 
+        $this->groups->pushCriteria(new SortCriteria('id'));
+
         if($request->has('name')){
             $this->groups->pushCriteria(new NameCriteria($request->get('name'), 'groups'));
         }
@@ -34,6 +37,7 @@ class GroupService
         if($request->has('page')){
             return $this->groups->paginate();
         }
+
         return $this->groups->all();
     }
 

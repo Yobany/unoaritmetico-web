@@ -7,10 +7,12 @@
 
     StudentDetailsController.$inject =
         [
-            'entity'
+            'entity',
+            '$window'
         ];
 
-    function StudentDetailsController(entity) {
+    function StudentDetailsController(entity,
+                                      $window) {
 
         let vm = this;
         vm.student = entity;

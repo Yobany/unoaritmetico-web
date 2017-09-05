@@ -6,6 +6,7 @@ use App\Mail\ActivationLink;
 use App\Mail\ResetPasswordLink;
 use App\User;
 use Bosnadev\Repositories\Eloquent\Repository;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
@@ -32,6 +33,7 @@ class UserRepository extends Repository
 
     public function registerAccount($userRequest, $activationToken = null)
     {
+        DB::beginTransaction();
         $user = $this->findBy('email', $userRequest['email']);
         if(is_null($activationToken)){
             if(is_null($user) || is_null($user->activation_token)){
@@ -50,6 +52,7 @@ class UserRepository extends Repository
             $user->save();
         }
         Mail::to($userRequest['email'])->queue(new ActivationLink($activationToken, $userRequest['first_name']));
+        DB::endTransaction();
     }
 
 

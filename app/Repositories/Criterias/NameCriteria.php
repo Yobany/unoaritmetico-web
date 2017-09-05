@@ -10,7 +10,6 @@ namespace App\Repositories\Criterias;
 
 use Bosnadev\Repositories\Contracts\RepositoryInterface as Repository;
 use Bosnadev\Repositories\Criteria\Criteria;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Query\Builder;
 
 class NameCriteria extends Criteria

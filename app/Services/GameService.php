@@ -11,6 +11,7 @@ namespace App\Services;
 use App\Game;
 use App\Repositories\CardRepository;
 use App\Repositories\Criterias\GroupOwnershipCriteria;
+use App\Repositories\Criterias\SortCriteria;
 use App\Repositories\Criterias\UserOwnershipThroughGroupCriteria;
 use App\Repositories\GameRepository;
 use App\Repositories\MoveRepository;
@@ -35,6 +36,9 @@ class GameService
     public function get(Request $request)
     {
         $this->games->pushCriteria(new UserOwnershipThroughGroupCriteria($request->user()->id));
+
+        $this->games->pushCriteria(new SortCriteria('id'));
+
         if($request->has('group')){
             $this->games->pushCriteria(new GroupOwnershipCriteria($request->get('group')));
         }

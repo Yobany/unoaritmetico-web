@@ -49,15 +49,6 @@
 
         vm.failedRegistration = function (response) {
             vm.isRegistering = false;
-            if (response.status === 422) {
-                for (let error in response.data.errors) {
-                    return ToastService.error(response.data.errors[error][0]);
-                }
-            }
-            if (response.status === 400) {
-                ToastService.error(response.data.message);
-            }
-            ToastService.error(response.responseText);
         };
 
     }
